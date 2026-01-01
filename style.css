@@ -1,89 +1,43 @@
 body {
-  font-family: Arial, sans-serif;
-  background: #f0f0f0;
-  margin: 0;
-  padding: 0;
+  background:#111;
+  color:#fff;
+  font-family:Arial;
 }
 
 .container {
-  max-width: 900px;
-  margin: 20px auto;
-  padding: 20px;
-  background: #1e1e1e;
-  color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.4);
+  max-width:900px;
+  margin:auto;
+  padding:20px;
 }
 
-h1, h2 { text-align: center; }
-
-.step { display: none; }
-.step.active { display: block; }
+.step { display:none; }
+.step.active { display:block; }
 
 .grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  gap: 15px;
-  margin: 10px 0;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+  gap:15px;
 }
 
-.exp, .mat, .obj {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: #333;
-  border-radius: 8px;
-  cursor: pointer;
-  text-align: center;
-  transition: 0.2s;
-  height: 120px;
+.card {
+  background:#222;
+  border-radius:10px;
+  text-align:center;
+  padding:10px;
+  cursor:pointer;
 }
 
-.exp img, .mat img, .obj img {
-  width: 80px;
-  height: 80px;
-  object-fit: contain;
-  margin-bottom: 5px;
+.card img {
+  width:80px;
+  height:80px;
+  object-fit:contain;
 }
 
-.exp.active, .mat.active, .obj.active {
-  background: #66f;
-  color: #fff;
-  font-weight: bold;
+.card.active {
+  background:#5566ff;
 }
 
 button {
-  padding: 10px 20px;
-  margin: 10px 5px;
-  cursor: pointer;
-  border: none;
-  background: #66f;
-  color: #fff;
-  border-radius: 5px;
-  transition: 0.2s;
-}
-
-button:hover { background: #55c; }
-
-.objects .object-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 5px 0;
-  border-bottom: 1px solid #555;
-}
-
-.counter button {
-  padding: 5px 10px;
-  margin: 0 5px;
-  cursor: pointer;
-}
-
-pre {
-  background: #333;
-  color: #fff;
-  padding: 10px;
-  border-radius: 5px;
-  overflow: auto;
+  margin:10px;
+  padding:10px 20px;
 }
