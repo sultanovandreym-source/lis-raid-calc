@@ -1,6 +1,6 @@
 body {
   font-family: Arial, sans-serif;
-  background: #1e1e1e;
+  background: #222;
   color: #fff;
   margin: 0;
   padding: 0;
@@ -10,7 +10,7 @@ body {
   max-width: 900px;
   margin: 20px auto;
   padding: 20px;
-  background: #2a2a2a;
+  background: #333;
   border-radius: 10px;
   box-shadow: 0 0 15px rgba(0,0,0,0.5);
 }
@@ -24,87 +24,84 @@ h1, h2 {
 
 .grid {
   display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   gap: 15px;
   margin: 15px 0;
 }
 
-/* Адаптивные колонки */
-@media (min-width: 1200px) { .grid { grid-template-columns: repeat(4, 1fr); } }
-@media (max-width: 1199px) { .grid { grid-template-columns: repeat(3, 1fr); } }
-@media (max-width: 800px) { .grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 500px) { .grid { grid-template-columns: 1fr; } }
-
-.exp, .mat {
-  background: #444;
-  border-radius: 10px;
+.exp, .mat, .object-row {
+  background: #555;
+  border-radius: 8px;
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  text-align: center;
+  justify-content: center;
   transition: 0.2s;
-  aspect-ratio: 1 / 1; /* квадрат */
+  height: 120px;
+  text-align: center;
 }
 
-.exp img, .mat img {
-  width: 60%;
-  height: 60%;
+.exp img, .mat img, .object-row img {
+  width: 80px;
+  height: 80px;
   object-fit: contain;
   margin-bottom: 5px;
 }
 
-.exp.active, .mat.active {
+.exp.active, .mat.active, .object-row.active {
   background: #66f;
   color: #fff;
   font-weight: bold;
 }
 
 button {
-  padding: 12px 25px;
+  padding: 10px 20px;
   margin: 10px 5px;
   cursor: pointer;
   border: none;
   background: #66f;
   color: #fff;
-  border-radius: 8px;
+  border-radius: 5px;
   transition: 0.2s;
-  width: 45%;
 }
 
 button:hover { background: #55c; }
 
 .objects .object-row {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  padding: 10px;
-  border-bottom: 1px solid #555;
-  flex-wrap: wrap;
+  justify-content: center;
 }
 
-.objects .object-row img {
-  width: 80px;
-  height: 80px;
-  object-fit: contain;
-  margin-right: 15px;
-  margin-bottom: 5px;
+.counter {
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
 }
 
 .counter button {
-  padding: 6px 12px;
+  padding: 5px 10px;
   margin: 0 5px;
   cursor: pointer;
 }
 
 pre {
-  background: #333;
-  color: #fff;
+  background: #111;
   padding: 15px;
-  border-radius: 8px;
+  border-radius: 5px;
   overflow: auto;
+  color: #0f0;
 }
 
-/* Кнопки под мобильный экран */
-@media (max-width: 600px){
-  button { width: 100%; margin: 5px 0; }
+/* Адаптивность */
+@media(max-width: 600px){
+  .exp, .mat, .object-row {
+    height: 100px;
+  }
+  .exp img, .mat img, .object-row img {
+    width: 60px;
+    height: 60px;
+  }
 }
