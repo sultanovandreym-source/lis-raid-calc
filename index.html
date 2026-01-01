@@ -1,76 +1,58 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<title>Калькулятор рейдов LIOS</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Калькулятор рейдов LIOS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header>
-  <h1>Калькулятор рейдов LIOS</h1>
-</header>
+<div class="container">
+    <h1>Калькулятор рейдов LIOS</h1>
 
-<main>
+    <div class="block">
+        <label>Взрывчатка</label>
+        <select id="explosive">
+            <option value="bobovka">Бобовка</option>
+            <option value="dynamite">Динамит</option>
+        </select>
+    </div>
 
-<!-- ШАГ 1 -->
-<section class="screen active" id="step-explosive">
-  <h2>Выберите взрывчатку</h2>
-  <div class="grid">
-    <div class="card" onclick="selectExplosive('bobovka', this)">
-      <img src="icons/bobovka.png">
-      <span>Бобовка</span>
+    <div class="block">
+        <label>Материал</label>
+        <select id="material">
+            <option value="wood">Дерево</option>
+            <option value="stone">Камень</option>
+            <option value="metal">Металл</option>
+            <option value="mvp">Отлитое железо (МВК)</option>
+            <option value="titan">Титан</option>
+        </select>
     </div>
-    <div class="card" onclick="selectExplosive('dinamit', this)">
-      <img src="icons/dinamit.png">
-      <span>Динамит</span>
-    </div>
-  </div>
-  <button onclick="nextStep('step-material')">Далее</button>
-</section>
 
-<!-- ШАГ 2 -->
-<section class="screen" id="step-material">
-  <h2>Материал постройки</h2>
-  <div class="grid">
-    <div class="card" onclick="toggleMaterial('wood', this)">
-      <img src="icons/wood.png"><span>Дерево</span>
+    <div class="block">
+        <label>Объект</label>
+        <select id="object">
+            <option value="door">Дверь</option>
+            <option value="wall">Стена</option>
+            <option value="foundation">Фундамент</option>
+            <option value="ladder">Складная лестница</option>
+        </select>
     </div>
-    <div class="card" onclick="toggleMaterial('stone', this)">
-      <img src="icons/stone.png"><span>Камень</span>
-    </div>
-    <div class="card" onclick="toggleMaterial('metal', this)">
-      <img src="icons/metal.png"><span>Металл</span>
-    </div>
-    <div class="card" onclick="toggleMaterial('mkv', this)">
-      <img src="icons/mkv.png"><span>Отлитое железо</span>
-    </div>
-    <div class="card" onclick="toggleMaterial('titan', this)">
-      <img src="icons/titan.png"><span>Титан</span>
-    </div>
-    <div class="card" onclick="toggleMaterial('objects', this)">
-      <img src="icons/objects.png"><span>Объекты</span>
-    </div>
-  </div>
-  <button onclick="nextStep('step-objects')">Далее</button>
-</section>
 
-<!-- ШАГ 3 -->
-<section class="screen" id="step-objects">
-  <h2>Объекты</h2>
-  <div id="objects-list"></div>
-  <button onclick="calculate()">Рассчитать</button>
-</section>
+    <div class="block">
+        <label>Количество</label>
+        <input type="number" id="count" value="1" min="1">
+    </div>
 
-<!-- РЕЗУЛЬТАТ -->
-<section class="screen" id="step-result">
-  <h2>Результат</h2>
-  <div id="result"></div>
-  <button onclick="location.reload()">Начать заново</button>
-</section>
+    <button onclick="addObject()">Добавить объект</button>
 
-</main>
+    <div id="list"></div>
+
+    <button class="calc" onclick="calculate()">Рассчитать</button>
+
+    <div id="result" class="result"></div>
+</div>
 
 <script src="script.js"></script>
 </body>
