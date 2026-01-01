@@ -1,131 +1,69 @@
-let step = 0;
+const steps = document.querySelectorAll('.step');
 let selectedExplosives = [];
 let selectedMaterials = [];
-let selectedObjects = {};
 
-const steps = document.querySelectorAll('.step');
-const objectsDiv = document.getElementById('objects');
-
-function showStep(n){ 
+// ===== Переключение шагов =====
+function showStep(n) {
   steps.forEach(s => s.classList.remove('active'));
   steps[n].classList.add('active');
 }
-
-function nextStep(n){ 
-  if(n === 2) loadObjects();
+function nextStep(n) {
+  if (n === 2) loadObjects();
   showStep(n);
 }
-
-function prevStep(n){ showStep(n); }
+function prevStep(n) { showStep(n); }
 
 // ===== Выбор взрывчатки =====
-document.querySelectorAll('[data-exp]').forEach(el=>{
-  el.onclick=()=>{
+document.querySelectorAll('.exp').forEach(el => {
+  el.onclick = () => {
     el.classList.toggle('active');
     const v = el.dataset.exp;
-    selectedExplosives.includes(v) ? selectedExplosives = selectedExplosives.filter(x=>x!==v) : selectedExplosives.push(v);
-  }
+    selectedExplosives.includes(v)
+      ? selectedExplosives = selectedExplosives.filter(x => x !== v)
+      : selectedExplosives.push(v);
+  };
 });
 
 // ===== Выбор материалов =====
-document.querySelectorAll('[data-mat]').forEach(el=>{
-  el.onclick=()=>{
+document.querySelectorAll('.mat').forEach(el => {
+  el.onclick = () => {
     el.classList.toggle('active');
     const v = el.dataset.mat;
-    selectedMaterials.includes(v) ? selectedMaterials = selectedMaterials.filter(x=>x!==v) : selectedMaterials.push(v);
-  }
+    selectedMaterials.includes(v)
+      ? selectedMaterials = selectedMaterials.filter(x => x !== v)
+      : selectedMaterials.push(v);
+  };
 });
 
-// ===== Объекты по материалу =====
+// ===== Объекты по выбранным материалам =====
 const objectsByMaterial = {
-  wood:['Дверь','Стена','Фундамент'],
-  stone:['Дверь','Стена','Фундамент'],
-  metal:['Дверь','Стена','Фундамент','Складная лестница','Решетка'],
-  steel:['Дверь','Стена','Фундамент','Складная лестница','Решетка'],
-  titan:['Дверь','Стена','Фундамент','Складная лестница','Решетка'],
-  objects:['Устройство отслеживания стрельбы','Установка с автоматической винтовкой','Автоматическая установка для картечи','Торговый бот','Электромагнитная турель','Ракетная пусковая установка']
+  wood: ['door','wall','foundation'],
+  stone: ['door','wall','foundation'],
+  metal: ['door','wall','foundation','ladder','grate'],
+  steel: ['door','wall','foundation','ladder','grate'],
+  titan: ['door','wall','foundation','ladder','grate'],
+  objects: [
+    'tracking_device',
+    'auto_rifle',
+    'auto_shotgun',
+    'trading_bot',
+    'turret',
+    'rocket_launcher'
+  ]
 };
 
-const objFileNames = {
-  'Дверь':'door','Стена':'wall','Фундамент':'foundation',
-  'Складная лестница':'ladder','Решетка':'grate',
-  'Устройство отслеживания стрельбы':'tracking_device',
-  'Установка с автоматической винтовкой':'auto_rifle',
-  'Автоматическая установка для картечи':'auto_shotgun',
-  'Торговый бот':'trading_bot',
-  'Электромагнитная турель':'turret',
-  'Ракетная пусковая установка':'rocket_launcher'
-};
+function loadObjects() {
+  const grid = document.getElementById('objectsGrid');
+  grid.innerHTML = '';
 
-function loadObjects(){
-  objectsDiv.innerHTML='';
-  selectedObjects={};
-
-  selectedMaterials.forEach(mat=>{
-    objectsByMaterial[mat].forEach(o=>{
-      const key = `${mat}_${o}`;
-      if(objectsDiv.querySelector(`[data-obj='${key}']`)) return;
-
+  selectedMaterials.forEach(mat => {
+    objectsByMaterial[mat].forEach(obj => {
       const div = document.createElement('div');
-      div.className = 'object-row';
-      div.dataset.obj = key;
-
-      let imgSrc = '';
-      if(mat==='objects') imgSrc = `img/objects_${objFileNames[o]}.png`;
-      else imgSrc = `img/${mat}_${objFileNames[o]}.png`;
-
-      div.innerHTML = `
-        <img src="${imgSrc}" alt="${o}">
-        <span>${mat} ${o}</span>
-        <div class="counter">
-          <button onclick="changeObjectCount('${key}',-1)">-</button>
-          <span id="count-${key}">0</span>
-          <button onclick="changeObjectCount('${key}',1)">+</button>
-        </div>
-      `;
-
-      objectsDiv.appendChild(div);
-      selectedObjects[key] = 0;
+      div.className = 'obj';
+      div.dataset.mat = mat;
+      div.dataset.obj = obj;
+      div.innerHTML = `<img src="img/${mat}_${obj}.png"><span>${mat} ${obj}</span>`;
+      grid.appendChild(div);
     });
   });
-}
-
-function changeObjectCount(obj, v){
-  selectedObjects[obj] = Math.max(0,(selectedObjects[obj]||0)+v);
-  document.getElementById(`count-${obj}`).innerText = selectedObjects[obj];
-}
-
-// ===== Данные взрывчатки =====
-// Здесь оставляем как в твоем предыдущем коде (data {...})
-// Для краткости не вставляю весь объект data, можно использовать предыдущий полностью
-
-// ===== Расчет =====
-function calculate(){
-  let result = '';
-  let totalSulfur = 0;
-
-  Object.keys(selectedObjects).forEach(key=>{
-    const qty = selectedObjects[key];
-    if(qty === 0) return;
-
-    const [mat,obj] = key.split('_');
-    result += `Объект: ${obj} (${mat})\nКоличество: ${qty}\n`;
-
-    selectedExplosives.forEach(exp=>{
-      let val = null;
-      if(data[exp] && data[exp][mat] && data[exp][mat][obj]){
-        val = data[exp][mat][obj];
-      }
-      let c,s;
-      if(!val){ c='Невозможно'; s='—'; }
-      else{ c=val.count*qty; s=val.sulfur*qty; totalSulfur += s; }
-      result += `• ${exp}: ${c} (Сера: ${s})\n`;
-    });
-
-    result+='\n';
-  });
-
-  result += `Общее количество серы: ${totalSulfur}`;
-  document.getElementById('result').innerText = result;
-  showStep(3);
 }
