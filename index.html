@@ -1,56 +1,42 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Калькулятор рейдов LIOS</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Калькулятор рейдов LIOS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
+
+<div class="container">
     <h1>Калькулятор рейдов LIOS</h1>
 
-    <!-- Выбор взрывчатки -->
-    <div class="section" id="explosive-section">
-      <h2>Выберите взрывчатку</h2>
-      <div class="icon-buttons" id="explosives">
-        <button data-explosive="bababka">Бабовка</button>
-        <button data-explosive="dinamit">Динамит</button>
-        <button data-explosive="c4">Военная С4</button>
-        <button data-explosive="hegsagen">Гегсаген</button>
-        <button data-explosive="simple_rocket">Простая ракета</button>
-        <button data-explosive="rocket">Ракета</button>
-        <button data-explosive="grenade">Граната</button>
-        <button data-explosive="alloy_grenade">Граната из сплава</button>
-        <button data-explosive="pc3o_rocket">Ракета PC3O</button>
-      </div>
+    <div class="block">
+        <label>Взрывчатка</label>
+        <select id="explosive"></select>
     </div>
 
-    <!-- Выбор типа объекта -->
-    <div class="section" id="object-type-section" style="display:none;">
-      <h2>Выберите материал/объект</h2>
-      <div class="icon-buttons" id="object-types">
-        <button data-type="wood">Дерево</button>
-        <button data-type="stone">Камень</button>
-        <button data-type="metal">Металл</button>
-        <button data-type="iron_cast">Отлитое железо</button>
-        <button data-type="titan">Титан</button>
-        <button data-type="objects">Объекты</button>
-      </div>
-      <button class="back-btn" id="back-to-explosive">Назад</button>
+    <div class="block">
+        <label>Материал</label>
+        <select id="material"></select>
     </div>
 
-    <!-- Выбор конкретного объекта -->
-    <div class="section" id="target-section" style="display:none;">
-      <h2>Выберите объект</h2>
-      <div class="icon-buttons" id="targets"></div>
-      <button class="back-btn" id="back-to-object-type">Назад</button>
+    <div class="block">
+        <label>Объект</label>
+        <select id="object"></select>
     </div>
 
-    <!-- Результат -->
-    <div id="result" class="result"></div>
-  </div>
+    <div class="block">
+        <label>Количество</label>
+        <input type="number" id="count" min="1" value="1">
+    </div>
 
-  <script src="script.js"></script>
+    <button onclick="addItem()">➕ Добавить в расчёт</button>
+
+    <div id="list"></div>
+    <div id="total"></div>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
