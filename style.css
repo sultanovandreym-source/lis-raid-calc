@@ -22,7 +22,7 @@ h1 { text-align: center; }
 .grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr); /* 4 колонки */
-  grid-auto-rows: 120px;                 /* высота ячеек */
+  grid-auto-rows: 120px; /* стандартная высота ячеек */
   gap: 10px;
   margin: 10px 0;
 }
@@ -38,11 +38,12 @@ h1 { text-align: center; }
   cursor: pointer;
   transition: 0.2s;
   text-align: center;
+  height: 140px; /* чуть больше, чтобы был квадрат */
 }
 
 .exp img {
-  width: 60px;
-  height: 60px;
+  width: 80px; /* чуть больше */
+  height: 80px; /* почти квадрат */
   object-fit: contain;
   margin-bottom: 5px;
 }
