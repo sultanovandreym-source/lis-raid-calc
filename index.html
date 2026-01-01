@@ -1,40 +1,53 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <title>Калькулятор рейдов LIOS</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>Калькулятор рейдов LIOS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="container">
-    <h1>Калькулятор рейдов LIOS</h1>
+<div class="app">
 
-    <div class="block">
-        <label>Взрывчатка</label>
-        <select id="explosive"></select>
-    </div>
+<!-- ШАГ 1 -->
+<div class="screen active" id="step1">
+  <h2>Взрывчатка</h2>
+  <p>Можно выбрать или пропустить</p>
+  <div class="grid">
+    <div class="card" onclick="toggleExplosive('bobovka')">💣<br>Бобовка</div>
+    <div class="card" onclick="toggleExplosive('dinamit')">🧨<br>Динамит</div>
+  </div>
+  <button onclick="goTo(2)">Далее</button>
+</div>
 
-    <div class="block">
-        <label>Материал</label>
-        <select id="material"></select>
-    </div>
+<!-- ШАГ 2 -->
+<div class="screen" id="step2">
+  <h2>Материалы</h2>
+  <div class="grid">
+    <div class="card" onclick="toggleMaterial('wood')">🌲<br>Дерево</div>
+    <div class="card" onclick="toggleMaterial('stone')">🪨<br>Камень</div>
+    <div class="card" onclick="toggleMaterial('metal')">🔩<br>Металл</div>
+    <div class="card" onclick="toggleMaterial('iron')">🧱<br>МВК</div>
+    <div class="card" onclick="toggleMaterial('titan')">🛡<br>Титан</div>
+  </div>
+  <button onclick="goTo(3)">Далее</button>
+</div>
 
-    <div class="block">
-        <label>Объект</label>
-        <select id="object"></select>
-    </div>
+<!-- ШАГ 3 -->
+<div class="screen" id="step3">
+  <h2>Объекты</h2>
+  <div id="objects"></div>
+  <button onclick="calculate()">Рассчитать</button>
+</div>
 
-    <div class="block">
-        <label>Количество</label>
-        <input type="number" id="count" min="1" value="1">
-    </div>
+<!-- РЕЗУЛЬТАТ -->
+<div class="screen" id="result">
+  <h2>Результат</h2>
+  <div id="output"></div>
+  <button onclick="location.reload()">Начать заново</button>
+</div>
 
-    <button onclick="addItem()">➕ Добавить в расчёт</button>
-
-    <div id="list"></div>
-    <div id="total"></div>
 </div>
 
 <script src="script.js"></script>
