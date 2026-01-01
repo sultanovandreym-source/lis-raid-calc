@@ -1,95 +1,62 @@
 body {
   font-family: Arial, sans-serif;
-  background: #f0f0f0;
-  margin: 0;
-  padding: 0;
+  background:#111;
+  color:#fff;
 }
 
 .container {
-  max-width: 900px;
-  margin: 20px auto;
-  padding: 20px;
-  background: #1e1e1e;
-  color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+  max-width:900px;
+  margin:auto;
+  padding:20px;
 }
 
-h1 { text-align: center; }
+h1,h2 { text-align:center; }
 
-.step { display: none; }
-.step.active { display: block; }
+.step { display:none; }
+.step.active { display:block; }
 
 .grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  gap: 10px;
-  margin: 15px 0;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+  gap:15px;
 }
 
-.exp, .mat, .object-item {
-  background: #333;
-  border-radius: 8px;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 10px;
-  transition: 0.2s;
-  height: 120px;  /* 1:1 примерно квадрат */
-  text-align: center;
+.card {
+  background:#222;
+  border-radius:10px;
+  padding:10px;
+  text-align:center;
+  cursor:pointer;
+  transition:.2s;
 }
 
-.exp img, .mat img, .object-item img {
-  width: 80px;
-  height: 80px;
-  object-fit: contain;
-  margin-bottom: 5px;
+.card img {
+  width:80px;
+  height:80px;
+  object-fit:contain;
 }
 
-.exp.active, .mat.active, .object-item.active {
-  background: #66f;
-  font-weight: bold;
+.card span {
+  display:block;
+  margin-top:5px;
+}
+
+.card.active {
+  outline:3px solid #5a7cff;
 }
 
 button {
-  padding: 10px 20px;
-  margin: 10px 5px;
-  cursor: pointer;
-  border: none;
-  background: #66f;
-  color: #fff;
-  border-radius: 5px;
-  transition: 0.2s;
-}
-
-button:hover { background: #55c; }
-
-.objects .object-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 5px 0;
-  border-bottom: 1px solid #444;
-}
-
-.counter button {
-  padding: 5px 10px;
-  margin: 0 5px;
-  cursor: pointer;
+  margin:10px;
+  padding:10px 20px;
+  background:#5a7cff;
+  border:none;
+  color:#fff;
+  border-radius:6px;
+  cursor:pointer;
 }
 
 pre {
-  background: #222;
-  padding: 10px;
-  border-radius: 5px;
-  overflow: auto;
-  color: #fff;
-}
-
-/* Адаптив */
-@media (max-width: 600px) {
-  .exp img, .mat img, .object-item img { width: 60px; height: 60px; }
-  .exp, .mat, .object-item { height: 100px; }
+  background:#222;
+  padding:15px;
+  border-radius:10px;
 }
