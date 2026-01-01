@@ -14,98 +14,65 @@ body {
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-h1 {
-  text-align: center;
-}
+h1 { text-align: center; }
 
-/* ===== ШАГИ ===== */
-.step {
-  display: none;
-}
-.step.active {
-  display: block;
-}
+.step { display: none; }
+.step.active { display: block; }
 
-/* ===== СЕТКА (РОВНАЯ) ===== */
 .grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-  margin: 15px 0;
+  grid-auto-rows: 140px;
+  gap: 10px;
+  margin: 10px 0;
 }
 
-/* ===== КАРТОЧКИ — СТРОГИЙ КВАДРАТ ===== */
-.exp,
-.mat {
-  aspect-ratio: 1 / 1;          /* 🔥 ВАЖНО */
-  width: 100%;
-  
+.exp, .mat, .object-row {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-
+  justify-content: center;
   background: #eee;
-  border-radius: 12px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: 0.2s;
   text-align: center;
+  transition: 0.2s;
+  height: 140px;
 }
 
-/* ===== ИКОНКИ ===== */
-.exp img,
-.mat img {
-  width: 60%;
-  height: 60%;
+.exp img, .mat img, .object-row img {
+  width: 80px;
+  height: 80px;
   object-fit: contain;
-  margin-bottom: 6px;
+  margin-bottom: 5px;
 }
 
-/* ===== ТЕКСТ ===== */
-.exp span,
-.mat span {
-  font-size: 14px;
-}
-
-/* ===== АКТИВ ===== */
-.exp.active,
-.mat.active {
-  background: #6677ff;
+.exp.active, .mat.active {
+  background: #66f;
   color: #fff;
   font-weight: bold;
 }
 
-/* ===== КНОПКИ ===== */
 button {
   padding: 10px 20px;
   margin: 10px 5px;
   cursor: pointer;
   border: none;
-  background: #6677ff;
+  background: #66f;
   color: #fff;
-  border-radius: 6px;
+  border-radius: 5px;
   transition: 0.2s;
 }
 
-button:hover {
-  background: #5566dd;
-}
+button:hover { background: #55c; }
 
-/* ===== 3 ВКЛАДКА ===== */
-.objects .object-row {
+.objects .counter {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 6px 0;
-  border-bottom: 1px solid #ccc;
+  justify-content: center;
+  gap: 5px;
 }
 
-.counter button {
-  padding: 5px 10px;
-  margin: 0 5px;
-}
-
-/* ===== РЕЗУЛЬТАТ ===== */
 pre {
   background: #f4f4f4;
   padding: 10px;
