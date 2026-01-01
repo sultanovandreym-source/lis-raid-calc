@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор рейдов LIS</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Калькулятор рейдов LIS</h1>
+        
+        <div class="section">
+            <label for="explosive">Выберите взрывчатку:</label>
+            <select id="explosive">
+                <option value="bababka">Бабовка</option>
+                <option value="dinamit">Динамит</option>
+                <option value="c4">Военная С4</option>
+                <option value="hegsagen">Гегсаген</option>
+                <option value="simple_rocket">Простая ракета</option>
+                <option value="rocket">Ракета</option>
+                <option value="grenade">Граната</option>
+                <option value="alloy_grenade">Граната из сплава</option>
+                <option value="pc3o_rocket">Ракета PC3O</option>
+            </select>
+        </div>
+
+        <div class="section">
+            <label for="target">Выберите цель:</label>
+            <select id="target">
+                <option value="wood_door">Деревянная дверь</option>
+                <option value="wood_wall">Деревянная стена</option>
+                <option value="wood_foundation">Деревянный фундамент</option>
+                <option value="stone_door">Каменная дверь</option>
+                <option value="stone_wall">Каменная стена</option>
+                <option value="stone_foundation">Каменный фундамент</option>
+                <option value="metal_door">Металлическая дверь</option>
+                <option value="metal_wall">Металлическая стена</option>
+                <option value="metal_foundation">Металлический фундамент</option>
+                <option value="metal_ladder">Железная складная лестница</option>
+                <option value="titan_door">Титановая дверь</option>
+                <option value="titan_wall">Титановая стена</option>
+                <option value="titan_ladder">Титановая лестница</option>
+                <option value="tracking_device">Устройство отслеживания стрельбы</option>
+                <option value="auto_rifle">Устройство с автоматической винтовкой</option>
+                <option value="grapeshot">Автоматическая установка для картечи</option>
+                <option value="trading_bot">Торговый бот</option>
+                <option value="electric_turret">Электрическая турель</option>
+                <option value="rocket_launcher">Ракетная пусковая установка</option>
+            </select>
+        </div>
+
+        <button id="calculate">Рассчитать</button>
+
+        <div id="result" class="result"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
