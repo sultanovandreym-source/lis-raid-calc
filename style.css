@@ -1,41 +1,96 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f0f0f0;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+}
+
+h1, h2 {
+  text-align: center;
+}
+
+.step {
+  display: none;
+}
+.step.active {
+  display: block;
+}
+
+/* ===== СЕТКА ===== */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 15px;
   margin: 15px 0;
 }
 
-/* Карточка 1x1 */
+/* ===== ИКОНКИ 1x1 ===== */
 .icon-card {
   aspect-ratio: 1 / 1;
   background: #eee;
-  border-radius: 10px;
+  border-radius: 12px;
   cursor: pointer;
   transition: 0.2s;
 
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
 }
 
-.exp.active,
-.mat.active {
-  background: #6677ff;
-  color: #fff;
-}
-
-/* КАРТИНКА СТРОГО 1x1 */
 .icon-card img {
   width: 70%;
   aspect-ratio: 1 / 1;
   object-fit: contain;
-  display: block;
   margin-bottom: 6px;
 }
 
-/* ТЕКСТ */
 .icon-card span {
   font-weight: bold;
-  text-align: center;
+}
+
+.icon-card.active {
+  background: #6677ff;
+  color: #fff;
+}
+
+/* ===== КНОПКИ ===== */
+button {
+  padding: 10px 20px;
+  margin: 10px 5px;
+  border: none;
+  background: #6677ff;
+  color: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #5566dd;
+}
+
+/* ===== ОБЪЕКТЫ ===== */
+.objects .object-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.counter button {
+  padding: 4px 10px;
+}
+
+pre {
+  background: #f4f4f4;
+  padding: 10px;
+  border-radius: 6px;
 }
