@@ -10,16 +10,16 @@
   <div class="container">
     <h1>Калькулятор LIOS</h1>
 
-    <!-- Шаг 1: Взрывчатка -->
+    <!-- Шаг 1: Выбор взрывчатки -->
     <div class="step active" id="step1">
       <h2>Выберите взрывчатку</h2>
-      <div class="grid" id="explosivesGrid">
+      <div class="grid" id="explosives-grid">
         <div data-exp="bobovka" class="exp">
-          <img src="images/bobovka.png" alt="Бобовка">
+          <img src="images/bobovka.png" alt="Bobovka">
           <span>Бобовка</span>
         </div>
         <div data-exp="dynamite" class="exp">
-          <img src="images/dynamite.png" alt="Динамит">
+          <img src="images/dynamite.png" alt="Dynamite">
           <span>Динамит</span>
         </div>
         <div data-exp="c4" class="exp">
@@ -27,43 +27,43 @@
           <span>C4</span>
         </div>
         <div data-exp="hexogen" class="exp">
-          <img src="images/hexogen.png" alt="Гексоген">
+          <img src="images/hexogen.png" alt="Hexogen">
           <span>Гексоген</span>
         </div>
         <div data-exp="rocket" class="exp">
-          <img src="images/rocket.png" alt="Ракета">
+          <img src="images/rocket.png" alt="Rocket">
           <span>Ракета</span>
         </div>
       </div>
       <button onclick="nextStep(1)">➡ Далее</button>
     </div>
 
-    <!-- Шаг 2: Материалы -->
+    <!-- Шаг 2: Выбор материалов -->
     <div class="step" id="step2">
       <h2>Выберите материалы</h2>
-      <div class="grid" id="materialsGrid">
+      <div class="grid" id="materials-grid">
         <div data-mat="wood" class="mat">
-          <img src="images/wood.png" alt="Дерево">
+          <img src="images/wood.png" alt="Wood">
           <span>Дерево</span>
         </div>
         <div data-mat="stone" class="mat">
-          <img src="images/stone.png" alt="Камень">
+          <img src="images/stone.png" alt="Stone">
           <span>Камень</span>
         </div>
         <div data-mat="metal" class="mat">
-          <img src="images/metal.png" alt="Железо">
+          <img src="images/metal.png" alt="Metal">
           <span>Железо</span>
         </div>
         <div data-mat="steel" class="mat">
-          <img src="images/steel.png" alt="Сталь">
+          <img src="images/steel.png" alt="Steel">
           <span>Сталь</span>
         </div>
         <div data-mat="titan" class="mat">
-          <img src="images/titan.png" alt="Титан">
+          <img src="images/titan.png" alt="Titan">
           <span>Титан</span>
         </div>
         <div data-mat="objects" class="mat">
-          <img src="images/objects.png" alt="Объекты">
+          <img src="images/objects.png" alt="Objects">
           <span>Объекты</span>
         </div>
       </div>
@@ -71,7 +71,7 @@
       <button onclick="nextStep(2)">➡ Далее</button>
     </div>
 
-    <!-- Шаг 3: Объекты -->
+    <!-- Шаг 3: Выбор объектов и количества -->
     <div class="step" id="step3">
       <h2>Выберите объекты и количество</h2>
       <div id="objects" class="grid"></div>
