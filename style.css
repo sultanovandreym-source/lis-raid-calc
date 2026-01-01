@@ -10,4 +10,7 @@ h1{text-align:center;margin-bottom:20px}
 button{padding:10px 20px;margin:5px;border:none;border-radius:5px;background:#4CAF50;color:white;cursor:pointer}
 button:hover{background:#45a049}
 pre{background:#eee;padding:10px;border-radius:5px;overflow:auto}
-.counter{display:flex;align-items:center;gap:10px;margin:10px 0;justify-content:center}
+.object-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.object-row span{flex:1}
+.counter{display:flex;align-items:center;gap:10px}
+.counter button{padding:5px 10px}
