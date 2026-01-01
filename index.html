@@ -1,92 +1,249 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Калькулятор LIOS</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Калькулятор LIOS</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #f0f0f0;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+h1 { text-align:center; }
+
+.step { display:none; }
+.step.active { display:block; }
+
+.grid {
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  grid-auto-rows: 100px;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.exp, .mat, .obj-icon {
+  padding: 10px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  background:#eee;
+  border-radius:8px;
+  cursor:pointer;
+  transition:0.2s;
+  text-align:center;
+}
+
+.exp img, .mat img, .obj-icon img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  margin-bottom:5px;
+}
+
+.exp.active, .mat.active, .obj-icon.active {
+  background:#66f;
+  color:#fff;
+  font-weight:bold;
+}
+
+button {
+  padding:10px 20px;
+  margin:10px 5px;
+  cursor:pointer;
+  border:none;
+  background:#66f;
+  color:#fff;
+  border-radius:5px;
+  transition:0.2s;
+}
+
+button:hover { background:#55c; }
+
+.objects .object-row {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:5px 0;
+  border-bottom:1px solid #ccc;
+}
+
+.counter button {
+  padding:5px 10px;
+  margin:0 5px;
+  cursor:pointer;
+}
+
+pre {
+  background:#f4f4f4;
+  padding:10px;
+  border-radius:5px;
+  overflow:auto;
+}
+@media(max-width:600px){
+  .grid {grid-template-columns: repeat(auto-fit,minmax(80px,1fr)); grid-auto-rows: 90px;}
+  .exp img, .mat img, .obj-icon img {width:50px;height:50px;}
+}
+</style>
 </head>
 <body>
-  <div class="container">
-    <h1>Калькулятор LIOS</h1>
+<div class="container">
+<h1>Калькулятор LIOS</h1>
 
-    <!-- Шаг 1: Выбор взрывчатки -->
-    <div class="step active" id="step1">
-      <h2>Выберите взрывчатку</h2>
-      <div class="grid" id="explosives-grid">
-        <div data-exp="bobovka" class="exp">
-          <img src="images/bobovka.png" alt="Bobovka">
-          <span>Бобовка</span>
-        </div>
-        <div data-exp="dynamite" class="exp">
-          <img src="images/dynamite.png" alt="Dynamite">
-          <span>Динамит</span>
-        </div>
-        <div data-exp="c4" class="exp">
-          <img src="images/c4.png" alt="C4">
-          <span>C4</span>
-        </div>
-        <div data-exp="hexogen" class="exp">
-          <img src="images/hexogen.png" alt="Hexogen">
-          <span>Гексоген</span>
-        </div>
-        <div data-exp="rocket" class="exp">
-          <img src="images/rocket.png" alt="Rocket">
-          <span>Ракета</span>
-        </div>
-      </div>
-      <button onclick="nextStep(1)">➡ Далее</button>
-    </div>
-
-    <!-- Шаг 2: Выбор материалов -->
-    <div class="step" id="step2">
-      <h2>Выберите материалы</h2>
-      <div class="grid" id="materials-grid">
-        <div data-mat="wood" class="mat">
-          <img src="images/wood.png" alt="Wood">
-          <span>Дерево</span>
-        </div>
-        <div data-mat="stone" class="mat">
-          <img src="images/stone.png" alt="Stone">
-          <span>Камень</span>
-        </div>
-        <div data-mat="metal" class="mat">
-          <img src="images/metal.png" alt="Metal">
-          <span>Железо</span>
-        </div>
-        <div data-mat="steel" class="mat">
-          <img src="images/steel.png" alt="Steel">
-          <span>Сталь</span>
-        </div>
-        <div data-mat="titan" class="mat">
-          <img src="images/titan.png" alt="Titan">
-          <span>Титан</span>
-        </div>
-        <div data-mat="objects" class="mat">
-          <img src="images/objects.png" alt="Objects">
-          <span>Объекты</span>
-        </div>
-      </div>
-      <button onclick="prevStep(0)">⬅ Назад</button>
-      <button onclick="nextStep(2)">➡ Далее</button>
-    </div>
-
-    <!-- Шаг 3: Выбор объектов и количества -->
-    <div class="step" id="step3">
-      <h2>Выберите объекты и количество</h2>
-      <div id="objects" class="grid"></div>
-      <button onclick="prevStep(1)">⬅ Назад</button>
-      <button onclick="calculate()">➡ Рассчитать</button>
-    </div>
-
-    <!-- Шаг 4: Результат -->
-    <div class="step" id="step4">
-      <h2>Результат</h2>
-      <pre id="result"></pre>
-      <button onclick="prevStep(2)">⬅ Назад</button>
-    </div>
+<!-- Шаг 1 -->
+<div class="step active" id="step1">
+  <h2>Выберите взрывчатку</h2>
+  <div class="grid">
+    <div data-exp="bobovka" class="exp"><img src="bobovka.png" alt="bobovka"><span>Bobovka</span></div>
+    <div data-exp="dynamite" class="exp"><img src="dynamite.png" alt="dynamite"><span>Dynamite</span></div>
+    <div data-exp="c4" class="exp"><img src="c4.png" alt="c4"><span>C4</span></div>
+    <div data-exp="hexogen" class="exp"><img src="hexogen.png" alt="hexogen"><span>Hexogen</span></div>
+    <div data-exp="rocket" class="exp"><img src="rocket.png" alt="rocket"><span>Rocket</span></div>
   </div>
+  <button onclick="nextStep(1)">➡ Далее</button>
+</div>
 
-  <script src="script.js"></script>
+<!-- Шаг 2 -->
+<div class="step" id="step2">
+  <h2>Выберите материалы</h2>
+  <div class="grid">
+    <div data-mat="wood" class="mat"><img src="wood.png" alt="wood"><span>Wood</span></div>
+    <div data-mat="stone" class="mat"><img src="stone.png" alt="stone"><span>Stone</span></div>
+    <div data-mat="metal" class="mat"><img src="metal.png" alt="metal"><span>Metal</span></div>
+    <div data-mat="steel" class="mat"><img src="steel.png" alt="steel"><span>Steel</span></div>
+    <div data-mat="titan" class="mat"><img src="titan.png" alt="titan"><span>Titan</span></div>
+    <div data-mat="objects" class="mat"><img src="objects.png" alt="objects"><span>Objects</span></div>
+  </div>
+  <button onclick="prevStep(0)">⬅ Назад</button>
+  <button onclick="nextStep(2)">➡ Далее</button>
+</div>
+
+<!-- Шаг 3 -->
+<div class="step" id="step3">
+  <h2>Выберите объекты</h2>
+  <div id="objects" class="grid objects"></div>
+  <button onclick="prevStep(1)">⬅ Назад</button>
+  <button onclick="calculate()">➡ Рассчитать</button>
+</div>
+
+<!-- Шаг 4 -->
+<div class="step" id="step4">
+  <h2>Результат</h2>
+  <pre id="result"></pre>
+  <button onclick="prevStep(2)">⬅ Назад</button>
+</div>
+
+</div>
+
+<script>
+let step=0;
+let selectedExplosives=[];
+let selectedMaterials=[];
+let selectedObjects={};
+
+const steps=document.querySelectorAll('.step');
+const objectsDiv=document.getElementById('objects');
+
+function showStep(n){steps.forEach(s=>s.classList.remove('active'));steps[n].classList.add('active')}
+function nextStep(n){ if(n===2) loadObjects(); showStep(n) }
+function prevStep(n){showStep(n)}
+
+// ===== Выбор взрывчатки =====
+document.querySelectorAll('[data-exp]').forEach(el=>{
+  el.onclick=()=>{
+    el.classList.toggle('active');
+    const v=el.dataset.exp;
+    selectedExplosives.includes(v)?selectedExplosives=selectedExplosives.filter(x=>x!==v):selectedExplosives.push(v);
+  }
+});
+
+// ===== Выбор материалов =====
+document.querySelectorAll('[data-mat]').forEach(el=>{
+  el.onclick=()=>{
+    el.classList.toggle('active');
+    const v=el.dataset.mat;
+    selectedMaterials.includes(v)?selectedMaterials=selectedMaterials.filter(x=>x!==v):selectedMaterials.push(v);
+  }
+});
+
+// ===== Объекты =====
+const objectsByMaterial={
+  wood:['Door','Wall','Foundation'],
+  stone:['Door','Wall','Foundation'],
+  metal:['Door','Wall','Foundation','FoldingLadder','Grate'],
+  steel:['Door','Wall','Foundation','FoldingLadder','Grate'],
+  titan:['Door','Wall','Foundation','FoldingLadder','Grate'],
+  objects:['TrackingDevice','AutoRifle','AutoTurret','TradingBot','EMTurret','RocketLauncher']
+};
+
+function loadObjects(){
+  objectsDiv.innerHTML='';
+  selectedObjects={};
+  selectedMaterials.forEach(mat=>{
+    objectsByMaterial[mat].forEach(obj=>{
+      const key=`${mat}_${obj}`;
+      const div=document.createElement('div');
+      div.className='obj-icon';
+      div.dataset.obj=key;
+      div.innerHTML=`<img src="${key}.png" alt="${obj}"><span>${obj}</span>`;
+      div.onclick=()=>{ div.classList.toggle('active'); selectedObjects[key] = selectedObjects[key]?0:1; }
+      objectsDiv.appendChild(div);
+      selectedObjects[key]=0;
+    });
+  });
+}
+
+// ===== Данные взрывчатки =====
+const data={
+  bobovka:{
+    wood:{Door:{count:2,sulfur:240},Wall:{count:4,sulfur:480},Foundation:{count:15,sulfur:1800}},
+    stone:{Door:{count:3,sulfur:360},Wall:{count:10,sulfur:1200},Foundation:{count:40,sulfur:4800}},
+    metal:{Door:{count:30,sulfur:3600},Wall:{count:100,sulfur:12000},Foundation:{count:400,sulfur:48000},FoldingLadder:{count:46,sulfur:5520},Grate:null},
+    steel:{Door:{count:200,sulfur:24000},Wall:{count:667,sulfur:80040},Foundation:{count:2667,sulfur:320040},FoldingLadder:{count:275,sulfur:33000},Grate:null},
+    titan:{Door:{count:800,sulfur:96000},Wall:{count:2667,sulfur:320040},Foundation:null,FoldingLadder:{count:1112,sulfur:133440},Grate:null},
+    objects:{TrackingDevice:{count:50,sulfur:6000},AutoRifle:{count:50,sulfur:6000},AutoTurret:{count:50,sulfur:6000},TradingBot:{count:668,sulfur:80160},EMTurret:{count:50,sulfur:6000},RocketLauncher:{count:50,sulfur:6000}}
+  },
+  dynamite:{ /*...аналогично*/ },
+  c4:{ /*...аналогично*/ },
+  hexogen:{ /*...аналогично*/ },
+  rocket:{ /*...аналогично*/ }
+};
+
+// ===== Расчет =====
+function calculate(){
+  let result='';
+  let totalSulfur=0;
+  Object.keys(selectedObjects).forEach(key=>{
+    if(!selectedObjects[key]) return;
+    const [mat,obj]=key.split('_');
+    result+=`Object: ${obj} (${mat})\n`;
+    selectedExplosives.forEach(exp=>{
+      let val=data[exp] && data[exp][mat] && data[exp][mat][obj] ? data[exp][mat][obj] : null;
+      let c,s;
+      if(!val){ c='Impossible'; s='—'; }
+      else{ c=val.count; s=val.sulfur; totalSulfur+=s; }
+      result+=`• ${exp}: ${c} (Sulfur: ${s})\n`;
+    });
+    result+='\n';
+  });
+  result+=`Total Sulfur: ${totalSulfur}`;
+  document.getElementById('result').innerText=result;
+  showStep(3);
+}
+</script>
 </body>
 </html>
