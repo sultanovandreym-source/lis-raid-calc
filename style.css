@@ -1,9 +1,8 @@
 body {
-    font-family: Arial, sans-serif;
+    margin: 0;
     background: #121212;
     color: #fff;
-    margin: 0;
-    padding: 0;
+    font-family: Arial, sans-serif;
 }
 
 .container {
@@ -17,7 +16,7 @@ h1 {
 }
 
 .block {
-    margin-bottom: 15px;
+    margin-bottom: 12px;
 }
 
 label {
@@ -36,10 +35,10 @@ button {
     width: 100%;
     padding: 10px;
     margin-top: 10px;
-    background: #ff9800;
     border: none;
-    border-radius: 5px;
+    border-radius: 6px;
     font-size: 16px;
+    background: #ff9800;
     cursor: pointer;
 }
 
@@ -56,5 +55,5 @@ button.calc {
     margin-top: 15px;
     padding: 10px;
     background: #1e1e1e;
-    border-radius: 5px;
+    border-radius: 6px;
 }
