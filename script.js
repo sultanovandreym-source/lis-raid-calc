@@ -1,100 +1,91 @@
-// Элементы
-const explosiveSection = document.getElementById("explosive-section");
-const materialSection = document.getElementById("material-section");
-const targetSection = document.getElementById("target-section");
-const targetButtonsDiv = document.getElementById("target-buttons");
-const backToExplosive = document.getElementById("back-to-explosive");
-const backToMaterial = document.getElementById("back-to-material");
-const resultDiv = document.getElementById("result");
+const screen = document.getElementById("screen");
+const title = document.getElementById("title");
+const backBtn = document.getElementById("backBtn");
+const result = document.getElementById("result");
 
-let selectedExplosive = null;
-let selectedMaterial = null;
+let step = 0;
+let explosive = "";
+let material = "";
 
-// Данные для расчета (пример)
 const data = {
-    bababka: {
-        wood: {
-            "Деревянная дверь": { amount: 2, sulfur: 240 },
-            "Деревянная стена": { amount: 4, sulfur: 480 },
-            "Деревянный фундамент": { amount: 15, sulfur: 1800 }
-        },
-        stone: {
-            "Каменная дверь": { amount: 3, sulfur: 360 },
-            "Каменная стена": { amount: 10, sulfur: 1200 },
-            "Каменный фундамент": { amount: 40, sulfur: 4800 }
-        },
-        metal: {
-            "Металлическая дверь": { amount: 30, sulfur: 3600 },
-            "Металлическая стена": { amount: 100, sulfur: 12000 },
-            "Металлический фундамент": { amount: 400, sulfur: 48000 },
-            "Железная складная лестница": { amount: 46, sulfur: 5520 }
-        },
-        iron: {
-            "Дверь": { amount: 200, sulfur: 24000 },
-            "Стена": { amount: 667, sulfur: 80040 },
-            "Фундамент": { amount: 2667, sulfur: 320040 },
-            "Складная лестница": { amount: 275, sulfur: 33000 }
-        },
-        titan: {
-            "Дверь": { amount: 800, sulfur: 96000 },
-            "Стена": { amount: 2667, sulfur: 320040 },
-            "Складная лестница": { amount: 1112, sulfur: 133440 }
-        },
-        objects: {
-            "Устройство отслеживания стрельбы": { amount: 50, sulfur: 6000 },
-            "Устройство с автоматической винтовкой": { amount: 50, sulfur: 6000 },
-            "Автоматическая установка для картечи": { amount: 50, sulfur: 6000 },
-            "Торговый бот": { amount: 668, sulfur: 80160 },
-            "Электрическая турель": { amount: 50, sulfur: 6000 },
-            "Ракетная пусковая установка": { amount: 50, sulfur: 6000 }
-        }
+  babovka: {
+    name: "Бабовка",
+    icon: "💣",
+    wood: {
+      "Дверь": [2, 240],
+      "Стена": [4, 480],
+      "Фундамент": [15, 1800]
+    },
+    stone: {
+      "Дверь": [3, 360],
+      "Стена": [10, 1200],
+      "Фундамент": [40, 4800]
+    },
+    metal: {
+      "Дверь": [30, 3600],
+      "Стена": [100, 12000],
+      "Фундамент": [400, 48000]
     }
+  }
 };
 
-// Выбор взрывчатки
-explosiveSection.querySelectorAll("button[data-explosive]").forEach(btn => {
-    btn.addEventListener("click", () => {
-        selectedExplosive = btn.dataset.explosive;
-        explosiveSection.style.display = "none";
-        materialSection.style.display = "block";
-        resultDiv.innerHTML = "";
-    });
-});
+function showExplosives() {
+  step = 0;
+  title.textContent = "Выбери взрывчатку";
+  backBtn.classList.add("hidden");
+  result.classList.add("hidden");
+  screen.innerHTML = "";
 
-// Выбор материала
-materialSection.querySelectorAll("button[data-material]").forEach(btn => {
-    btn.addEventListener("click", () => {
-        selectedMaterial = btn.dataset.material;
-        materialSection.style.display = "none";
-        targetSection.style.display = "block";
+  for (let key in data) {
+    screen.innerHTML += `
+      <div class="card" onclick="selectExplosive('${key}')">
+        <div class="icon">${data[key].icon}</div>
+        ${data[key].name}
+      </div>`;
+  }
+}
 
-        // Генерируем кнопки для целей
-        targetButtonsDiv.innerHTML = "";
-        const targets = data[selectedExplosive][selectedMaterial];
-        for (let key in targets) {
-            const tBtn = document.createElement("button");
-            tBtn.textContent = key;
-            tBtn.addEventListener("click", () => {
-                const { amount, sulfur } = targets[key];
-                resultDiv.innerHTML = `
-                    Для разрушения <b>${key}</b> с помощью <b>${selectedExplosive}</b>:<br>
-                    Необходимо <b>${amount}</b> единиц взрывчатки<br>
-                    Потребуется <b>${sulfur}</b> серы
-                `;
-            });
-            targetButtonsDiv.appendChild(tBtn);
-        }
-    });
-});
+function selectExplosive(key) {
+  explosive = key;
+  step = 1;
+  title.textContent = "Что рейдим?";
+  backBtn.classList.remove("hidden");
+  screen.innerHTML = `
+    <div class="card" onclick="selectMaterial('wood')">🌲 Дерево</div>
+    <div class="card" onclick="selectMaterial('stone')">🪨 Камень</div>
+    <div class="card" onclick="selectMaterial('metal')">🔩 Металл</div>
+  `;
+}
 
-// Кнопки назад
-backToExplosive.addEventListener("click", () => {
-    materialSection.style.display = "none";
-    explosiveSection.style.display = "block";
-    resultDiv.innerHTML = "";
-});
-backToMaterial.addEventListener("click", () => {
-    targetSection.style.display = "none";
-    materialSection.style.display = "block";
-    resultDiv.innerHTML = "";
-});
+function selectMaterial(mat) {
+  material = mat;
+  step = 2;
+  title.textContent = "Выбери объект";
+  screen.innerHTML = "";
+
+  for (let obj in data[explosive][material]) {
+    screen.innerHTML += `
+      <div class="card" onclick="calculate('${obj}')">${obj}</div>`;
+  }
+}
+
+function calculate(obj) {
+  const [count, sulfur] = data[explosive][material][obj];
+  screen.innerHTML = "";
+  title.textContent = "Результат";
+  result.classList.remove("hidden");
+  result.innerHTML = `
+    <b>${data[explosive].name}</b><br><br>
+    Объект: ${obj}<br>
+    Взрывчатка: ${count}<br>
+    Сера: ${sulfur}
+  `;
+}
+
+backBtn.onclick = () => {
+  if (step === 1) showExplosives();
+  if (step === 2) selectExplosive(explosive);
+  if (step === 3) selectMaterial(material);
+};
+
+showExplosives();});
