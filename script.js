@@ -6,9 +6,8 @@ const resultDiv = document.getElementById('result');
 let selectedExplosive = '';
 let selectedObjectType = '';
 
-// Данные объектов (Бабовка как пример)
 const data = {
-  bababka: {
+  bobovka: {
     wood: {
       "Деревянная дверь": { bombs: 2, sulfur: 240 },
       "Деревянная стена": { bombs: 4, sulfur: 480 },
@@ -27,120 +26,152 @@ const data = {
       "Металлическая решетка": "Невозможно"
     },
     iron_cast: {
-      "Дверь": { bombs: 200, sulfur: 24000 },
-      "Стена": { bombs: 667, sulfur: 80040 },
-      "Фундамент": { bombs: 2667, sulfur: 320040 },
-      "Складная лестница": { bombs: 275, sulfur: 33000 },
-      "Решетка": "Невозможно"
+      "МВК дверь": { bombs: 200, sulfur: 24000 },
+      "МВК стена": { bombs: 667, sulfur: 80040 },
+      "МВК фундамент": { bombs: 2667, sulfur: 320040 },
+      "Стальная складная лестница": { bombs: 275, sulfur: 33000 },
+      "Стальная решетка": "Невозможно"
     },
     titan: {
-      "Дверь": { bombs: 800, sulfur: 96000 },
-      "Стена": { bombs: 2667, sulfur: 320040 },
-      "Фундамент": "Невозможно",
-      "Складная лестница": { bombs: 1112, sulfur: 133440 },
-      "Решетка": "Невозможно"
+      "Титановая дверь": { bombs: 800, sulfur: 96000 },
+      "Титановая стена": { bombs: 2667, sulfur: 320040 },
+      "Титановый фундамент": "Невозможно",
+      "Титановая складная лестница": { bombs: 1112, sulfur: 133440 },
+      "Титановая решетка": "Невозможно"
     },
     objects: {
       "Устройство отслеживания стрельбы": { bombs: 50, sulfur: 6000 },
-      "Устройство с автоматической винтовкой": { bombs: 50, sulfur: 6000 },
+      "Установка с автоматической винтовкой": { bombs: 50, sulfur: 6000 },
       "Автоматическая установка для картечи": { bombs: 50, sulfur: 6000 },
       "Торговый бот": { bombs: 668, sulfur: 80160 },
-      "Электрическая турель": { bombs: 50, sulfur: 6000 },
+      "Электромагнитная турель": { bombs: 50, sulfur: 6000 },
       "Ракетная пусковая установка": { bombs: 50, sulfur: 6000 }
+    }
+  },
+
+  dinamit: {
+    wood: {
+      "Деревянная дверь": { bombs: 1, sulfur: 500 },
+      "Деревянная стена": { bombs: 2, sulfur: 1000 },
+      "Деревянный фундамент": { bombs: 8, sulfur: 4000 }
+    },
+    stone: {
+      "Каменная дверь": { bombs: 2, sulfur: 1000 },
+      "Каменная стена": { bombs: 5, sulfur: 2500 },
+      "Каменный фундамент": { bombs: 20, sulfur: 10000 }
+    },
+    metal: {
+      "Железная дверь": { bombs: 4, sulfur: 2000 },
+      "Железная стена": { bombs: 13, sulfur: 6500 },
+      "Железный фундамент": { bombs: 50, sulfur: 25000 },
+      "Железная складная лестница": { bombs: 7, sulfur: 3500 },
+      "Железная решетка": "Невозможно"
+    },
+    iron_cast: {
+      "МВК дверь": { bombs: 20, sulfur: 10000 },
+      "МВК стена": { bombs: 67, sulfur: 33500 },
+      "МВК фундамент": { bombs: 267, sulfur: 133500 },
+      "Стальная складная лестница": { bombs: 28, sulfur: 14000 },
+      "Стальная решетка": "Невозможно"
+    },
+    titan: {
+      "Титановая дверь": { bombs: 80, sulfur: 40000 },
+      "Титановая стена": { bombs: 200, sulfur: 100000 },
+      "Титановый фундамент": { bombs: 800, sulfur: 800000 },
+      "Титановая складная лестница": { bombs: 112, sulfur: 56000 },
+      "Титановая решетка": "Невозможно"
+    },
+    objects: {
+      "Устройство отслеживания стрельбы": "Невозможно",
+      "Установка с автоматической винтовкой": { bombs: 7, sulfur: 3500 },
+      "Автоматическая установка для картечи": { bombs: 7, sulfur: 3500 },
+      "Торговый бот": { bombs: 68, sulfur: 34000 },
+      "Электромагнитная турель": { bombs: 7, sulfur: 3500 },
+      "Ракетная пусковая установка": { bombs: 7, sulfur: 3500 }
     }
   }
 };
 
-// Выбор взрывчатки
+// ---------- ЛОГИКА ----------
+
 document.querySelectorAll('#explosives button').forEach(btn => {
-  btn.addEventListener('click', () => {
+  btn.onclick = () => {
     selectedExplosive = btn.dataset.explosive;
     explosivesSection.style.display = 'none';
     objectTypeSection.style.display = 'block';
-  });
+  };
 });
 
-// Назад к выбору взрывчатки
-document.getElementById('back-to-explosive').addEventListener('click', () => {
+document.getElementById('back-to-explosive').onclick = () => {
   objectTypeSection.style.display = 'none';
   explosivesSection.style.display = 'block';
   resultDiv.innerHTML = '';
-});
+};
 
-// Выбор типа объекта
 document.querySelectorAll('#object-types button').forEach(btn => {
-  btn.addEventListener('click', () => {
+  btn.onclick = () => {
     selectedObjectType = btn.dataset.type;
     objectTypeSection.style.display = 'none';
     targetSection.style.display = 'block';
-    showTargets(selectedExplosive, selectedObjectType);
-  });
+    showTargets();
+  };
 });
 
-// Назад к выбору типа объекта
-document.getElementById('back-to-object-type').addEventListener('click', () => {
+document.getElementById('back-to-object-type').onclick = () => {
   targetSection.style.display = 'none';
   objectTypeSection.style.display = 'block';
   resultDiv.innerHTML = '';
-});
+};
 
-// Показ объектов и счетчик
-function showTargets(explosive, type) {
+function showTargets() {
   const targetsDiv = document.getElementById('targets');
   targetsDiv.innerHTML = '';
-  const items = data[explosive][type];
+  const items = data[selectedExplosive][selectedObjectType];
 
-  for (let key in items) {
+  for (let name in items) {
     const btn = document.createElement('button');
-    btn.textContent = key;
+    btn.textContent = name;
 
-    btn.addEventListener('click', () => {
-      const info = items[key];
-      if (typeof info === 'string') {
-        resultDiv.innerHTML = info;
-      } else {
-        // Добавляем счетчик
-        targetsDiv.innerHTML = `<h3>${key}</h3>`;
-        const counterDiv = document.createElement('div');
-        counterDiv.classList.add('counter');
-
-        const minusBtn = document.createElement('button');
-        minusBtn.textContent = "-";
-        const plusBtn = document.createElement('button');
-        plusBtn.textContent = "+";
-        const countSpan = document.createElement('span');
-        let count = 1;
-        countSpan.textContent = count;
-
-        minusBtn.addEventListener('click', () => {
-          if(count > 1) {
-            count--;
-            countSpan.textContent = count;
-            updateResult(info, count);
-          }
-        });
-        plusBtn.addEventListener('click', () => {
-          count++;
-          countSpan.textContent = count;
-          updateResult(info, count);
-        });
-
-        counterDiv.appendChild(minusBtn);
-        counterDiv.appendChild(countSpan);
-        counterDiv.appendChild(plusBtn);
-        targetsDiv.appendChild(counterDiv);
-
-        updateResult(info, count);
+    btn.onclick = () => {
+      const info = items[name];
+      if (info === "Невозможно") {
+        resultDiv.innerHTML = "❌ Невозможно разрушить выбранный объект данной взрывчаткой.";
+        return;
       }
-    });
+
+      let count = 1;
+      update(info, count);
+
+      targetsDiv.innerHTML = `
+        <h3>${name}</h3>
+        <div class="counter">
+          <button id="minus">−</button>
+          <span id="count">1</span>
+          <button id="plus">+</button>
+        </div>
+      `;
+
+      document.getElementById('minus').onclick = () => {
+        if (count > 1) count--;
+        document.getElementById('count').textContent = count;
+        update(info, count);
+      };
+
+      document.getElementById('plus').onclick = () => {
+        count++;
+        document.getElementById('count').textContent = count;
+        update(info, count);
+      };
+    };
 
     targetsDiv.appendChild(btn);
   }
 }
 
-// Функция для расчета по количеству
-function updateResult(info, count) {
-  const totalBombs = info.bombs * count;
-  const totalSulfur = info.sulfur * count;
-  resultDiv.innerHTML = `Нужно: ${totalBombs} Бабовок, ${totalSulfur} серы для ${count} штук`;
+function update(info, count) {
+  resultDiv.innerHTML = `
+    💣 Взрывчатка: <b>${info.bombs * count}</b><br>
+    🧪 Сера: <b>${info.sulfur * count}</b><br>
+    📦 Количество объектов: <b>${count}</b>
+  `;
 }
