@@ -37,35 +37,45 @@ function addObject() {
 function renderList() {
     const list = document.getElementById("list");
     list.innerHTML = "";
-    objects.forEach((o, i) => {
-        list.innerHTML += `${i + 1}. ${o.count} × ${o.object} (${o.material})<br>`;
-    });
+
+    for (let i = 0; i < objects.length; i++) {
+        const o = objects[i];
+        list.innerHTML += `${i + 1}) ${o.count} × ${o.object} (${o.material})<br>`;
+    }
 }
 
 function calculate() {
+    if (objects.length === 0) {
+        document.getElementById("result").innerHTML =
+            "❗ Добавь хотя бы один объект";
+        return;
+    }
+
     const explosiveKey = document.getElementById("explosive").value;
     const explosive = explosives[explosiveKey];
 
     let totalExplosives = 0;
     let totalSulfur = 0;
-    let text = "";
+    let output = "";
 
-    for (const o of objects) {
-        const value = explosive.data[o.material]?.[o.object];
-        if (!value) {
-            text += `❌ Нельзя разрушить (${o.object}, ${o.material})<br>`;
+    for (let o of objects) {
+        const materialData = explosive.data[o.material];
+        if (!materialData || materialData[o.object] === undefined) {
+            output += `❌ Нельзя разрушить ${o.object} (${o.material})<br>`;
             continue;
         }
-        const need = value * o.count;
+
+        const need = materialData[o.object] * o.count;
         totalExplosives += need;
         totalSulfur += need * explosive.sulfur;
-        text += `✔ ${o.count} × ${o.object}: ${need} ${explosive.name}<br>`;
+
+        output += `✔ ${o.count} × ${o.object}: ${need} ${explosive.name}<br>`;
     }
 
-    document.getElementById("result").innerHTML = `
-        ${text}<hr>
-        <b>Итого:</b><br>
-        Взрывчатка: ${totalExplosives}<br>
-        Сера: ${totalSulfur}
-    `;
+    document.getElementById("result").innerHTML =
+        output +
+        "<hr>" +
+        `<b>ИТОГО:</b><br>
+         Взрывчатка: ${totalExplosives}<br>
+         Сера: ${totalSulfur}`;
 }
