@@ -14,29 +14,21 @@ body {
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-h1 {
-  text-align: center;
-}
+h1 { text-align: center; }
 
-.step {
-  display: none;
-}
-
-.step.active {
-  display: block;
-}
+.step { display: none; }
+.step.active { display: block; }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  grid-template-columns: repeat(4, 1fr); /* 4 колонки */
+  grid-auto-rows: 120px;                 /* высота ячеек */
   gap: 10px;
   margin: 10px 0;
 }
 
 .exp, .mat {
-  padding: 0;
-  width: 120px;
-  height: 120px;
+  padding: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -52,17 +44,18 @@ h1 {
   width: 60px;
   height: 60px;
   object-fit: contain;
-  margin-bottom: 8px;
-}
-
-.exp span {
-  font-size: 14px;
+  margin-bottom: 5px;
 }
 
 .exp.active, .mat.active {
   background: #66f;
   color: #fff;
   font-weight: bold;
+}
+
+.exp.empty {
+  background: transparent;
+  cursor: default;
 }
 
 button {
@@ -76,9 +69,7 @@ button {
   transition: 0.2s;
 }
 
-button:hover {
-  background: #55c;
-}
+button:hover { background: #55c; }
 
 .objects .object-row {
   display: flex;
