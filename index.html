@@ -8,11 +8,10 @@
 </head>
 <body>
 <div class="container">
-
   <h1>Калькулятор LIOS</h1>
 
-  <!-- Шаг 1: Взрывчатка -->
-  <div class="step" id="step1">
+  <!-- Вкладка 1: Взрывчатка -->
+  <div class="step active" id="step1">
     <h2>Выберите взрывчатку</h2>
     <div class="cards">
       <div class="card" data-exp="bobovka"><img src="icons/bobovka.png" alt=""><span>Бобовка</span></div>
@@ -24,13 +23,13 @@
     <button onclick="nextStep(1)">Далее →</button>
   </div>
 
-  <!-- Шаг 2: Материалы -->
+  <!-- Вкладка 2: Материалы -->
   <div class="step" id="step2">
     <h2>Выберите материалы</h2>
     <div class="cards">
       <div class="card" data-mat="wood"><img src="icons/wood.png" alt=""><span>Дерево</span></div>
       <div class="card" data-mat="stone"><img src="icons/stone.png" alt=""><span>Камень</span></div>
-      <div class="card" data-mat="metal"><img src="icons/metal.png" alt=""><span>Железо</span></div>
+      <div class="card" data-mat="metal"><img src="icons/metal.png" alt=""><span>Металл</span></div>
       <div class="card" data-mat="steel"><img src="icons/steel.png" alt=""><span>Сталь</span></div>
       <div class="card" data-mat="titan"><img src="icons/titan.png" alt=""><span>Титан</span></div>
       <div class="card" data-mat="objects"><img src="icons/object.png" alt=""><span>Объекты</span></div>
@@ -39,17 +38,17 @@
     <button onclick="nextStep(2)">Далее →</button>
   </div>
 
-  <!-- Шаг 3: Объекты -->
+  <!-- Вкладка 3: Объекты -->
   <div class="step" id="step3">
-    <h2>Выберите объекты</h2>
+    <h2>Выберите объекты и количество</h2>
     <div id="objects" class="cards"></div>
     <button onclick="prevStep(1)">← Назад</button>
     <button onclick="calculate()">Рассчитать</button>
   </div>
 
-  <!-- Шаг 4: Результат -->
+  <!-- Вкладка 4: Результат -->
   <div class="step" id="step4">
-    <h2>Результат</h2>
+    <h2>Результат расчета</h2>
     <pre id="result"></pre>
     <button onclick="prevStep(2)">← Назад</button>
   </div>
