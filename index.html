@@ -10,43 +10,35 @@
   <div class="container">
     <h1>Калькулятор LIOS</h1>
 
-    <!-- Вкладка 1: Выбор взрывчатки -->
+    <!-- Шаг 1: Выбор взрывчатки -->
     <div class="step active" id="step1">
       <h2>Выберите взрывчатку</h2>
       <div class="grid">
         <div data-exp="bobovka" class="exp">
-          <img src="https://via.placeholder.com/60?text=B" alt="Бобовка">
-          Бобовка
+          <img src="images/bobovka.png" alt="Бобовка">
+          <span>Бобовка</span>
         </div>
         <div data-exp="dynamite" class="exp">
-          <img src="https://via.placeholder.com/60?text=D" alt="Динамит">
-          Динамит
+          <img src="images/dynamite.png" alt="Динамит">
+          <span>Динамит</span>
         </div>
         <div data-exp="c4" class="exp">
-          <img src="https://via.placeholder.com/60?text=C4" alt="C4">
-          C4
+          <img src="images/c4.png" alt="C4">
+          <span>C4</span>
         </div>
         <div data-exp="hexogen" class="exp">
-          <img src="https://via.placeholder.com/60?text=H" alt="Гексоген">
-          Гексоген
+          <img src="images/hexogen.png" alt="Гексоген">
+          <span>Гексоген</span>
         </div>
         <div data-exp="rocket" class="exp">
-          <img src="https://via.placeholder.com/60?text=R" alt="Ракета">
-          Ракета
+          <img src="images/rocket.png" alt="Ракета">
+          <span>Ракета</span>
         </div>
-        <!-- Пустые элементы, чтобы сетка была ровно 4x3 -->
-        <div class="exp empty"></div>
-        <div class="exp empty"></div>
-        <div class="exp empty"></div>
-        <div class="exp empty"></div>
-        <div class="exp empty"></div>
-        <div class="exp empty"></div>
-        <div class="exp empty"></div>
       </div>
       <button onclick="nextStep(1)">➡ Далее</button>
     </div>
 
-    <!-- Вкладка 2: Выбор материалов -->
+    <!-- Шаг 2: Выбор материалов -->
     <div class="step" id="step2">
       <h2>Выберите материалы</h2>
       <div class="grid">
@@ -61,7 +53,7 @@
       <button onclick="nextStep(2)">➡ Далее</button>
     </div>
 
-    <!-- Вкладка 3: Объекты и количество -->
+    <!-- Шаг 3: Объекты и количество -->
     <div class="step" id="step3">
       <h2>Выберите объекты и количество</h2>
       <div id="objects" class="objects"></div>
@@ -69,12 +61,13 @@
       <button onclick="calculate()">➡ Рассчитать</button>
     </div>
 
-    <!-- Вкладка 4: Результат -->
+    <!-- Шаг 4: Результат -->
     <div class="step" id="step4">
       <h2>Результат</h2>
       <pre id="result"></pre>
       <button onclick="prevStep(2)">⬅ Назад</button>
     </div>
+
   </div>
 
   <script src="script.js"></script>
