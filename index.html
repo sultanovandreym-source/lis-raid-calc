@@ -8,47 +8,69 @@
 </head>
 <body>
 
-<div class="app">
+<header>
+  <h1>Калькулятор рейдов LIOS</h1>
+</header>
+
+<main>
 
 <!-- ШАГ 1 -->
-<div class="screen active" id="step1">
-  <h2>Взрывчатка</h2>
-  <p>Можно выбрать или пропустить</p>
+<section class="screen active" id="step-explosive">
+  <h2>Выберите взрывчатку</h2>
   <div class="grid">
-    <div class="card" onclick="toggleExplosive('bobovka')">💣<br>Бобовка</div>
-    <div class="card" onclick="toggleExplosive('dinamit')">🧨<br>Динамит</div>
+    <div class="card" onclick="selectExplosive('bobovka', this)">
+      <img src="icons/bobovka.png">
+      <span>Бобовка</span>
+    </div>
+    <div class="card" onclick="selectExplosive('dinamit', this)">
+      <img src="icons/dinamit.png">
+      <span>Динамит</span>
+    </div>
   </div>
-  <button onclick="goTo(2)">Далее</button>
-</div>
+  <button onclick="nextStep('step-material')">Далее</button>
+</section>
 
 <!-- ШАГ 2 -->
-<div class="screen" id="step2">
-  <h2>Материалы</h2>
+<section class="screen" id="step-material">
+  <h2>Материал постройки</h2>
   <div class="grid">
-    <div class="card" onclick="toggleMaterial('wood')">🌲<br>Дерево</div>
-    <div class="card" onclick="toggleMaterial('stone')">🪨<br>Камень</div>
-    <div class="card" onclick="toggleMaterial('metal')">🔩<br>Металл</div>
-    <div class="card" onclick="toggleMaterial('iron')">🧱<br>МВК</div>
-    <div class="card" onclick="toggleMaterial('titan')">🛡<br>Титан</div>
+    <div class="card" onclick="toggleMaterial('wood', this)">
+      <img src="icons/wood.png"><span>Дерево</span>
+    </div>
+    <div class="card" onclick="toggleMaterial('stone', this)">
+      <img src="icons/stone.png"><span>Камень</span>
+    </div>
+    <div class="card" onclick="toggleMaterial('metal', this)">
+      <img src="icons/metal.png"><span>Металл</span>
+    </div>
+    <div class="card" onclick="toggleMaterial('mkv', this)">
+      <img src="icons/mkv.png"><span>Отлитое железо</span>
+    </div>
+    <div class="card" onclick="toggleMaterial('titan', this)">
+      <img src="icons/titan.png"><span>Титан</span>
+    </div>
+    <div class="card" onclick="toggleMaterial('objects', this)">
+      <img src="icons/objects.png"><span>Объекты</span>
+    </div>
   </div>
-  <button onclick="goTo(3)">Далее</button>
-</div>
+  <button onclick="nextStep('step-objects')">Далее</button>
+</section>
 
 <!-- ШАГ 3 -->
-<div class="screen" id="step3">
+<section class="screen" id="step-objects">
   <h2>Объекты</h2>
-  <div id="objects"></div>
+  <div id="objects-list"></div>
   <button onclick="calculate()">Рассчитать</button>
-</div>
+</section>
 
 <!-- РЕЗУЛЬТАТ -->
-<div class="screen" id="result">
+<section class="screen" id="step-result">
   <h2>Результат</h2>
-  <div id="output"></div>
+  <div id="result"></div>
   <button onclick="location.reload()">Начать заново</button>
-</div>
+</section>
 
-</div>
+</main>
 
 <script src="script.js"></script>
 </body>
