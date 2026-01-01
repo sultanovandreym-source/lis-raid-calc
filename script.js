@@ -6,7 +6,7 @@ const resultDiv = document.getElementById('result');
 let selectedExplosive = '';
 let selectedObjectType = '';
 
-// Объекты и их стоимость в Бабовках и сере
+// Данные объектов (Бабовка как пример)
 const data = {
   bababka: {
     wood: {
@@ -49,7 +49,6 @@ const data = {
       "Ракетная пусковая установка": { bombs: 50, sulfur: 6000 }
     }
   }
-  // Можно добавить другие виды взрывчатки
 };
 
 // Выбор взрывчатки
@@ -85,22 +84,63 @@ document.getElementById('back-to-object-type').addEventListener('click', () => {
   resultDiv.innerHTML = '';
 });
 
-// Показ объектов для выбранного типа
+// Показ объектов и счетчик
 function showTargets(explosive, type) {
   const targetsDiv = document.getElementById('targets');
   targetsDiv.innerHTML = '';
   const items = data[explosive][type];
+
   for (let key in items) {
     const btn = document.createElement('button');
     btn.textContent = key;
+
     btn.addEventListener('click', () => {
       const info = items[key];
-      if(typeof info === 'string'){
+      if (typeof info === 'string') {
         resultDiv.innerHTML = info;
       } else {
-        resultDiv.innerHTML = `${key}: ${info.bombs} Бабовок, ${info.sulfur} серы`;
+        // Добавляем счетчик
+        targetsDiv.innerHTML = `<h3>${key}</h3>`;
+        const counterDiv = document.createElement('div');
+        counterDiv.classList.add('counter');
+
+        const minusBtn = document.createElement('button');
+        minusBtn.textContent = "-";
+        const plusBtn = document.createElement('button');
+        plusBtn.textContent = "+";
+        const countSpan = document.createElement('span');
+        let count = 1;
+        countSpan.textContent = count;
+
+        minusBtn.addEventListener('click', () => {
+          if(count > 1) {
+            count--;
+            countSpan.textContent = count;
+            updateResult(info, count);
+          }
+        });
+        plusBtn.addEventListener('click', () => {
+          count++;
+          countSpan.textContent = count;
+          updateResult(info, count);
+        });
+
+        counterDiv.appendChild(minusBtn);
+        counterDiv.appendChild(countSpan);
+        counterDiv.appendChild(plusBtn);
+        targetsDiv.appendChild(counterDiv);
+
+        updateResult(info, count);
       }
     });
+
     targetsDiv.appendChild(btn);
   }
+}
+
+// Функция для расчета по количеству
+function updateResult(info, count) {
+  const totalBombs = info.bombs * count;
+  const totalSulfur = info.sulfur * count;
+  resultDiv.innerHTML = `Нужно: ${totalBombs} Бабовок, ${totalSulfur} серы для ${count} штук`;
 }
