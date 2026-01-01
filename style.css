@@ -25,7 +25,7 @@ h1, h2 { text-align: center; }
   gap: 12px;
 }
 
-.exp, .mat, .obj {
+.exp, .mat, .object-row {
   background: #2a2a2a;
   border-radius: 10px;
   height: 130px;
@@ -37,20 +37,50 @@ h1, h2 { text-align: center; }
   transition: 0.2s;
 }
 
-.exp img, .mat img, .obj img {
+.exp img, .mat img {
   width: 64px;
   height: 64px;
   object-fit: contain;
 }
 
-.exp span, .mat span, .obj span {
+.exp span, .mat span {
   margin-top: 6px;
   font-size: 14px;
   text-align: center;
 }
 
-.exp.active, .mat.active, .obj.active {
+.exp.active, .mat.active {
   background: #4a6cff;
+}
+
+.objects .object-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #333;
+  background: #2a2a2a;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+
+.object-row img {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+.counter button {
+  padding: 5px 10px;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+pre {
+  background: #222;
+  padding: 15px;
+  border-radius: 8px;
+  overflow: auto;
 }
 
 button {
@@ -63,12 +93,15 @@ button {
   cursor: pointer;
 }
 
+button:hover {
+  background: #3560c2;
+}
+
 /* Адаптация под телефон */
 @media (max-width: 600px) {
   .grid {
     grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
   }
-  .exp, .mat, .obj { height: 100px; }
-  .exp img, .mat img, .obj img { width: 50px; height: 50px; }
-  .exp span, .mat span, .obj span { font-size: 12px; }
+  .exp, .mat, .object-row { height: 100px; }
+  .exp img, .mat img { width: 50px; height: 50px; }
 }
