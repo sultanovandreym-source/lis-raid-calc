@@ -1,6 +1,6 @@
 body {
   font-family: Arial, sans-serif;
-  background: #222;
+  background: #111;
   color: #fff;
   margin: 0;
   padding: 0;
@@ -10,98 +10,65 @@ body {
   max-width: 900px;
   margin: 20px auto;
   padding: 20px;
-  background: #333;
+  background: #1e1e1e;
   border-radius: 10px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.5);
 }
 
-h1, h2 {
-  text-align: center;
-}
+h1, h2 { text-align: center; }
 
 .step { display: none; }
 .step.active { display: block; }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 15px;
-  margin: 15px 0;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 12px;
 }
 
-.exp, .mat, .object-row {
-  background: #555;
-  border-radius: 8px;
-  cursor: pointer;
+.exp, .mat, .obj {
+  background: #2a2a2a;
+  border-radius: 10px;
+  height: 130px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
   transition: 0.2s;
-  height: 120px;
+}
+
+.exp img, .mat img, .obj img {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+}
+
+.exp span, .mat span, .obj span {
+  margin-top: 6px;
+  font-size: 14px;
   text-align: center;
 }
 
-.exp img, .mat img, .object-row img {
-  width: 80px;
-  height: 80px;
-  object-fit: contain;
-  margin-bottom: 5px;
-}
-
-.exp.active, .mat.active, .object-row.active {
-  background: #66f;
-  color: #fff;
-  font-weight: bold;
+.exp.active, .mat.active, .obj.active {
+  background: #4a6cff;
 }
 
 button {
-  padding: 10px 20px;
-  margin: 10px 5px;
-  cursor: pointer;
+  background: #4a6cff;
+  color: white;
   border: none;
-  background: #66f;
-  color: #fff;
-  border-radius: 5px;
-  transition: 0.2s;
-}
-
-button:hover { background: #55c; }
-
-.objects .object-row {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.counter {
-  display: flex;
-  justify-content: center;
-  margin-top: 5px;
-}
-
-.counter button {
-  padding: 5px 10px;
-  margin: 0 5px;
+  padding: 10px 20px;
+  margin: 10px;
+  border-radius: 6px;
   cursor: pointer;
 }
 
-pre {
-  background: #111;
-  padding: 15px;
-  border-radius: 5px;
-  overflow: auto;
-  color: #0f0;
-}
-
-/* Адаптивность */
-@media(max-width: 600px){
-  .exp, .mat, .object-row {
-    height: 100px;
+/* Адаптация под телефон */
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
   }
-  .exp img, .mat img, .object-row img {
-    width: 60px;
-    height: 60px;
-  }
+  .exp, .mat, .obj { height: 100px; }
+  .exp img, .mat img, .obj img { width: 50px; height: 50px; }
+  .exp span, .mat span, .obj span { font-size: 12px; }
 }
