@@ -5,6 +5,7 @@ const resultDiv = document.getElementById('result');
 
 let selectedExplosive = '';
 let selectedObjectType = '';
+let selectedItems = [];
 
 const data = {
   bobovka: {
@@ -29,23 +30,16 @@ const data = {
       "МВК дверь": { bombs: 200, sulfur: 24000 },
       "МВК стена": { bombs: 667, sulfur: 80040 },
       "МВК фундамент": { bombs: 2667, sulfur: 320040 },
-      "Стальная складная лестница": { bombs: 275, sulfur: 33000 },
       "Стальная решетка": "Невозможно"
     },
     titan: {
       "Титановая дверь": { bombs: 800, sulfur: 96000 },
       "Титановая стена": { bombs: 2667, sulfur: 320040 },
-      "Титановый фундамент": "Невозможно",
-      "Титановая складная лестница": { bombs: 1112, sulfur: 133440 },
-      "Титановая решетка": "Невозможно"
+      "Титановый фундамент": "Невозможно"
     },
     objects: {
-      "Устройство отслеживания стрельбы": { bombs: 50, sulfur: 6000 },
-      "Установка с автоматической винтовкой": { bombs: 50, sulfur: 6000 },
-      "Автоматическая установка для картечи": { bombs: 50, sulfur: 6000 },
-      "Торговый бот": { bombs: 668, sulfur: 80160 },
       "Электромагнитная турель": { bombs: 50, sulfur: 6000 },
-      "Ракетная пусковая установка": { bombs: 50, sulfur: 6000 }
+      "Торговый бот": { bombs: 668, sulfur: 80160 }
     }
   },
 
@@ -71,43 +65,35 @@ const data = {
       "МВК дверь": { bombs: 20, sulfur: 10000 },
       "МВК стена": { bombs: 67, sulfur: 33500 },
       "МВК фундамент": { bombs: 267, sulfur: 133500 },
-      "Стальная складная лестница": { bombs: 28, sulfur: 14000 },
       "Стальная решетка": "Невозможно"
     },
     titan: {
       "Титановая дверь": { bombs: 80, sulfur: 40000 },
       "Титановая стена": { bombs: 200, sulfur: 100000 },
       "Титановый фундамент": { bombs: 800, sulfur: 800000 },
-      "Титановая складная лестница": { bombs: 112, sulfur: 56000 },
       "Титановая решетка": "Невозможно"
     },
     objects: {
-      "Устройство отслеживания стрельбы": "Невозможно",
       "Установка с автоматической винтовкой": { bombs: 7, sulfur: 3500 },
       "Автоматическая установка для картечи": { bombs: 7, sulfur: 3500 },
       "Торговый бот": { bombs: 68, sulfur: 34000 },
-      "Электромагнитная турель": { bombs: 7, sulfur: 3500 },
-      "Ракетная пусковая установка": { bombs: 7, sulfur: 3500 }
+      "Электромагнитная турель": { bombs: 7, sulfur: 3500 }
     }
   }
 };
 
-// ---------- ЛОГИКА ----------
-
+// ---------- ВЫБОР ВЗРЫВЧАТКИ ----------
 document.querySelectorAll('#explosives button').forEach(btn => {
   btn.onclick = () => {
     selectedExplosive = btn.dataset.explosive;
     explosivesSection.style.display = 'none';
     objectTypeSection.style.display = 'block';
+    selectedItems = [];
+    resultDiv.innerHTML = '';
   };
 });
 
-document.getElementById('back-to-explosive').onclick = () => {
-  objectTypeSection.style.display = 'none';
-  explosivesSection.style.display = 'block';
-  resultDiv.innerHTML = '';
-};
-
+// ---------- ВЫБОР ТИПА ----------
 document.querySelectorAll('#object-types button').forEach(btn => {
   btn.onclick = () => {
     selectedObjectType = btn.dataset.type;
@@ -117,12 +103,7 @@ document.querySelectorAll('#object-types button').forEach(btn => {
   };
 });
 
-document.getElementById('back-to-object-type').onclick = () => {
-  targetSection.style.display = 'none';
-  objectTypeSection.style.display = 'block';
-  resultDiv.innerHTML = '';
-};
-
+// ---------- СПИСОК ОБЪЕКТОВ ----------
 function showTargets() {
   const targetsDiv = document.getElementById('targets');
   targetsDiv.innerHTML = '';
@@ -131,47 +112,77 @@ function showTargets() {
   for (let name in items) {
     const btn = document.createElement('button');
     btn.textContent = name;
-
-    btn.onclick = () => {
-      const info = items[name];
-      if (info === "Невозможно") {
-        resultDiv.innerHTML = "❌ Невозможно разрушить выбранный объект данной взрывчаткой.";
-        return;
-      }
-
-      let count = 1;
-      update(info, count);
-
-      targetsDiv.innerHTML = `
-        <h3>${name}</h3>
-        <div class="counter">
-          <button id="minus">−</button>
-          <span id="count">1</span>
-          <button id="plus">+</button>
-        </div>
-      `;
-
-      document.getElementById('minus').onclick = () => {
-        if (count > 1) count--;
-        document.getElementById('count').textContent = count;
-        update(info, count);
-      };
-
-      document.getElementById('plus').onclick = () => {
-        count++;
-        document.getElementById('count').textContent = count;
-        update(info, count);
-      };
-    };
-
+    btn.onclick = () => addItem(name, items[name]);
     targetsDiv.appendChild(btn);
   }
 }
 
-function update(info, count) {
-  resultDiv.innerHTML = `
-    💣 Взрывчатка: <b>${info.bombs * count}</b><br>
-    🧪 Сера: <b>${info.sulfur * count}</b><br>
-    📦 Количество объектов: <b>${count}</b>
+// ---------- ДОБАВЛЕНИЕ В РАСЧЁТ ----------
+function addItem(name, info) {
+  if (info === "Невозможно") {
+    alert("❌ Невозможно разрушить этим типом взрывчатки");
+    return;
+  }
+
+  const existing = selectedItems.find(i => i.name === name);
+  if (existing) {
+    existing.count++;
+  } else {
+    selectedItems.push({
+      name,
+      bombs: info.bombs,
+      sulfur: info.sulfur,
+      count: 1
+    });
+  }
+
+  renderResult();
+}
+
+// ---------- ОТРИСОВКА ----------
+function renderResult() {
+  let totalBombs = 0;
+  let totalSulfur = 0;
+
+  resultDiv.innerHTML = `<h3>Расчёт рейда</h3>`;
+
+  selectedItems.forEach((item, index) => {
+    const bombs = item.bombs * item.count;
+    const sulfur = item.sulfur * item.count;
+
+    totalBombs += bombs;
+    totalSulfur += sulfur;
+
+    resultDiv.innerHTML += `
+      <div class="raid-item">
+        <b>${item.name}</b><br>
+        💣 ${bombs} | 🧪 ${sulfur}<br>
+        <button onclick="changeCount(${index}, -1)">−</button>
+        ${item.count}
+        <button onclick="changeCount(${index}, 1)">+</button>
+      </div>
+      <hr>
+    `;
+  });
+
+  resultDiv.innerHTML += `
+    <h3>ИТОГО</h3>
+    💣 Всего взрывчатки: <b>${totalBombs}</b><br>
+    🧪 Всего серы: <b>${totalSulfur}</b><br><br>
+    <button onclick="clearAll()">Очистить расчёт</button>
   `;
+}
+
+// ---------- ИЗМЕНЕНИЕ КОЛИЧЕСТВА ----------
+function changeCount(index, delta) {
+  selectedItems[index].count += delta;
+  if (selectedItems[index].count <= 0) {
+    selectedItems.splice(index, 1);
+  }
+  renderResult();
+}
+
+function clearAll() {
+  selectedItems = [];
+  resultDiv.innerHTML = '';
 }
