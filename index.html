@@ -1,60 +1,59 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Калькулятор LIOS</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Калькулятор LIOS</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="container">
+    <h1>Калькулятор LIOS</h1>
 
-<div class="container">
-  <h1>Калькулятор LIOS</h1>
-
-  <!-- STEP 1: Взрывчатка -->
-  <div class="step active" id="step1">
-    <h2>Выберите взрывчатку</h2>
-    <div class="grid">
-      <div class="exp" data-exp="bobovka"><img src="img/bobovka.png"><span>Бобовка</span></div>
-      <div class="exp" data-exp="dynamite"><img src="img/dynamite.png"><span>Динамит</span></div>
-      <div class="exp" data-exp="c4"><img src="img/c4.png"><span>C4</span></div>
-      <div class="exp" data-exp="hexogen"><img src="img/hexogen.png"><span>Гексоген</span></div>
-      <div class="exp" data-exp="rocket"><img src="img/rocket.png"><span>Ракета</span></div>
+    <!-- Взрывчатка -->
+    <div class="step active" id="step1">
+      <h2>Выберите взрывчатку</h2>
+      <div class="grid">
+        <div data-exp="bobovka" class="exp"><img src="img/bobovka.png" alt="Бобовка"><span>Бобовка</span></div>
+        <div data-exp="dynamite" class="exp"><img src="img/dynamite.png" alt="Динамит"><span>Динамит</span></div>
+        <div data-exp="c4" class="exp"><img src="img/c4.png" alt="C4"><span>C4</span></div>
+        <div data-exp="hexogen" class="exp"><img src="img/hexogen.png" alt="Гексоген"><span>Гексоген</span></div>
+        <div data-exp="rocket" class="exp"><img src="img/rocket.png" alt="Ракета"><span>Ракета</span></div>
+      </div>
+      <button onclick="nextStep(1)">➡ Далее</button>
     </div>
-    <button onclick="nextStep(1)">Далее</button>
-  </div>
 
-  <!-- STEP 2: Материалы -->
-  <div class="step" id="step2">
-    <h2>Выберите материалы</h2>
-    <div class="grid">
-      <div class="mat" data-mat="wood"><img src="img/wood.png"><span>Дерево</span></div>
-      <div class="mat" data-mat="stone"><img src="img/stone.png"><span>Камень</span></div>
-      <div class="mat" data-mat="metal"><img src="img/metal.png"><span>Железо</span></div>
-      <div class="mat" data-mat="steel"><img src="img/steel.png"><span>Сталь</span></div>
-      <div class="mat" data-mat="titan"><img src="img/titan.png"><span>Титан</span></div>
-      <div class="mat" data-mat="objects"><img src="img/objects.png"><span>Объекты</span></div>
+    <!-- Материалы -->
+    <div class="step" id="step2">
+      <h2>Выберите материалы</h2>
+      <div class="grid">
+        <div data-mat="wood" class="mat"><img src="img/wood.png" alt="Дерево"><span>Дерево</span></div>
+        <div data-mat="stone" class="mat"><img src="img/stone.png" alt="Камень"><span>Камень</span></div>
+        <div data-mat="metal" class="mat"><img src="img/metal.png" alt="Железо"><span>Железо</span></div>
+        <div data-mat="steel" class="mat"><img src="img/steel.png" alt="Сталь"><span>Сталь</span></div>
+        <div data-mat="titan" class="mat"><img src="img/titan.png" alt="Титан"><span>Титан</span></div>
+        <div data-mat="objects" class="mat"><img src="img/objects.png" alt="Объекты"><span>Объекты</span></div>
+      </div>
+      <button onclick="prevStep(0)">⬅ Назад</button>
+      <button onclick="nextStep(2)">➡ Далее</button>
     </div>
-    <button onclick="prevStep(0)">Назад</button>
-    <button onclick="nextStep(2)">Далее</button>
+
+    <!-- Объекты -->
+    <div class="step" id="step3">
+      <h2>Выберите объекты и количество</h2>
+      <div id="objects" class="objects"></div>
+      <button onclick="prevStep(1)">⬅ Назад</button>
+      <button onclick="calculate()">➡ Рассчитать</button>
+    </div>
+
+    <!-- Результат -->
+    <div class="step" id="step4">
+      <h2>Результат</h2>
+      <pre id="result"></pre>
+      <button onclick="prevStep(2)">⬅ Назад</button>
+    </div>
   </div>
 
-  <!-- STEP 3: Объекты с количеством -->
-  <div class="step" id="step3">
-    <h2>Выберите объекты и количество</h2>
-    <div id="objects" class="objects"></div>
-    <button onclick="prevStep(1)">Назад</button>
-    <button onclick="calculate()">Рассчитать</button>
-  </div>
-
-  <!-- STEP 4: Результат -->
-  <div class="step" id="step4">
-    <h2>Результат</h2>
-    <pre id="result"></pre>
-    <button onclick="prevStep(2)">Назад</button>
-  </div>
-</div>
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
