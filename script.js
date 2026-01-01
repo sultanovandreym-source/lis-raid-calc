@@ -18,7 +18,7 @@ function nextStep(n) {
 
 function prevStep(n) { showStep(n); }
 
-// ===== Выбор взрывчатки =====
+// Выбор взрывчатки
 document.querySelectorAll('[data-exp]').forEach(el=>{
   el.onclick = () => {
     el.classList.toggle('active');
@@ -27,7 +27,7 @@ document.querySelectorAll('[data-exp]').forEach(el=>{
   }
 });
 
-// ===== Выбор материалов =====
+// Выбор материалов
 document.querySelectorAll('[data-mat]').forEach(el=>{
   el.onclick = () => {
     el.classList.toggle('active');
@@ -60,11 +60,10 @@ const objectNames = {
   rocket_launcher:'Ракетная пусковая установка'
 };
 
-// ===== Загрузка объектов для 3-й вкладки =====
+// ===== Загрузка объектов 3 вкладка =====
 function loadObjects() {
   objectsDiv.innerHTML = '';
   selectedObjects = {};
-
   selectedMaterials.forEach(mat=>{
     objectsByMaterial[mat].forEach(obj=>{
       const key = `${mat}_${obj}`;
@@ -98,7 +97,7 @@ function changeObjectCount(key, val) {
 
 // ===== Данные взрывчатки =====
 const data = {
-  bobovka: { wood:{door:{count:2,sulfur:240}, wall:{count:4,sulfur:480}, foundation:{count:15,sulfur:1800}}, /* … остальные */ },
+  bobovka: { wood:{door:{count:2,sulfur:240}, wall:{count:4,sulfur:480}, foundation:{count:15,sulfur:1800}} },
   dynamite: { /* данные */ },
   c4: { /* данные */ },
   hexogen: { /* данные */ },
