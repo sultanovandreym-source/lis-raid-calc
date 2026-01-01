@@ -12,7 +12,7 @@ body {
   background: #1e1e1e;
   color: #fff;
   border-radius: 10px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);
 }
 
 h1 { text-align: center; }
@@ -23,34 +23,33 @@ h1 { text-align: center; }
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  grid-auto-rows: 120px;
-  gap: 15px;
+  gap: 10px;
   margin: 15px 0;
 }
 
-.exp, .mat, .object {
+.exp, .mat, .object-item {
   background: #333;
-  border-radius: 10px;
+  border-radius: 8px;
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  text-align: center;
+  justify-content: center;
+  padding: 10px;
   transition: 0.2s;
-  height: 120px;
+  height: 120px;  /* 1:1 примерно квадрат */
+  text-align: center;
 }
 
-.exp img, .mat img, .object img {
+.exp img, .mat img, .object-item img {
   width: 80px;
   height: 80px;
   object-fit: contain;
   margin-bottom: 5px;
 }
 
-.exp.active, .mat.active, .object.active {
+.exp.active, .mat.active, .object-item.active {
   background: #66f;
-  color: #fff;
   font-weight: bold;
 }
 
@@ -67,11 +66,12 @@ button {
 
 button:hover { background: #55c; }
 
-.grid .counter {
+.objects .object-row {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  margin-top: 5px;
+  padding: 5px 0;
+  border-bottom: 1px solid #444;
 }
 
 .counter button {
@@ -81,16 +81,15 @@ button:hover { background: #55c; }
 }
 
 pre {
-  background: #2e2e2e;
+  background: #222;
   padding: 10px;
   border-radius: 5px;
   overflow: auto;
   color: #fff;
 }
 
+/* Адаптив */
 @media (max-width: 600px) {
-  .exp img, .mat img, .object img {
-    width: 60px;
-    height: 60px;
-  }
+  .exp img, .mat img, .object-item img { width: 60px; height: 60px; }
+  .exp, .mat, .object-item { height: 100px; }
 }
