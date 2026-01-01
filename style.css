@@ -1,83 +1,62 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #1e1e1e;
-    color: #f0f0f0;
     margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
+    font-family: Arial, sans-serif;
+    background: #0b0f14;
+    color: #fff;
 }
 
 .container {
-    width: 95%;
-    max-width: 600px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #2e2e2e;
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    max-width: 480px;
+    margin: auto;
+    padding: 15px;
 }
 
-h1, h2 {
+h1 {
     text-align: center;
+    margin-bottom: 15px;
 }
 
-.section {
-    margin-top: 20px;
+.block {
+    margin-bottom: 10px;
 }
 
-.icon-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
+label {
+    display: block;
+    margin-bottom: 4px;
+    color: #cbd5e1;
 }
 
-.icon-buttons button {
-    background-color: #444;
-    border: none;
-    color: #f0f0f0;
-    padding: 15px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 14px;
-    flex: 1 0 28%;
-    min-width: 100px;
-    transition: all 0.2s;
-}
-
-.icon-buttons button:hover {
-    background-color: #666;
-}
-
-.back-btn {
-    background-color: #888;
-    margin-top: 10px;
-}
-
-.back-btn:hover {
-    background-color: #aaa;
-}
-
-#result {
-    margin-top: 20px;
-    text-align: center;
-    font-size: 16px;
+select, input {
+    width: 100%;
     padding: 10px;
-    background-color: #333;
-    border-radius: 8px;
+    background: #1f2937;
+    border: 1px solid #374151;
+    color: #fff;
+    border-radius: 6px;
 }
 
-/* Счетчик количества */
-.counter {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    background: #2563eb;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 16px;
+}
+
+.raid {
+    background: #1f2937;
+    padding: 10px;
+    border-radius: 8px;
     margin-top: 10px;
 }
 
-.counter button {
-    padding: 5px 10px;
-    font-size: 16px;
+.total {
+    margin-top: 15px;
+    padding: 10px;
+    background: #020617;
+    border-radius: 8px;
+    font-size: 18px;
 }
