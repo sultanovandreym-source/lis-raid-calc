@@ -1,59 +1,56 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Калькулятор LIOS</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Калькулятор LIOS</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="container">
-  <h1>Калькулятор LIOS</h1>
+  <div class="container">
+    <h1>Калькулятор LIOS</h1>
 
-  <!-- Вкладка 1: Взрывчатка -->
-  <div class="step active" id="step1">
-    <h2>Выберите взрывчатку</h2>
-    <div class="cards">
-      <div class="card" data-exp="bobovka"><img src="icons/bobovka.png" alt=""><span>Бобовка</span></div>
-      <div class="card" data-exp="dynamite"><img src="icons/dynamite.png" alt=""><span>Динамит</span></div>
-      <div class="card" data-exp="c4"><img src="icons/c4.png" alt=""><span>C4</span></div>
-      <div class="card" data-exp="hexogen"><img src="icons/hexogen.png" alt=""><span>Гексоген</span></div>
-      <div class="card" data-exp="rocket"><img src="icons/rocket.png" alt=""><span>Ракета</span></div>
+    <!-- Шаги -->
+    <div class="step active" id="step1">
+      <h2>Выберите взрывчатку</h2>
+      <div class="grid">
+        <div data-exp="bobovka" class="exp">Бобовка</div>
+        <div data-exp="dynamite" class="exp">Динамит</div>
+        <div data-exp="c4" class="exp">C4</div>
+        <div data-exp="hexogen" class="exp">Гексоген</div>
+        <div data-exp="rocket" class="exp">Ракета</div>
+      </div>
+      <button onclick="nextStep(1)">➡ Далее</button>
     </div>
-    <button onclick="nextStep(1)">Далее →</button>
-  </div>
 
-  <!-- Вкладка 2: Материалы -->
-  <div class="step" id="step2">
-    <h2>Выберите материалы</h2>
-    <div class="cards">
-      <div class="card" data-mat="wood"><img src="icons/wood.png" alt=""><span>Дерево</span></div>
-      <div class="card" data-mat="stone"><img src="icons/stone.png" alt=""><span>Камень</span></div>
-      <div class="card" data-mat="metal"><img src="icons/metal.png" alt=""><span>Металл</span></div>
-      <div class="card" data-mat="steel"><img src="icons/steel.png" alt=""><span>Сталь</span></div>
-      <div class="card" data-mat="titan"><img src="icons/titan.png" alt=""><span>Титан</span></div>
-      <div class="card" data-mat="objects"><img src="icons/object.png" alt=""><span>Объекты</span></div>
+    <div class="step" id="step2">
+      <h2>Выберите материалы</h2>
+      <div class="grid">
+        <div data-mat="wood" class="mat">Дерево</div>
+        <div data-mat="stone" class="mat">Камень</div>
+        <div data-mat="metal" class="mat">Железо</div>
+        <div data-mat="steel" class="mat">Сталь</div>
+        <div data-mat="titan" class="mat">Титан</div>
+        <div data-mat="objects" class="mat">Объекты</div>
+      </div>
+      <button onclick="prevStep(0)">⬅ Назад</button>
+      <button onclick="nextStep(2)">➡ Далее</button>
     </div>
-    <button onclick="prevStep(0)">← Назад</button>
-    <button onclick="nextStep(2)">Далее →</button>
+
+    <div class="step" id="step3">
+      <h2>Выберите объекты и количество</h2>
+      <div id="objects" class="objects"></div>
+      <button onclick="prevStep(1)">⬅ Назад</button>
+      <button onclick="calculate()">➡ Рассчитать</button>
+    </div>
+
+    <div class="step" id="step4">
+      <h2>Результат</h2>
+      <pre id="result"></pre>
+      <button onclick="prevStep(2)">⬅ Назад</button>
+    </div>
   </div>
 
-  <!-- Вкладка 3: Объекты -->
-  <div class="step" id="step3">
-    <h2>Выберите объекты и количество</h2>
-    <div id="objects" class="cards"></div>
-    <button onclick="prevStep(1)">← Назад</button>
-    <button onclick="calculate()">Рассчитать</button>
-  </div>
-
-  <!-- Вкладка 4: Результат -->
-  <div class="step" id="step4">
-    <h2>Результат расчета</h2>
-    <pre id="result"></pre>
-    <button onclick="prevStep(2)">← Назад</button>
-  </div>
-
-</div>
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
