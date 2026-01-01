@@ -1,56 +1,57 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Калькулятор LIOS</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Калькулятор LIOS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-  <div class="container">
+
+<div class="app">
+
     <h1>Калькулятор LIOS</h1>
 
-    <!-- Шаги -->
-    <div class="step active" id="step1">
-      <h2>Выберите взрывчатку</h2>
-      <div class="grid">
-        <div data-exp="bobovka" class="exp">Бобовка</div>
-        <div data-exp="dynamite" class="exp">Динамит</div>
-        <div data-exp="c4" class="exp">C4</div>
-        <div data-exp="hexogen" class="exp">Гексоген</div>
-        <div data-exp="rocket" class="exp">Ракета</div>
-      </div>
-      <button onclick="nextStep(1)">➡ Далее</button>
+    <!-- ВКЛАДКА 1 -->
+    <div class="tab active">
+
+        <h2>Выберите взрывчатку</h2>
+
+        <div class="grid">
+
+            <div class="card explosive" data-id="bobovka">
+                <img src="../Images/explosives/bobovka.png">
+                <span>Бобовка</span>
+            </div>
+
+            <div class="card explosive" data-id="dynamite">
+                <img src="../Images/explosives/dynamite.png">
+                <span>Динамит</span>
+            </div>
+
+            <div class="card explosive" data-id="c4">
+                <img src="../Images/explosives/c4.png">
+                <span>C4</span>
+            </div>
+
+            <div class="card explosive" data-id="hexogen">
+                <img src="../Images/explosives/hexogen.png">
+                <span>Гексоген</span>
+            </div>
+
+            <div class="card explosive" data-id="rocket">
+                <img src="../Images/explosives/rocket.png">
+                <span>Ракета</span>
+            </div>
+
+        </div>
+
+        <button id="nextBtn" disabled>➜ Далее</button>
+
     </div>
 
-    <div class="step" id="step2">
-      <h2>Выберите материалы</h2>
-      <div class="grid">
-        <div data-mat="wood" class="mat">Дерево</div>
-        <div data-mat="stone" class="mat">Камень</div>
-        <div data-mat="metal" class="mat">Железо</div>
-        <div data-mat="steel" class="mat">Сталь</div>
-        <div data-mat="titan" class="mat">Титан</div>
-        <div data-mat="objects" class="mat">Объекты</div>
-      </div>
-      <button onclick="prevStep(0)">⬅ Назад</button>
-      <button onclick="nextStep(2)">➡ Далее</button>
-    </div>
+</div>
 
-    <div class="step" id="step3">
-      <h2>Выберите объекты и количество</h2>
-      <div id="objects" class="objects"></div>
-      <button onclick="prevStep(1)">⬅ Назад</button>
-      <button onclick="calculate()">➡ Рассчитать</button>
-    </div>
-
-    <div class="step" id="step4">
-      <h2>Результат</h2>
-      <pre id="result"></pre>
-      <button onclick="prevStep(2)">⬅ Назад</button>
-    </div>
-  </div>
-
-  <script src="script.js"></script>
+<script src="../js/script.js"></script>
 </body>
 </html>
