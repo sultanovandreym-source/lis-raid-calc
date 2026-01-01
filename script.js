@@ -1,111 +1,81 @@
-let step=0;
-let selectedExplosives=[];
-let selectedMaterials=[];
-let selectedObjects={};
-
-const steps=document.querySelectorAll('.step');
-const objectsDiv=document.getElementById('objects');
-
-function showStep(n){
-  steps.forEach(s=>s.classList.remove('active'));
-  steps[n].classList.add('active');
+body {
+  font-family: Arial, sans-serif;
+  background: #f0f0f0;
+  margin: 0;
+  padding: 0;
 }
 
-function nextStep(n){
-  if(n===2) loadObjects();
-  showStep(n);
+.container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-function prevStep(n){
-  showStep(n);
+h1 { text-align: center; }
+
+.step { display: none; }
+.step.active { display: block; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 140px;
+  gap: 10px;
+  margin: 10px 0;
 }
 
-// ===== Выбор взрывчатки =====
-document.querySelectorAll('[data-exp]').forEach(el=>{
-  el.onclick=()=>{
-    el.classList.toggle('active');
-    const v=el.dataset.exp;
-    selectedExplosives.includes(v)?selectedExplosives=selectedExplosives.filter(x=>x!==v):selectedExplosives.push(v);
-  }
-});
-
-// ===== Выбор материалов =====
-document.querySelectorAll('[data-mat]').forEach(el=>{
-  el.onclick=()=>{
-    el.classList.toggle('active');
-    const v=el.dataset.mat;
-    selectedMaterials.includes(v)?selectedMaterials=selectedMaterials.filter(x=>x!==v):selectedMaterials.push(v);
-  }
-});
-
-// ===== Объекты по материалу =====
-const objectsByMaterial={
-  wood:['Дверь','Стена','Фундамент'],
-  stone:['Дверь','Стена','Фундамент'],
-  metal:['Дверь','Стена','Фундамент','Складная лестница','Решетка'],
-  steel:['Дверь','Стена','Фундамент','Складная лестница','Решетка'],
-  titan:['Дверь','Стена','Фундамент','Складная лестница','Решетка'],
-  objects:['Устройство отслеживания стрельбы','Установка с автоматической винтовкой','Автоматическая установка для картечи','Торговый бот','Электромагнитная турель','Ракетная пусковая установка']
-};
-
-function loadObjects(){
-  objectsDiv.innerHTML='';
-  selectedObjects={};
-  selectedMaterials.forEach(mat=>{
-    objectsByMaterial[mat].forEach(o=>{
-      const key = `${mat}_${o}`;
-      if(objectsDiv.querySelector(`[data-obj='${key}']`)) return;
-      const div=document.createElement('div');
-      div.className='object-row';
-      div.dataset.obj=key;
-      div.innerHTML=`<span>${mat} ${o}</span>
-        <div class="counter">
-          <button onclick="changeObjectCount('${key}',-1)">-</button>
-          <span id="count-${key}">0</span>
-          <button onclick="changeObjectCount('${key}',1)">+</button>
-        </div>`;
-      objectsDiv.appendChild(div);
-      selectedObjects[key]=0;
-    });
-  });
+.exp, .mat, .object-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #eee;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  transition: 0.2s;
+  height: 140px;
 }
 
-function changeObjectCount(obj,v){
-  selectedObjects[obj]=Math.max(0,(selectedObjects[obj]||0)+v);
-  document.getElementById(`count-${obj}`).innerText=selectedObjects[obj];
+.exp img, .mat img, .object-row img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  margin-bottom: 5px;
 }
 
-// ===== Данные взрывчатки =====
-const data={
-  bobovka:{ wood:{'Дверь':{count:2,sulfur:240},'Стена':{count:4,sulfur:480},'Фундамент':{count:15,sulfur:1800}}, /* остальные материалы */ },
-  dynamite:{ /* данные */ },
-  c4:{ /* данные */ },
-  hexogen:{ /* данные */ },
-  rocket:{ /* данные */ }
-};
+.exp.active, .mat.active {
+  background: #66f;
+  color: #fff;
+  font-weight: bold;
+}
 
-// ===== Расчет =====
-function calculate(){
-  let result='';
-  let totalSulfur=0;
-  Object.keys(selectedObjects).forEach(key=>{
-    const qty=selectedObjects[key];
-    if(qty===0) return;
-    const [mat,obj]=key.split('_');
-    result+=`Объект: ${obj} (${mat})\nКоличество: ${qty}\n`;
-    selectedExplosives.forEach(exp=>{
-      let val=null;
-      if(data[exp] && data[exp][mat] && data[exp][mat][obj]){
-        val=data[exp][mat][obj];
-      }
-      let c,s;
-      if(!val){c='Невозможно'; s='—';}
-      else{c=val.count*qty; s=val.sulfur*qty; totalSulfur+=s;}
-      result+=`• ${exp}: ${c} (Сера: ${s})\n`;
-    });
-    result+='\n';
-  });
-  result+=`Общее количество серы: ${totalSulfur}`;
-  document.getElementById('result').innerText=result;
-  showStep(3);
+button {
+  padding: 10px 20px;
+  margin: 10px 5px;
+  cursor: pointer;
+  border: none;
+  background: #66f;
+  color: #fff;
+  border-radius: 5px;
+  transition: 0.2s;
+}
+
+button:hover { background: #55c; }
+
+.objects .counter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+pre {
+  background: #f4f4f4;
+  padding: 10px;
+  border-radius: 5px;
+  overflow: auto;
 }
