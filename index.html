@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Калькулятор LIOS</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Калькулятор LIOS</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -39,18 +39,18 @@
     <button onclick="nextStep(2)">Далее</button>
   </div>
 
-  <!-- STEP 3: Объекты -->
+  <!-- STEP 3: Объекты с количеством -->
   <div class="step" id="step3">
-    <h2>Выберите объекты</h2>
-    <div class="grid" id="objectsGrid"></div>
+    <h2>Выберите объекты и количество</h2>
+    <div id="objects" class="objects"></div>
     <button onclick="prevStep(1)">Назад</button>
-    <button onclick="nextStep(3)">Рассчитать</button>
+    <button onclick="calculate()">Рассчитать</button>
   </div>
 
   <!-- STEP 4: Результат -->
   <div class="step" id="step4">
     <h2>Результат</h2>
-    <pre id="result">Готово</pre>
+    <pre id="result"></pre>
     <button onclick="prevStep(2)">Назад</button>
   </div>
 </div>
