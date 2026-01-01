@@ -1,110 +1,71 @@
-let selectedExplosives = [];
-let selectedMaterials = [];
-
-const screens = document.querySelectorAll('.screen');
-const objectsDiv = document.getElementById('objects');
-const outputDiv = document.getElementById('output');
-
-/* ОБЪЕКТЫ ПО МАТЕРИАЛАМ */
-const objectsByMaterial = {
-  wood: ["Дверь", "Стена", "Фундамент"],
-  stone: ["Дверь", "Стена", "Фундамент"],
-  metal: ["Дверь", "Стена"],
-  iron: ["Дверь", "Стена"],
-  titan: ["Дверь"]
+const explosives = {
+    bobovka: {
+        name: "Бобовка",
+        sulfur: 120,
+        data: {
+            wood: { door: 2, wall: 4, foundation: 15 },
+            stone: { door: 3, wall: 10, foundation: 40 },
+            metal: { door: 30, wall: 100, foundation: 400, ladder: 46 },
+            mvp: { door: 200, wall: 667, foundation: 2667, ladder: 275 },
+            titan: { door: 800, wall: 2667, ladder: 1112 }
+        }
+    },
+    dynamite: {
+        name: "Динамит",
+        sulfur: 500,
+        data: {
+            wood: { door: 1, wall: 2, foundation: 8 },
+            stone: { door: 2, wall: 5, foundation: 20 },
+            metal: { door: 4, wall: 13, foundation: 50, ladder: 7 },
+            mvp: { door: 20, wall: 67, foundation: 267, ladder: 28 },
+            titan: { door: 80, wall: 200, foundation: 800, ladder: 112 }
+        }
+    }
 };
 
-/* СТОИМОСТЬ (БАЗА, МОЖНО РАСШИРЯТЬ) */
-const costs = {
-  bobovka: {
-    stone: {
-      "Стена": { b: 10, s: 1200 }
-    }
-  },
-  dinamit: {
-    metal: {
-      "Стена": { b: 13, s: 6500 }
-    }
-  }
-};
+let objects = [];
 
-function goTo(step) {
-  screens.forEach(s => s.classList.remove('active'));
-  document.getElementById(step === 4 ? 'result' : 'step' + step).classList.add('active');
-  if (step === 3) loadObjects();
+function addObject() {
+    const material = document.getElementById("material").value;
+    const object = document.getElementById("object").value;
+    const count = parseInt(document.getElementById("count").value);
+
+    objects.push({ material, object, count });
+    renderList();
 }
 
-function toggleExplosive(e) {
-  if (selectedExplosives.includes(e))
-    selectedExplosives = selectedExplosives.filter(x => x !== e);
-  else
-    selectedExplosives.push(e);
-  updateCards();
-}
-
-function toggleMaterial(m) {
-  if (selectedMaterials.includes(m))
-    selectedMaterials = selectedMaterials.filter(x => x !== m);
-  else
-    selectedMaterials.push(m);
-  updateCards();
-}
-
-function updateCards() {
-  document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
-  document.querySelectorAll('.card').forEach(c => {
-    const t = c.innerText.toLowerCase();
-    selectedExplosives.forEach(e => { if (t.includes(e)) c.classList.add('active'); });
-    selectedMaterials.forEach(m => { if (t.includes(m)) c.classList.add('active'); });
-  });
-}
-
-function loadObjects() {
-  objectsDiv.innerHTML = '';
-  selectedMaterials.forEach(m => {
-    objectsByMaterial[m].forEach(o => {
-      objectsDiv.innerHTML += `
-        <div class="object-row">
-          ${o} (${m})
-          <input type="number" min="1" value="1" data-m="${m}" data-o="${o}">
-        </div>`;
+function renderList() {
+    const list = document.getElementById("list");
+    list.innerHTML = "";
+    objects.forEach((o, i) => {
+        list.innerHTML += `${i + 1}. ${o.count} × ${o.object} (${o.material})<br>`;
     });
-  });
 }
 
 function calculate() {
-  let totalB = 0;
-  let totalS = 0;
-  let result = "";
+    const explosiveKey = document.getElementById("explosive").value;
+    const explosive = explosives[explosiveKey];
 
-  document.querySelectorAll('#objects input').forEach(inp => {
-    const count = +inp.value;
-    const m = inp.dataset.m;
-    const o = inp.dataset.o;
+    let totalExplosives = 0;
+    let totalSulfur = 0;
+    let text = "";
 
-    let best = null;
-
-    const explosives = selectedExplosives.length ? selectedExplosives : Object.keys(costs);
-
-    explosives.forEach(e => {
-      if (costs[e][m] && costs[e][m][o]) {
-        const c = costs[e][m][o];
-        const sulfur = c.s * count;
-        if (!best || sulfur < best.sulfur) {
-          best = { e, b: c.b * count, s: sulfur };
+    for (const o of objects) {
+        const value = explosive.data[o.material]?.[o.object];
+        if (!value) {
+            text += `❌ Нельзя разрушить (${o.object}, ${o.material})<br>`;
+            continue;
         }
-      }
-    });
-
-    if (best) {
-      result += `🔹 ${o} (${m}) → ${best.e}<br>💣 ${best.b} | 🧪 ${best.s}<br><br>`;
-      totalB += best.b;
-      totalS += best.s;
+        const need = value * o.count;
+        totalExplosives += need;
+        totalSulfur += need * explosive.sulfur;
+        text += `✔ ${o.count} × ${o.object}: ${need} ${explosive.name}<br>`;
     }
-  });
 
-  result += `<hr><b>ИТОГО</b><br>💣 ${totalB}<br>🧪 ${totalS}`;
-
-  outputDiv.innerHTML = result;
-  goTo(4);
+    document.getElementById("result").innerHTML = `
+        ${text}<hr>
+        <b>Итого:</b><br>
+        Взрывчатка: ${totalExplosives}<br>
+        Сера: ${totalSulfur}
+    `;
 }
