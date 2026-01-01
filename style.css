@@ -24,11 +24,15 @@ h1, h2 {
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-auto-rows: 140px;
   gap: 15px;
   margin: 15px 0;
 }
+
+/* Адаптивные колонки */
+@media (min-width: 1200px) { .grid { grid-template-columns: repeat(4, 1fr); } }
+@media (max-width: 1199px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 800px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 500px) { .grid { grid-template-columns: 1fr; } }
 
 .exp, .mat {
   background: #444;
@@ -40,11 +44,12 @@ h1, h2 {
   align-items: center;
   text-align: center;
   transition: 0.2s;
+  aspect-ratio: 1 / 1; /* квадрат */
 }
 
 .exp img, .mat img {
-  width: 80px;
-  height: 80px;
+  width: 60%;
+  height: 60%;
   object-fit: contain;
   margin-bottom: 5px;
 }
@@ -64,6 +69,7 @@ button {
   color: #fff;
   border-radius: 8px;
   transition: 0.2s;
+  width: 45%;
 }
 
 button:hover { background: #55c; }
@@ -73,6 +79,7 @@ button:hover { background: #55c; }
   align-items: center;
   padding: 10px;
   border-bottom: 1px solid #555;
+  flex-wrap: wrap;
 }
 
 .objects .object-row img {
@@ -80,6 +87,7 @@ button:hover { background: #55c; }
   height: 80px;
   object-fit: contain;
   margin-right: 15px;
+  margin-bottom: 5px;
 }
 
 .counter button {
@@ -94,4 +102,9 @@ pre {
   padding: 15px;
   border-radius: 8px;
   overflow: auto;
+}
+
+/* Кнопки под мобильный экран */
+@media (max-width: 600px){
+  button { width: 100%; margin: 5px 0; }
 }
