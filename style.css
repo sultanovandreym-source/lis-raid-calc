@@ -1,31 +1,3 @@
-body {
-  font-family: Arial, sans-serif;
-  background: #f0f0f0;
-  margin: 0;
-  padding: 0;
-}
-
-.container {
-  max-width: 800px;
-  margin: 20px auto;
-  padding: 20px;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
-
-h1, h2 {
-  text-align: center;
-}
-
-.step {
-  display: none;
-}
-
-.step.active {
-  display: block;
-}
-
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
@@ -33,66 +5,37 @@ h1, h2 {
   margin: 15px 0;
 }
 
-.exp, .mat {
+/* Карточка 1x1 */
+.icon-card {
+  aspect-ratio: 1 / 1;
   background: #eee;
   border-radius: 10px;
   cursor: pointer;
   transition: 0.2s;
-}
 
-.exp.active, .mat.active {
-  background: #6677ff;
-  color: #fff;
-}
-
-.icon-card {
-  aspect-ratio: 1 / 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
+.exp.active,
+.mat.active {
+  background: #6677ff;
+  color: #fff;
+}
+
+/* КАРТИНКА СТРОГО 1x1 */
 .icon-card img {
-  width: 80px;
-  height: 80px;
+  width: 70%;
+  aspect-ratio: 1 / 1;
   object-fit: contain;
+  display: block;
   margin-bottom: 6px;
 }
 
+/* ТЕКСТ */
 .icon-card span {
   font-weight: bold;
-}
-
-button {
-  padding: 10px 20px;
-  margin: 10px 5px;
-  border: none;
-  background: #6677ff;
-  color: #fff;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-button:hover {
-  background: #5566cc;
-}
-
-.objects .object-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 6px 0;
-  border-bottom: 1px solid #ccc;
-}
-
-.counter button {
-  padding: 4px 10px;
-}
-
-pre {
-  background: #f4f4f4;
-  padding: 10px;
-  border-radius: 6px;
-  overflow: auto;
+  text-align: center;
 }
