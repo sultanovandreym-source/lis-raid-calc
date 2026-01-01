@@ -22,41 +22,41 @@ h1 {
 .step {
   display: none;
 }
-
 .step.active {
   display: block;
 }
 
-/* ===== СЕТКА (1 и 2 вкладка) ===== */
+/* ===== СЕТКА (РОВНАЯ) ===== */
 .grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4 в ряд */
+  grid-template-columns: repeat(4, 1fr);
   gap: 12px;
   margin: 15px 0;
 }
 
-/* ===== КАРТОЧКИ (иконки) ===== */
+/* ===== КАРТОЧКИ — СТРОГИЙ КВАДРАТ ===== */
 .exp,
 .mat {
+  aspect-ratio: 1 / 1;          /* 🔥 ВАЖНО */
+  width: 100%;
+  
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
   background: #eee;
-  border-radius: 10px;
+  border-radius: 12px;
   cursor: pointer;
   transition: 0.2s;
-
-  height: 150px;          /* квадрат */
   text-align: center;
 }
 
-/* ===== КАРТИНКИ (ВАЖНО!) ===== */
+/* ===== ИКОНКИ ===== */
 .exp img,
 .mat img {
-  width: 90px;
-  height: 90px;
+  width: 60%;
+  height: 60%;
   object-fit: contain;
   margin-bottom: 6px;
 }
@@ -67,7 +67,7 @@ h1 {
   font-size: 14px;
 }
 
-/* ===== АКТИВНО ===== */
+/* ===== АКТИВ ===== */
 .exp.active,
 .mat.active {
   background: #6677ff;
