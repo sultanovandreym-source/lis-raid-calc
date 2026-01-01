@@ -10,19 +10,35 @@
   <div class="container">
     <h1>Калькулятор LIOS</h1>
 
-    <!-- Шаги -->
+    <!-- Шаг 1: Взрывчатка с картинками -->
     <div class="step active" id="step1">
       <h2>Выберите взрывчатку</h2>
       <div class="grid">
-        <div data-exp="bobovka" class="exp">Бобовка</div>
-        <div data-exp="dynamite" class="exp">Динамит</div>
-        <div data-exp="c4" class="exp">C4</div>
-        <div data-exp="hexogen" class="exp">Гексоген</div>
-        <div data-exp="rocket" class="exp">Ракета</div>
+        <div data-exp="bobovka" class="exp">
+          <img src="images/bobovka.png" alt="Бобовка">
+          <span>Бобовка</span>
+        </div>
+        <div data-exp="dynamite" class="exp">
+          <img src="images/dynamite.png" alt="Динамит">
+          <span>Динамит</span>
+        </div>
+        <div data-exp="c4" class="exp">
+          <img src="images/c4.png" alt="C4">
+          <span>C4</span>
+        </div>
+        <div data-exp="hexogen" class="exp">
+          <img src="images/hexogen.png" alt="Гексоген">
+          <span>Гексоген</span>
+        </div>
+        <div data-exp="rocket" class="exp">
+          <img src="images/rocket.png" alt="Ракета">
+          <span>Ракета</span>
+        </div>
       </div>
       <button onclick="nextStep(1)">➡ Далее</button>
     </div>
 
+    <!-- Шаг 2: Материалы -->
     <div class="step" id="step2">
       <h2>Выберите материалы</h2>
       <div class="grid">
@@ -37,6 +53,7 @@
       <button onclick="nextStep(2)">➡ Далее</button>
     </div>
 
+    <!-- Шаг 3: Объекты и количество -->
     <div class="step" id="step3">
       <h2>Выберите объекты и количество</h2>
       <div id="objects" class="objects"></div>
@@ -44,11 +61,13 @@
       <button onclick="calculate()">➡ Рассчитать</button>
     </div>
 
+    <!-- Шаг 4: Результат -->
     <div class="step" id="step4">
       <h2>Результат</h2>
       <pre id="result"></pre>
       <button onclick="prevStep(2)">⬅ Назад</button>
     </div>
+
   </div>
 
   <script src="script.js"></script>
