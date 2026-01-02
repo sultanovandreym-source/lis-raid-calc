@@ -4,14 +4,18 @@ body {
   font-family: Arial, sans-serif;
   color: #fff;
   margin: 0;
+  display: flex;
+  justify-content: center;
 }
 
 .container {
+  width: 100%;
   max-width: 900px;
-  margin: 20px auto;
   background: rgba(42,42,42,0.95);
   padding: 20px;
   border-radius: 10px;
+  margin: 20px;
+  box-sizing: border-box;
 }
 
 .step { display: none; }
@@ -21,6 +25,7 @@ body {
   display: grid;
   grid-template-columns: repeat(4,1fr);
   gap: 12px;
+  justify-items: center; /* по центру */
   transition: all 0.3s ease;
 }
 
@@ -36,6 +41,9 @@ body {
   align-items: center;
   border: 2px solid transparent;
   transition: all 0.3s ease;
+  width: 120px; /* фиксированный размер */
+  height: 150px;
+  box-sizing: border-box;
 }
 
 .exp img, .mat img, .object-icon img {
@@ -92,4 +100,5 @@ input[type="number"]:focus {
 @media(max-width: 600px) {
   .grid { grid-template-columns: repeat(2,1fr); }
   .exp img, .mat img, .object-icon img { width: 70px; height: 70px; }
+  .exp, .mat, .object-icon { width: 100px; height: 130px; }
 }
