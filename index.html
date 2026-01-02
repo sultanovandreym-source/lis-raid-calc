@@ -6,11 +6,10 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
 <div class="container">
   <h1>Калькулятор LIOS</h1>
 
-  <!-- 1 вкладка: Взрывчатка -->
+  <!-- 1 вкладка -->
   <div class="step active">
     <h2>Выберите взрывчатку</h2>
     <div class="grid">
@@ -23,7 +22,7 @@
     <button onclick="nextStep(1)">Далее</button>
   </div>
 
-  <!-- 2 вкладка: Материалы -->
+  <!-- 2 вкладка -->
   <div class="step">
     <h2>Выберите материалы</h2>
     <div class="grid">
@@ -38,7 +37,7 @@
     <button onclick="nextStep(2)">Далее</button>
   </div>
 
-  <!-- 3 вкладка: Объекты -->
+  <!-- 3 вкладка -->
   <div class="step">
     <h2>Выберите объекты</h2>
     <div id="objects" class="grid"></div>
@@ -46,7 +45,7 @@
     <button onclick="calculate()">Рассчитать</button>
   </div>
 
-  <!-- 4 вкладка: Результат -->
+  <!-- 4 вкладка -->
   <div class="step">
     <h2>Результат</h2>
     <pre id="result"></pre>
