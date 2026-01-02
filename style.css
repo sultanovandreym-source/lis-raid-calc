@@ -13,39 +13,65 @@ body {
   border-radius:10px;
 }
 
-.step { display:none; opacity:0; transition:opacity 0.3s; }
-.step.active { display:block; opacity:1; }
+.step { 
+  display:none;
+  opacity:0;
+  transform: translateY(10px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.step.active {
+  display:block;
+  opacity:1;
+  transform: translateY(0);
+}
 
 .grid {
   display:grid;
+  grid-template-columns:repeat(2,1fr);
   gap:12px;
-  grid-template-columns:repeat(auto-fit, minmax(120px,1fr));
+}
+@media (min-width:768px){
+  .grid{grid-template-columns:repeat(4,1fr);}
 }
 
 .exp,.mat,.object-icon {
   background:#3a3a3a;
-  border-radius:10px;
+  border-radius:12px;
   padding:10px;
   text-align:center;
   cursor:pointer;
+
+  aspect-ratio:1/1;
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
-  transition: transform 0.2s, background 0.2s;
+
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+.exp:active,.mat:active,.object-icon:active{
+  transform: scale(0.97);
 }
 
-.exp:hover,.mat:hover,.object-icon:hover { transform:scale(1.05); }
-
-.exp img,.mat img,.object-icon img {
-  width:64px;
-  height:64px;
+.exp img,.mat img,.object-icon img{
+  width:56px;
+  height:56px;
   object-fit:contain;
+  margin-bottom:6px;
 }
 
-.active { background:#4f6cff; }
+.exp span,.mat span,.object-icon span{
+  font-size:13px;
+  line-height:1.2;
+  text-align:center;
+  word-break:break-word;
+}
 
-button {
+.active{
+  background:#4f6cff;
+}
+
+button{
   margin:10px;
   padding:10px 20px;
   background:#4f6cff;
@@ -53,27 +79,15 @@ button {
   color:#fff;
   border-radius:6px;
   cursor:pointer;
-  transition: background 0.2s;
 }
-button:hover { background:#5577ff; }
-button.disabled { background:#555; cursor:not-allowed; }
 
-.counter {
+button:disabled{
+  background:#666;
+  cursor:not-allowed;
+}
+
+.counter{
   display:flex;
   align-items:center;
   gap:5px;
-}
-
-#result {
-  background:#333;
-  padding:15px;
-  border-radius:8px;
-  white-space:pre-wrap;
-  font-family:monospace;
-  line-height:1.4;
-}
-
-@media (max-width:600px){
-  .grid { grid-template-columns:repeat(2,1fr); }
-  .exp img,.mat img,.object-icon img { width:50px; height:50px; }
 }
