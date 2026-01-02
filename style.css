@@ -1,58 +1,102 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   background: #1e1e1e;
-  color: #fff;
   font-family: Arial, sans-serif;
+  color: #fff;
   margin: 0;
 }
 
 .container {
   max-width: 900px;
-  margin: 20px auto;
+  margin: 0 auto;
+  padding: 16px;
   background: #2a2a2a;
-  padding: 20px;
   border-radius: 10px;
 }
 
-.step { display: none; }
-.step.active { display: block; }
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(4,1fr); /* ПК: 4 колонки */
-  gap: 12px;
+h1, h2 {
+  text-align: center;
+  margin: 10px 0;
 }
 
-.exp, .mat, .object-icon {
+.step {
+  display: none;
+}
+
+.step.active {
+  display: block;
+}
+
+/* ===== Сетка ===== */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* ПК */
+  gap: 12px;
+  margin-top: 12px;
+}
+
+/* ===== Карточки ===== */
+.exp,
+.mat,
+.object-icon {
   background: #3a3a3a;
   border-radius: 10px;
   padding: 10px;
   text-align: center;
   cursor: pointer;
+
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+
+  aspect-ratio: 1 / 1; /* квадрат */
 }
 
-.exp img, .mat img, .object-icon img {
+.exp img,
+.mat img,
+.object-icon img {
   width: 64px;
   height: 64px;
   object-fit: contain;
 }
 
+.exp span,
+.mat span,
+.object-icon span {
+  font-size: 13px;
+  margin-top: 6px;
+  text-align: center;
+}
+
+/* ===== Активное ===== */
 .active {
   background: #4f6cff;
 }
 
+/* ===== Счётчик ===== */
 .counter {
   display: flex;
-  justify-content: center;
-  gap: 8px;
+  align-items: center;
+  gap: 6px;
   margin-top: 6px;
 }
 
+.counter button {
+  padding: 4px 10px;
+  background: #4f6cff;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* ===== Кнопки ===== */
 button {
-  margin: 10px;
+  margin: 12px 6px 0;
   padding: 10px 20px;
   background: #4f6cff;
   border: none;
@@ -61,9 +105,28 @@ button {
   cursor: pointer;
 }
 
-/* Мобильная адаптация */
-@media screen and (max-width:768px){
+/* ===== Результат ===== */
+pre {
+  background: #1e1e1e;
+  padding: 12px;
+  border-radius: 8px;
+  white-space: pre-wrap;
+}
+
+/* ===== 📱 МОБИЛЬНАЯ АДАПТАЦИЯ ===== */
+@media (max-width: 768px) {
   .grid {
-    grid-template-columns: repeat(2, 1fr); /* Телефон: 2 колонки */
+    grid-template-columns: repeat(2, 1fr); /* телефон */
+  }
+
+  .exp img,
+  .mat img,
+  .object-icon img {
+    width: 56px;
+    height: 56px;
+  }
+
+  button {
+    width: 100%;
   }
 }
