@@ -1,4 +1,3 @@
-/* Общие стили */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -11,37 +10,27 @@ body {
     max-width: 1000px;
     margin: 20px auto;
     padding: 20px;
-    border-radius: 12px;
 }
 
-/* Заголовки */
 h1, h2 {
     text-align: center;
     margin-bottom: 20px;
 }
 
-/* Шаги */
-.step {
-    display: none;
-}
+.step { display: none; }
+.step.active { display: block; }
 
-.step.active {
-    display: block;
-}
-
-/* Сетка карточек */
 .grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 14px;
-    background: rgba(0, 0, 0, 0.5); /* прозрачная панель */
+    gap: 12px;
+    background: rgba(0,0,0,0.5);
     padding: 12px;
     border-radius: 12px;
 }
 
-/* Карточки */
 .exp, .mat, .object-icon {
-    background: rgba(255, 255, 255, 0.06);
+    background: rgba(255,255,255,0.06);
     border-radius: 12px;
     padding: 12px;
     text-align: center;
@@ -50,11 +39,6 @@ h1, h2 {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    transition: transform 0.1s ease;
-}
-
-.exp:hover, .mat:hover, .object-icon:hover {
-    transform: scale(1.05);
 }
 
 .exp img, .mat img, .object-icon img {
@@ -64,62 +48,33 @@ h1, h2 {
     margin-bottom: 8px;
 }
 
-span {
-    font-size: 14px;
-    line-height: 1.2;
-}
+span { font-size: 14px; line-height: 1.2; }
 
-/* Выделение активной карточки */
-.active {
-    outline: 2px solid #fff;
-}
+.active { outline: 2px solid #fff; }
 
-/* Кнопки */
 button {
-    background: rgba(51, 51, 51, 0.6);
+    background: rgba(51,51,51,0.6);
     border: 2px solid #fff;
     color: #fff;
     padding: 10px 20px;
     border-radius: 6px;
     margin: 10px;
     cursor: pointer;
-    transition: 0.2s;
 }
 
-button:hover {
-    background: rgba(51, 51, 51, 0.8);
-}
+button:hover { background: rgba(51,51,51,0.8); }
 
-.buttons {
-    text-align: center;
-}
+.buttons { text-align: center; }
 
-/* Счётчики для объектов */
 .counter {
     display: flex;
     gap: 6px;
     margin-top: 6px;
 }
 
-.counter input {
-    width: 42px;
-    text-align: center;
-}
+.counter input { width: 42px; text-align: center; }
 
-/* Результаты расчёта */
-pre {
-    background: rgba(0, 0, 0, 0.5);
-    padding: 12px;
-    border-radius: 8px;
-    white-space: pre-wrap;
-}
-
-/* Адаптив для телефона */
-@media(max-width: 600px){
-    .grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    span {
-        font-size: 13px;
-    }
+@media(max-width:600px){
+    .grid { grid-template-columns: repeat(2,1fr); }
+    span { font-size: 13px; }
 }
