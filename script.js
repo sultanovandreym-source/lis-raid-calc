@@ -5,50 +5,66 @@ let selectedObjects = {};
 const steps = document.querySelectorAll('.step');
 const objectsDiv = document.getElementById('objects');
 
+// === Шаги ===
 function showStep(n){
-  steps.forEach(s=>s.classList.remove('active'));
+  steps.forEach(s => s.classList.remove('active'));
   steps[n].classList.add('active');
 }
 
-function nextStep(n){
-  // запрет, если ничего не выбрано
-  if(n===1 && selectedExplosives.length===0){ alert("Выберите взрывчатку"); return; }
-  if(n===2 && selectedMaterials.length===0){ alert("Выберите материалы"); return; }
-
-  if(n===2) loadObjects();
-  showStep(n);
-}
-
-function prevStep(n){ showStep(n); }
-
-// Выбор взрывчатки
-document.querySelectorAll('.exp').forEach(e=>{
-  e.onclick=()=>{
-    e.classList.toggle('active');
-    const v=e.dataset.exp;
-    selectedExplosives.includes(v) ? selectedExplosives.splice(selectedExplosives.indexOf(v),1) : selectedExplosives.push(v);
+// Кнопки "Далее" и "Назад"
+document.getElementById('next1').onclick = () => {
+  if(selectedExplosives.length === 0){
+    alert('Выберите хотя бы одну взрывчатку!');
+    return;
   }
+  showStep(1);
+};
+document.getElementById('prev2').onclick = () => showStep(0);
+document.getElementById('next2').onclick = () => {
+  if(selectedMaterials.length === 0){
+    alert('Выберите хотя бы один материал!');
+    return;
+  }
+  loadObjects();
+  showStep(2);
+};
+document.getElementById('prev3').onclick = () => showStep(1);
+document.getElementById('calculate').onclick = () => {
+  if(Object.values(selectedObjects).every(v => v===0)){
+    alert('Выберите количество объектов!');
+    return;
+  }
+  calculate();
+};
+document.getElementById('prev4').onclick = () => showStep(2);
+
+// === Выбор взрывчатки ===
+document.querySelectorAll('.exp').forEach(el => {
+  el.onclick = () => {
+    el.classList.toggle('active');
+    const val = el.dataset.exp;
+    selectedExplosives.includes(val)
+      ? selectedExplosives = selectedExplosives.filter(x=>x!==val)
+      : selectedExplosives.push(val);
+  };
 });
 
-// Выбор материалов
-document.querySelectorAll('.mat').forEach(e=>{
-  e.onclick=()=>{
-    e.classList.toggle('active');
-    const v=e.dataset.mat;
-    selectedMaterials.includes(v) ? selectedMaterials.splice(selectedMaterials.indexOf(v),1) : selectedMaterials.push(v);
-  }
+// === Выбор материалов ===
+document.querySelectorAll('.mat').forEach(el => {
+  el.onclick = () => {
+    el.classList.toggle('active');
+    const val = el.dataset.mat;
+    selectedMaterials.includes(val)
+      ? selectedMaterials = selectedMaterials.filter(x=>x!==val)
+      : selectedMaterials.push(val);
+  };
 });
 
-// Объекты
+// === Объекты ===
 const objectNames = {
-  door:'Дверь', wall:'Стена', foundation:'Фундамент',
-  ladder:'Складная лестница', grate:'Решётка',
-  tracker:'Устройство отслеживания стрельбы',
-  auto_rifle:'Автоматическая винтовка',
-  auto_shotgun:'Автоматическая картечь',
-  trader_bot:'Торговый бот',
-  em_turret:'Электромагнитная турель',
-  rocket_launcher:'Ракетная установка'
+  door:'Дверь', wall:'Стена', foundation:'Фундамент', ladder:'Лестница', grate:'Решётка',
+  tracker:'Трекер', auto_rifle:'Автомат', auto_shotgun:'Картечница', trader_bot:'Торговый бот',
+  em_turret:'Турель', rocket_launcher:'Ракетная установка'
 };
 
 const objectsByMaterial = {
@@ -61,73 +77,74 @@ const objectsByMaterial = {
 };
 
 function loadObjects(){
-  objectsDiv.innerHTML='';
-  selectedObjects={};
+  objectsDiv.innerHTML = '';
+  selectedObjects = {};
 
-  selectedMaterials.forEach(mat=>{
-    objectsByMaterial[mat].forEach(obj=>{
+  selectedMaterials.forEach(mat => {
+    objectsByMaterial[mat].forEach(obj => {
       const key = `${mat}_${obj}`;
+      selectedObjects[key] = 0;
       const img = mat==='objects' ? `images/${obj}.png` : `images/${mat}_${obj}.png`;
 
-      const d = document.createElement('div');
-      d.className='object-icon';
-      d.innerHTML=`
+      const div = document.createElement('div');
+      div.className = 'object-icon';
+      div.innerHTML = `
         <img src="${img}" alt="${objectNames[obj]}">
         <span>${objectNames[obj]}</span>
         <div class="counter">
           <button onclick="change('${key}',-1)">-</button>
-          <input type="number" id="c_${key}" value="0" min="0" onchange="manualChange('${key}',this.value)">
+          <input type="number" id="c_${key}" value="0" min="0" onchange="inputChange('${key}')">
           <button onclick="change('${key}',1)">+</button>
         </div>`;
-      objectsDiv.appendChild(d);
-      selectedObjects[key]=0;
+      objectsDiv.appendChild(div);
     });
   });
 }
 
 function change(k,v){
-  selectedObjects[k]=Math.max(0,(selectedObjects[k]||0)+v);
-  document.getElementById('c_'+k).value = selectedObjects[k];
+  const input = document.getElementById('c_'+k);
+  selectedObjects[k] = Math.max(0,(selectedObjects[k]||0)+v);
+  input.value = selectedObjects[k];
 }
 
-function manualChange(k,v){
-  const val = Math.max(0, parseInt(v)||0);
-  selectedObjects[k] = val;
-  document.getElementById('c_'+k).value = val;
+function inputChange(k){
+  const input = document.getElementById('c_'+k);
+  selectedObjects[k] = Math.max(0, parseInt(input.value) || 0);
+  input.value = selectedObjects[k];
 }
 
-// Пример данных взрывчатки (можно расширить)
+// === Данные взрывчатки ===
 const data = {
-  bobovka:{ wood:{door:{count:2,sulfur:240}, wall:{count:4,sulfur:480}, foundation:{count:15,sulfur:1800}}, metal:{door:{count:30,sulfur:3600}, wall:{count:100,sulfur:12000}, foundation:{count:400,sulfur:48000}, ladder:{count:46,sulfur:5520}, grate:{count:10,sulfur:1200} } },
-  dynamite:{ wood:{door:{count:1,sulfur:500}, wall:{count:2,sulfur:1000}}, metal:{door:{count:4,sulfur:2000}, wall:{count:13,sulfur:6500}, foundation:{count:50,sulfur:25000}, ladder:{count:7,sulfur:3500}, grate:{count:2,sulfur:1000} } }
+  bobovka: { wood:{door:{count:2,sulfur:240}, wall:{count:4,sulfur:480}, foundation:{count:15,sulfur:1800}}, metal:{door:{count:30,sulfur:3600}, wall:{count:100,sulfur:12000}} },
+  dynamite: { wood:{door:{count:1,sulfur:500}, wall:{count:2,sulfur:1000}}, metal:{door:{count:4,sulfur:2000}, wall:{count:13,sulfur:6500}} },
+  c4: { wood:{door:{count:1,sulfur:1500}}, metal:{door:{count:2,sulfur:3000}} },
+  hexogen: { wood:{door:{count:1,sulfur:2500}}, metal:{door:{count:1,sulfur:2500}} },
+  rocket: { wood:{door:{count:1,sulfur:1500}}, metal:{door:{count:2,sulfur:3000}} }
 };
 
+// === Расчет ===
 function calculate(){
-  let totalSulfur=0;
-  let output='';
-  let hasObjects=false;
+  let res = '';
+  let total = 0;
 
-  Object.entries(selectedObjects).forEach(([key,val])=>{
-    if(val===0) return;
-    hasObjects=true;
-    const [mat,obj]=key.split('_');
-    output+=`${objectNames[obj]} (${mat}) x${val}\n`;
+  Object.entries(selectedObjects).forEach(([k,v])=>{
+    if(v===0) return;
+    const [mat,obj] = k.split('_');
+    res += `${objectNames[obj]} (${mat}) x${v}\n`;
 
     selectedExplosives.forEach(exp=>{
-      const v = data[exp]?.[mat]?.[obj];
-      if(v){
-        output+=`• ${exp}: ${v.count*val} (Сера: ${v.sulfur*val})\n`;
-        totalSulfur+=v.sulfur*val;
+      const val = data[exp]?.[mat]?.[obj];
+      if(val){
+        res += `  ${exp}: ${val.count*v} шт (Сера: ${val.sulfur*v})\n`;
+        total += val.sulfur*v;
       } else {
-        output+=`• ${exp}: Невозможно\n`;
+        res += `  ${exp}: Невозможно\n`;
       }
     });
-    output+='\n';
+    res+='\n';
   });
 
-  if(!hasObjects){ alert("Выберите хотя бы один объект"); return; }
-
-  output += `Общее количество серы: ${totalSulfur}`;
-  document.getElementById('result').innerText = output;
+  res += `Общее количество серы: ${total}`;
+  document.getElementById('result').innerText = res;
   showStep(3);
-}
+        }
