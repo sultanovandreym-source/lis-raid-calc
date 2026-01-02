@@ -1,53 +1,51 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Lios Calculator</title>
-<link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8" />
+  <title>Калькулятор рейда</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<div class="container">
 
-  <!-- ШАГ 1: Выбор взрывчатки -->
+<div class="app">
+
+  <!-- ШАГ 1 -->
   <section class="step active" id="step-1">
-    <h2>Выберите взрывчатку</h2>
+    <h2>Выбери взрывчатку</h2>
     <div class="grid" id="explosives"></div>
-    <div class="buttons">
-      <button id="next1" disabled>Далее</button>
-    </div>
+    <button class="nav-btn" id="to-step-2" disabled>Далее</button>
   </section>
 
-  <!-- ШАГ 2: Выбор материала -->
+  <!-- ШАГ 2 -->
   <section class="step" id="step-2">
-    <h2>Выберите материал</h2>
+    <h2>Выбери материал</h2>
     <div class="grid" id="materials"></div>
-    <div class="buttons">
-      <button onclick="go(1)">Назад</button>
-      <button id="next2" disabled>Далее</button>
+    <div class="nav-row">
+      <button class="nav-btn" id="back-1">Назад</button>
+      <button class="nav-btn" id="to-step-3" disabled>Далее</button>
     </div>
   </section>
 
-  <!-- ШАГ 3: Выбор объектов -->
+  <!-- ШАГ 3 -->
   <section class="step" id="step-3">
-    <h2>Выберите объекты</h2>
+    <h2>Выбери объекты</h2>
     <div class="grid" id="objects"></div>
-    <div class="buttons">
-      <button onclick="go(2)">Назад</button>
-      <button id="calc" disabled>Рассчитать</button>
+    <div class="nav-row">
+      <button class="nav-btn" id="back-2">Назад</button>
+      <button class="nav-btn" id="calculate" disabled>Рассчитать</button>
     </div>
   </section>
 
-  <!-- ШАГ 4: Результат -->
-  <section class="step" id="step-4">
-    <h2>Результат</h2>
-    <pre id="result"></pre>
-    <div class="buttons">
-      <button onclick="go(3)">Назад</button>
-    </div>
+  <!-- РЕЗУЛЬТАТ -->
+  <section class="step" id="result">
+    <h2>Результат рейда</h2>
+    <div id="result-content"></div>
+    <button class="nav-btn" id="restart">Начать заново</button>
   </section>
 
 </div>
+
 <script src="js/app.js"></script>
 </body>
 </html>
