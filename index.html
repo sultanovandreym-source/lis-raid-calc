@@ -10,40 +10,46 @@
 
 <h1 class="title">LIOS Калькулятор</h1>
 
+<!-- Шаг 1 -->
 <div class="step active">
-  <h2>Выберите тип взрывчатки</h2>
-  <div class="dark-window">
+  <div class="panel">
+    <h2>Выберите тип взрывчатки</h2>
     <div class="grid" id="explosives"></div>
+    <button class="nav" onclick="nextStep(1)">Далее</button>
   </div>
-  <button class="nav" onclick="nextStep(1)">Далее</button>
 </div>
 
+<!-- Шаг 2 -->
 <div class="step">
-  <h2>Выберите вид материала</h2>
-  <div class="dark-window">
+  <div class="panel">
+    <h2>Выберите вид материала</h2>
     <div class="grid" id="materials"></div>
-  </div>
-  <div class="navs">
-    <button class="nav" onclick="prevStep(0)">Назад</button>
-    <button class="nav" onclick="nextStep(2)">Далее</button>
+    <div class="navs">
+      <button class="nav" onclick="prevStep(0)">Назад</button>
+      <button class="nav" onclick="nextStep(2)">Далее</button>
+    </div>
   </div>
 </div>
 
+<!-- Шаг 3 -->
 <div class="step">
-  <h2>Укажите количество объектов</h2>
-  <div class="dark-window">
+  <div class="panel">
+    <h2>Укажите количество объектов</h2>
     <div class="grid compact" id="objects"></div>
-  </div>
-  <div class="navs">
-    <button class="nav" onclick="prevStep(1)">Назад</button>
-    <button class="nav" onclick="calculate()">Рассчитать</button>
+    <div class="navs">
+      <button class="nav" onclick="prevStep(1)">Назад</button>
+      <button class="nav" onclick="calculate()">Рассчитать</button>
+    </div>
   </div>
 </div>
 
+<!-- Результат -->
 <div class="step">
-  <h2>Результат</h2>
-  <pre id="result"></pre>
-  <button class="nav" onclick="prevStep(2)">Назад</button>
+  <div class="panel">
+    <h2>Результат</h2>
+    <pre id="result"></pre>
+    <button class="nav" onclick="prevStep(2)">Назад</button>
+  </div>
 </div>
 
 <script src="script.js"></script>
