@@ -10,33 +10,41 @@
 
 <h1 class="title">LIOS Калькулятор</h1>
 
-<div class="step active" id="step1">
+<div class="step active">
   <h2>Выберите тип взрывчатки</h2>
-  <div class="grid" id="explosives"></div>
+  <div class="panel">
+    <div class="grid" id="explosives"></div>
+  </div>
   <button class="nav" onclick="nextStep(1)">Далее</button>
 </div>
 
-<div class="step" id="step2">
+<div class="step">
   <h2>Выберите вид материала</h2>
-  <div class="grid" id="materials"></div>
+  <div class="panel">
+    <div class="grid" id="materials"></div>
+  </div>
   <div class="navs">
     <button class="nav" onclick="prevStep(0)">Назад</button>
     <button class="nav" onclick="nextStep(2)">Далее</button>
   </div>
 </div>
 
-<div class="step" id="step3">
+<div class="step">
   <h2>Укажите количество объектов</h2>
-  <div class="grid compact" id="objects"></div>
+  <div class="panel">
+    <div class="grid compact" id="objects"></div>
+  </div>
   <div class="navs">
     <button class="nav" onclick="prevStep(1)">Назад</button>
     <button class="nav" onclick="calculate()">Рассчитать</button>
   </div>
 </div>
 
-<div class="step" id="step4">
+<div class="step">
   <h2>Результат</h2>
-  <pre id="result"></pre>
+  <div class="panel">
+    <pre id="result"></pre>
+  </div>
   <button class="nav" onclick="prevStep(2)">Назад</button>
 </div>
 
