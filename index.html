@@ -8,54 +8,50 @@
 </head>
 <body>
 
-<div class="app">
+<div class="container">
+    <h1>LIOS Калькулятор</h1>
 
-<h1>LIOS Калькулятор</h1>
+    <!-- 1 Вкладка: Выбор взрывчатки -->
+    <div class="step active">
+        <h2>Выберите тип взрывчатки</h2>
+        <div class="grid">
+            <div class="exp" data-exp="bobovka"><img src="images/bobovka.png"><span>Бобовка</span></div>
+            <div class="exp" data-exp="dynamite"><img src="images/dynamite.png"><span>Динамит</span></div>
+            <div class="exp" data-exp="c4"><img src="images/c4.png"><span>C4</span></div>
+            <div class="exp" data-exp="hexogen"><img src="images/hexogen.png"><span>Гексоген</span></div>
+            <div class="exp" data-exp="rocket"><img src="images/rocket.png"><span>Ракета</span></div>
+        </div>
+        <div class="buttons">
+            <button onclick="nextStep(1)">Далее</button>
+        </div>
+    </div>
 
-<!-- STEP 1 -->
-<div class="step active">
-<h2>Выберите тип взрывчатки</h2>
-<div class="panel">
-<div class="grid">
-<div class="card exp" data-exp="bobovka"><img src="images/bobovka.png"><span>Бобовка</span></div>
-<div class="card exp" data-exp="dynamite"><img src="images/dynamite.png"><span>Динамит</span></div>
-<div class="card exp" data-exp="c4"><img src="images/c4.png"><span>C4</span></div>
-<div class="card exp" data-exp="hexogen"><img src="images/hexogen.png"><span>Гексаген</span></div>
-<div class="card exp" data-exp="rocket"><img src="images/rocket.png"><span>Ракета</span></div>
-</div>
-</div>
-<button class="btn" id="toStep2">Далее</button>
-</div>
+    <!-- 2 Вкладка: Выбор материала -->
+    <div class="step">
+        <h2>Выберите вид материала</h2>
+        <div class="grid">
+            <div class="mat" data-mat="wood"><img src="images/wood.png"><span>Дерево</span></div>
+            <div class="mat" data-mat="stone"><img src="images/stone.png"><span>Камень</span></div>
+            <div class="mat" data-mat="metal"><img src="images/metal.png"><span>Железо</span></div>
+            <div class="mat" data-mat="steel"><img src="images/steel.png"><span>Сталь</span></div>
+            <div class="mat" data-mat="titan"><img src="images/titan.png"><span>Титан</span></div>
+            <div class="mat" data-mat="objects"><img src="images/objects.png"><span>Прочее</span></div>
+        </div>
+        <div class="buttons">
+            <button onclick="prevStep(0)">Назад</button>
+            <button onclick="nextStep(2)">Далее</button>
+        </div>
+    </div>
 
-<!-- STEP 2 -->
-<div class="step">
-<h2>Выберите вид материала</h2>
-<div class="panel">
-<div class="grid">
-<div class="card mat" data-mat="wood"><img src="images/wood.png"><span>Дерево</span></div>
-<div class="card mat" data-mat="stone"><img src="images/stone.png"><span>Камень</span></div>
-<div class="card mat" data-mat="metal"><img src="images/metal.png"><span>Железо</span></div>
-<div class="card mat" data-mat="steel"><img src="images/steel.png"><span>Сталь</span></div>
-<div class="card mat" data-mat="titan"><img src="images/titan.png"><span>Титан</span></div>
-<div class="card mat" data-mat="objects"><img src="images/objects.png"><span>Прочее</span></div>
-</div>
-</div>
-<div class="nav">
-<button class="btn" id="back1">Назад</button>
-<button class="btn" id="toStep3">Далее</button>
-</div>
-</div>
-
-<!-- STEP 3 -->
-<div class="step">
-<h2>Выберите объекты</h2>
-<div class="panel">
-<div class="grid" id="objectsGrid"></div>
-</div>
-<div class="nav">
-<button class="btn" id="back2">Назад</button>
-</div>
-</div>
+    <!-- 3 Вкладка: Выбор объектов -->
+    <div class="step">
+        <h2>Укажите количество объектов</h2>
+        <div id="objects" class="grid"></div>
+        <div class="buttons">
+            <button onclick="prevStep(1)">Назад</button>
+            <button onclick="alert('Рассчитать пока не реализовано')">Рассчитать</button>
+        </div>
+    </div>
 
 </div>
 
