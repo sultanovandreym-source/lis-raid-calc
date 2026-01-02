@@ -1,3 +1,4 @@
+
 const steps = document.querySelectorAll('.step');
 let step = 0;
 
@@ -10,15 +11,15 @@ function showStep(n){
   steps[n].classList.add('active');
   step = n;
 }
+
 function nextStep(n){
   if(n===1 && !selectedExp.size) return alert('Выберите взрывчатку');
   if(n===2 && !selectedMat.size) return alert('Выберите материал');
   if(n===2) loadObjects();
   showStep(n);
 }
-function prevStep(n){showStep(n)}
 
-/* ================== ДАННЫЕ ИНТЕРФЕЙСА ================== */
+function prevStep(n){showStep(n)}
 
 const explosives = [
   ['bobovka','Бобовка'],
@@ -59,8 +60,6 @@ const names = {
   em_turret:'Электромагнитная турель',
   rocket_launcher:'Ракетная пусковая установка'
 };
-
-/* ================== РЕНДЕР ================== */
 
 function renderGrid(id, data, set){
   const el=document.getElementById(id);
