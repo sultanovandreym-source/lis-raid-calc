@@ -10,50 +10,48 @@ function showStep(n){
   steps[n].classList.add('active');
 }
 
-// запретить Далее, если ничего не выбрано
 function nextStep(n){
-  if(n===1 && selectedExplosives.length===0){ alert('Выберите взрывчатку'); return; }
-  if(n===2 && selectedMaterials.length===0){ alert('Выберите материалы'); return; }
+  // запрет, если ничего не выбрано
+  if(n===1 && selectedExplosives.length===0){ alert("Выберите взрывчатку"); return; }
+  if(n===2 && selectedMaterials.length===0){ alert("Выберите материалы"); return; }
+
   if(n===2) loadObjects();
   showStep(n);
 }
 
 function prevStep(n){ showStep(n); }
 
-// выбор взрывчатки
+// Выбор взрывчатки
 document.querySelectorAll('.exp').forEach(e=>{
   e.onclick=()=>{
     e.classList.toggle('active');
     const v=e.dataset.exp;
-    selectedExplosives.includes(v)
-      ? selectedExplosives=selectedExplosives.filter(x=>x!==v)
-      : selectedExplosives.push(v);
+    selectedExplosives.includes(v) ? selectedExplosives.splice(selectedExplosives.indexOf(v),1) : selectedExplosives.push(v);
   }
 });
 
-// выбор материалов
+// Выбор материалов
 document.querySelectorAll('.mat').forEach(e=>{
   e.onclick=()=>{
     e.classList.toggle('active');
     const v=e.dataset.mat;
-    selectedMaterials.includes(v)
-      ? selectedMaterials=selectedMaterials.filter(x=>x!==v)
-      : selectedMaterials.push(v);
+    selectedMaterials.includes(v) ? selectedMaterials.splice(selectedMaterials.indexOf(v),1) : selectedMaterials.push(v);
   }
 });
 
-const objectNames={
-  door:'Дверь',wall:'Стена',foundation:'Фундамент',
-  ladder:'Складная лестница',grate:'Решётка',
-  tracker:'Устройство отслеживания',
+// Объекты
+const objectNames = {
+  door:'Дверь', wall:'Стена', foundation:'Фундамент',
+  ladder:'Складная лестница', grate:'Решётка',
+  tracker:'Устройство отслеживания стрельбы',
   auto_rifle:'Автоматическая винтовка',
   auto_shotgun:'Автоматическая картечь',
   trader_bot:'Торговый бот',
-  em_turret:'Турель',
+  em_turret:'Электромагнитная турель',
   rocket_launcher:'Ракетная установка'
 };
 
-const objectsByMaterial={
+const objectsByMaterial = {
   wood:['door','wall','foundation'],
   stone:['door','wall','foundation'],
   metal:['door','wall','foundation','ladder','grate'],
@@ -68,30 +66,21 @@ function loadObjects(){
 
   selectedMaterials.forEach(mat=>{
     objectsByMaterial[mat].forEach(obj=>{
-      const key=`${mat}_${obj}`;
-      const img = mat==='objects'
-        ? `images/${obj}.png`
-        : `images/${mat}_${obj}.png`;
+      const key = `${mat}_${obj}`;
+      const img = mat==='objects' ? `images/${obj}.png` : `images/${mat}_${obj}.png`;
 
-      const d=document.createElement('div');
+      const d = document.createElement('div');
       d.className='object-icon';
       d.innerHTML=`
-        <img src="${img}">
+        <img src="${img}" alt="${objectNames[obj]}">
         <span>${objectNames[obj]}</span>
         <div class="counter">
           <button onclick="change('${key}',-1)">-</button>
-          <input type="number" id="c_${key}" value="0" min="0" oninput="update('${key')">
+          <input type="number" id="c_${key}" value="0" min="0" onchange="manualChange('${key}',this.value)">
           <button onclick="change('${key}',1)">+</button>
         </div>`;
       objectsDiv.appendChild(d);
       selectedObjects[key]=0;
-
-      // клик по всей карточке тоже выделяет белой обводкой
-      d.onclick = function(e){
-        if(e.target.tagName !== 'BUTTON' && e.target.tagName !== 'INPUT'){
-          d.classList.toggle('active');
-        }
-      }
     });
   });
 }
@@ -101,20 +90,44 @@ function change(k,v){
   document.getElementById('c_'+k).value = selectedObjects[k];
 }
 
-function update(k){
-  const val = parseInt(document.getElementById('c_'+k).value);
-  selectedObjects[k] = isNaN(val) || val<0 ? 0 : val;
+function manualChange(k,v){
+  const val = Math.max(0, parseInt(v)||0);
+  selectedObjects[k] = val;
+  document.getElementById('c_'+k).value = val;
 }
 
-function calculate(){
-  let empty = Object.values(selectedObjects).every(v=>v===0);
-  if(empty){ alert('Выберите хотя бы один объект'); return; }
+// Пример данных взрывчатки (можно расширить)
+const data = {
+  bobovka:{ wood:{door:{count:2,sulfur:240}, wall:{count:4,sulfur:480}, foundation:{count:15,sulfur:1800}}, metal:{door:{count:30,sulfur:3600}, wall:{count:100,sulfur:12000}, foundation:{count:400,sulfur:48000}, ladder:{count:46,sulfur:5520}, grate:{count:10,sulfur:1200} } },
+  dynamite:{ wood:{door:{count:1,sulfur:500}, wall:{count:2,sulfur:1000}}, metal:{door:{count:4,sulfur:2000}, wall:{count:13,sulfur:6500}, foundation:{count:50,sulfur:25000}, ladder:{count:7,sulfur:3500}, grate:{count:2,sulfur:1000} } }
+};
 
-  let res='';
-  Object.entries(selectedObjects).forEach(([k,v])=>{
-    if(!v) return;
-    res+=`${k} x${v}\n`;
+function calculate(){
+  let totalSulfur=0;
+  let output='';
+  let hasObjects=false;
+
+  Object.entries(selectedObjects).forEach(([key,val])=>{
+    if(val===0) return;
+    hasObjects=true;
+    const [mat,obj]=key.split('_');
+    output+=`${objectNames[obj]} (${mat}) x${val}\n`;
+
+    selectedExplosives.forEach(exp=>{
+      const v = data[exp]?.[mat]?.[obj];
+      if(v){
+        output+=`• ${exp}: ${v.count*val} (Сера: ${v.sulfur*val})\n`;
+        totalSulfur+=v.sulfur*val;
+      } else {
+        output+=`• ${exp}: Невозможно\n`;
+      }
+    });
+    output+='\n';
   });
-  document.getElementById('result').innerText=res||'Ничего не выбрано';
+
+  if(!hasObjects){ alert("Выберите хотя бы один объект"); return; }
+
+  output += `Общее количество серы: ${totalSulfur}`;
+  document.getElementById('result').innerText = output;
   showStep(3);
 }
