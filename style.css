@@ -1,75 +1,102 @@
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    color: #fff;
-    background: url('images/my_background.jpg') no-repeat center center fixed;
-    background-size: cover;
-    background-color: rgba(0,0,0,0.4);
-    background-blend-mode: darken;
+*{box-sizing:border-box}
+
+body{
+margin:0;
+font-family:Arial,Helvetica,sans-serif;
+color:#fff;
+background:
+linear-gradient(rgba(0,0,0,.65),rgba(0,0,0,.65)),
+url("images/my_background.jpg") center/cover fixed;
 }
 
-.container {
-    max-width: 1000px;
-    margin: 20px auto;
-    padding: 20px;
+.app{
+max-width:420px;
+margin:0 auto;
+padding:16px;
 }
 
-h1, h2 { text-align: center; margin-bottom: 20px; }
+h1{text-align:center;margin:10px 0}
+h2{text-align:center;font-size:18px;margin:12px 0}
 
-.step { display: none; }
-.step.active { display: block; }
+.step{display:none}
+.step.active{display:block}
 
-.grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-    background: rgba(0,0,0,0.5);
-    padding: 12px;
-    border-radius: 12px;
+.panel{margin:10px 0}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:12px;
 }
 
-.exp, .mat, .object-icon {
-    background: rgba(255,255,255,0.06);
-    border-radius: 12px;
-    padding: 10px;
-    text-align: center;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.grid.compact{gap:8px}
+
+.card{
+border:2px solid rgba(255,255,255,.25);
+border-radius:14px;
+padding:10px 6px;
+text-align:center;
+transition:.2s;
 }
 
-.exp img, .mat img, .object-icon img {
-    width: 70px;
-    height: 70px;
-    object-fit: contain;
-    margin-bottom: 6px;
+.card img{
+width:60px;
+height:60px;
+object-fit:contain;
+margin-bottom:6px;
 }
 
-span { font-size: 14px; line-height: 1.2; }
-
-.active { outline: 2px solid #fff; }
-
-button {
-    background: rgba(51,51,51,0.6);
-    border: 2px solid #fff;
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 6px;
-    margin: 10px;
-    cursor: pointer;
+.card span{
+font-size:13px;
+line-height:1.2;
+display:block;
 }
 
-button:hover { background: rgba(51,51,51,0.8); }
+.selectable{cursor:pointer}
+.selectable.active{border-color:#fff}
 
-.buttons { text-align: center; }
-
-.counter { display: flex; gap: 6px; margin-top: 6px; }
-.counter input { width: 42px; text-align: center; }
-
-@media(max-width:600px){
-    .grid { grid-template-columns: repeat(2,1fr); }
-    span { font-size: 13px; }
-    .exp img, .mat img, .object-icon img { width: 60px; height: 60px; }
+.counter{
+display:flex;
+align-items:center;
+justify-content:center;
+gap:6px;
+margin-top:6px;
 }
+
+.counter button{
+width:28px;
+height:28px;
+border:1px solid #fff;
+background:transparent;
+color:#fff;
+border-radius:6px;
+font-size:18px;
+}
+
+.counter input{
+width:36px;
+text-align:center;
+background:transparent;
+border:1px solid #fff;
+color:#fff;
+border-radius:6px;
+}
+
+.nav-btn{
+width:100%;
+margin-top:12px;
+padding:12px;
+background:transparent;
+border:2px solid #fff;
+color:#fff;
+border-radius:10px;
+font-size:16px;
+}
+
+.nav-row{
+display:flex;
+gap:10px;
+margin-top:12px;
+}
+
+.nav-row .nav-btn{flex:1}
