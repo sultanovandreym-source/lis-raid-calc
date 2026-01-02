@@ -13,18 +13,20 @@ body {
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 20px #000;
+  text-align: center;
 }
 
-h1, h2 { text-align: center; }
+h1, h2 { margin:10px 0; }
 
-.step { display: none; opacity:0; transition: opacity 0.4s ease; }
-.step.active { display: block; opacity:1; }
+.step { display:none; opacity:0; transition: opacity 0.4s ease; }
+.step.active { display:block; opacity:1; }
 
 .grid {
-  display: grid;
+  display:grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 12px;
   margin: 10px 0;
+  justify-items: center;
 }
 
 .exp,.mat,.object-icon {
@@ -38,17 +40,18 @@ h1, h2 { text-align: center; }
   justify-content: center;
   align-items: center;
   transition: all 0.3s ease;
+  border: 2px solid transparent;
 }
 
 .exp img,.mat img,.object-icon img {
-  width:64px;
-  height:64px;
+  width:72px;
+  height:72px;
   object-fit: contain;
   margin-bottom:5px;
 }
 
-.exp.active,.mat.active,.object-icon.active { 
-  background: #4f6cff; 
+.exp.active,.mat.active,.object-icon.active {
+  border: 2px solid #fff;
   transform: scale(1.05);
 }
 
