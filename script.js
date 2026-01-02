@@ -13,7 +13,6 @@ function showStep(n){
 function nextStep(n){
   if(n===1 && selectedExplosives.length===0){ alert("Выберите взрывчатку"); return; }
   if(n===2 && selectedMaterials.length===0){ alert("Выберите материалы"); return; }
-
   if(n===2) loadObjects();
   showStep(n);
 }
@@ -38,7 +37,7 @@ document.querySelectorAll('.mat').forEach(e=>{
   }
 });
 
-// Названия объектов
+// Объекты
 const objectNames = {
   door:'Дверь', wall:'Стена', foundation:'Фундамент',
   ladder:'Складная лестница', grate:'Решётка',
@@ -56,7 +55,7 @@ const objectsByMaterial = {
   metal:['door','wall','foundation','ladder','grate'],
   steel:['door','wall','foundation','ladder','grate'],
   titan:['door','wall','foundation','ladder','grate'],
-  objects:['tracker','auto_rifle','auto_shotgun','trader_bot','em_turret','rocket_launcher']
+  objects:['object_tracker','object_auto_rifle','object_auto_shotgun','object_trader_bot','object_em_turret','object_rocket_launcher']
 };
 
 function loadObjects(){
@@ -71,8 +70,8 @@ function loadObjects(){
       const d = document.createElement('div');
       d.className='object-icon';
       d.innerHTML=`
-        <img src="${img}" alt="${objectNames[obj]}">
-        <span>${objectNames[obj]}</span>
+        <img src="${img}" alt="${objectNames[obj.replace('object_','')] || obj}">
+        <span>${objectNames[obj.replace('object_','')] || obj}</span>
         <div class="counter">
           <button onclick="change('${key}',-1)">-</button>
           <input type="number" id="c_${key}" value="0" min="0" onchange="manualChange('${key}',this.value)">
@@ -95,7 +94,7 @@ function manualChange(k,v){
   document.getElementById('c_'+k).value = val;
 }
 
-// Пример данных взрывчатки
+// Данные взрывчатки (пример)
 const data = {
   bobovka:{ wood:{door:{count:2,sulfur:240}, wall:{count:4,sulfur:480}, foundation:{count:15,sulfur:1800}}, metal:{door:{count:30,sulfur:3600}, wall:{count:100,sulfur:12000}, foundation:{count:400,sulfur:48000}, ladder:{count:46,sulfur:5520}, grate:{count:10,sulfur:1200} } },
   dynamite:{ wood:{door:{count:1,sulfur:500}, wall:{count:2,sulfur:1000}}, metal:{door:{count:4,sulfur:2000}, wall:{count:13,sulfur:6500}, foundation:{count:50,sulfur:25000}, ladder:{count:7,sulfur:3500}, grate:{count:2,sulfur:1000} } }
@@ -110,10 +109,10 @@ function calculate(){
     if(val===0) return;
     hasObjects=true;
     const [mat,obj]=key.split('_');
-    output+=`${objectNames[obj]} (${mat}) x${val}\n`;
+    output+=`${objectNames[obj.replace('object_','')] || obj} (${mat}) x${val}\n`;
 
     selectedExplosives.forEach(exp=>{
-      const v = data[exp]?.[mat]?.[obj];
+      const v = data[exp]?.[mat]?.[obj.replace('object_','')] || data[exp]?.[mat]?.[obj];
       if(v){
         output+=`• ${exp}: ${v.count*val} (Сера: ${v.sulfur*val})\n`;
         totalSulfur+=v.sulfur*val;
