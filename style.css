@@ -1,165 +1,88 @@
-body{
-background:url('images/my_background.jpg') center/cover fixed;
-margin:0;
-font-family:Arial;
-color:#fff;
+body {
+  background: url('images/my_background.jpg') no-repeat center center fixed;
+  background-size: cover;
+  font-family: Arial, sans-serif;
+  color: #fff;
+  margin: 0;
 }
 
-.container{
-max-width:1000px;
-margin:20px auto;
-background:rgba(0,0,0,.75);
-padding:20px;
-border-radius:12px;
+.container {
+  max-width: 900px;
+  margin: 20px auto;
+  background: rgba(0,0,0,0.75);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px #000;
+  text-align: center;
 }
 
-h1,h2{text-align:center}
+h1, h2 { text-align: center; }
 
-.step{display:none}
-.step.active{display:block}
+.step { display: none; opacity:0; transition: opacity 0.4s ease; }
+.step.active { display: block; opacity:1; }
 
-.grid{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:14px;
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin: 10px 0;
 }
 
-.exp,.mat,.object-icon{
-background:rgba(255,255,255,.06);
-border-radius:12px;
-padding:12px;
-text-align:center;
-cursor:pointer;
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
+.exp, .mat, .object-icon {
+  background: rgba(255,255,255,0.05);
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
 }
 
-.exp img,.mat img,.object-icon img{
-width:80px;
-height:80px;
-object-fit:contain;
-margin-bottom:8px;
+.exp img, .mat img, .object-icon img {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  margin-bottom:5px;
 }
 
-span{font-size:14px;line-height:1.2}
-
-.active{outline:2px solid #fff}
-
-button{
-background:#333;
-border:2px solid #fff;
-color:#fff;
-padding:10px 20px;
-border-radius:6px;
-margin:10px;
-cursor:pointer;
+.exp.active, .mat.active, .object-icon.active { 
+  border: 2px solid #fff; 
 }
 
-.buttons{text-align:center}
-
-.counter{
-display:flex;
-gap:6px;
-margin-top:6px;
+.btn-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 15px;
 }
 
-.counter input{
-width:42px;
-text-align:center;
+.btn {
+  padding: 10px 20px;
+  background: #333;
+  border: 2px solid #fff;
+  color: #fff;
+  border-radius:6px;
+  cursor:pointer;
+  transition: 0.3s;
+}
+.btn:hover { background:#444; }
+
+.counter { display:flex; align-items:center; gap:5px; margin-top:5px; }
+.counter input { width:40px; text-align:center; border-radius:4px; border:none; }
+
+pre {
+  background: rgba(0,0,0,0.5);
+  padding: 10px;
+  border-radius: 5px;
+  overflow:auto;
 }
 
-pre{
-background:rgba(0,0,0,.5);
-padding:12px;
-border-radius:8px;
-white-space:pre-wrap;
-}
-
+/* Мобильная адаптация */
 @media(max-width:600px){
-.grid{grid-template-columns:repeat(2,1fr)}
-span{font-size:13px}
-}body{
-background:url('images/my_background.jpg') center/cover fixed;
-margin:0;
-font-family:Arial;
-color:#fff;
-}
-
-.container{
-max-width:1000px;
-margin:20px auto;
-background:rgba(0,0,0,.75);
-padding:20px;
-border-radius:12px;
-}
-
-h1,h2{text-align:center}
-
-.step{display:none}
-.step.active{display:block}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:14px;
-}
-
-.exp,.mat,.object-icon{
-background:rgba(255,255,255,.06);
-border-radius:12px;
-padding:12px;
-text-align:center;
-cursor:pointer;
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-}
-
-.exp img,.mat img,.object-icon img{
-width:80px;
-height:80px;
-object-fit:contain;
-margin-bottom:8px;
-}
-
-span{font-size:14px;line-height:1.2}
-
-.active{outline:2px solid #fff}
-
-button{
-background:#333;
-border:2px solid #fff;
-color:#fff;
-padding:10px 20px;
-border-radius:6px;
-margin:10px;
-cursor:pointer;
-}
-
-.buttons{text-align:center}
-
-.counter{
-display:flex;
-gap:6px;
-margin-top:6px;
-}
-
-.counter input{
-width:42px;
-text-align:center;
-}
-
-pre{
-background:rgba(0,0,0,.5);
-padding:12px;
-border-radius:8px;
-white-space:pre-wrap;
-}
-
-@media(max-width:600px){
-.grid{grid-template-columns:repeat(2,1fr)}
-span{font-size:13px}
+  .grid { grid-template-columns: repeat(2, 1fr); }
+  .exp img, .mat img, .object-icon img { width: 60px; height:60px; }
+  .btn { padding: 8px 16px; }
 }
