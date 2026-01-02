@@ -1,19 +1,24 @@
 * {
   box-sizing: border-box;
-  font-family: system-ui, sans-serif;
+  font-family: "Segoe UI", system-ui, sans-serif;
 }
 
 body {
   margin: 0;
+  min-height: 100vh;
   background: url("../images/my_background.jpg") center / cover no-repeat fixed;
   color: #fff;
 }
 
+/* ===== КОНТЕЙНЕР ===== */
+
 .app {
-  max-width: 1100px;
-  margin: auto;
-  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 16px 40px;
 }
+
+/* ===== ШАГИ ===== */
 
 .step {
   display: none;
@@ -25,72 +30,131 @@ body {
 
 h2 {
   text-align: center;
-  margin-bottom: 16px;
+  margin: 10px 0 20px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }
+
+/* ===== СЕТКА ===== */
 
 .grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
+  gap: 14px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
+/* ===== КАРТОЧКИ ===== */
+
 .card {
-  border: 1px solid rgba(255,255,255,0.3);
-  border-radius: 12px;
-  padding: 10px;
+  height: 150px;
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 14px;
+  padding: 10px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
   text-align: center;
   cursor: pointer;
+  transition: 0.2s ease;
+  background: rgba(0,0,0,0.25);
+}
+
+.card:hover {
+  background: rgba(255,255,255,0.06);
 }
 
 .card.selected {
   border-color: #fff;
-  background: rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.12);
 }
+
+/* ===== КАРТИНКИ ===== */
 
 .card img {
   width: 64px;
   height: 64px;
   object-fit: contain;
-  margin-bottom: 6px;
+  pointer-events: none;
 }
+
+/* ===== ТЕКСТ ===== */
+
+.card div {
+  font-size: 14px;
+  line-height: 1.2;
+  padding: 0 4px;
+  word-break: break-word;
+}
+
+/* ===== СЧЁТЧИК ===== */
 
 .counter {
   display: flex;
-  justify-content: center;
+  align-items: center;
   gap: 6px;
-  margin-top: 6px;
 }
 
 .counter button {
   width: 28px;
   height: 28px;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.5);
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
 }
 
 .counter input {
   width: 40px;
+  height: 28px;
   text-align: center;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.4);
+  background: rgba(0,0,0,0.4);
+  color: #fff;
 }
+
+/* ===== КНОПКИ НАВИГАЦИИ ===== */
 
 .nav-row {
   display: flex;
-  justify-content: space-between;
-  margin-top: 16px;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 22px;
 }
 
 .nav-btn {
+  min-width: 140px;
   padding: 10px 24px;
-  border-radius: 12px;
-  background: transparent;
+  border-radius: 14px;
+  background: rgba(0,0,0,0.35);
   color: #fff;
   border: 1px solid rgba(255,255,255,0.6);
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.nav-btn:hover:not(:disabled) {
+  background: rgba(255,255,255,0.1);
 }
 
 .nav-btn:disabled {
-  opacity: 0.3;
+  opacity: 0.35;
+  cursor: default;
+}
+
+/* ===== РЕЗУЛЬТАТ ===== */
+
+#result-content {
+  background: rgba(0,0,0,0.35);
+  border-radius: 14px;
+  padding: 16px;
+  line-height: 1.5;
 }
