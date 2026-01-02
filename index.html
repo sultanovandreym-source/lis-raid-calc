@@ -3,19 +3,91 @@
 <head>
 <meta charset="UTF-8">
 <title>LIOS Калькулятор</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<link rel="stylesheet" href="style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  color:#fff;
+  background:#111;
+}
+
+h1,h2{text-align:center;margin:12px 0}
+
+.step{display:none;padding:10px}
+.step.active{display:block}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+  max-width:420px;
+  margin:0 auto;
+}
+
+.cell{
+  border:2px solid rgba(255,255,255,0.4);
+  border-radius:12px;
+  padding:14px 6px;
+  text-align:center;
+  cursor:pointer;
+  user-select:none;
+}
+
+.cell.active{
+  border-color:#fff;
+}
+
+.nav{
+  display:block;
+  margin:16px auto 0;
+  padding:10px 26px;
+  background:transparent;
+  color:#fff;
+  border:2px solid #fff;
+  border-radius:8px;
+  font-size:16px;
+}
+
+.navs{
+  display:flex;
+  justify-content:center;
+  gap:14px;
+}
+
+.counter{
+  display:flex;
+  justify-content:center;
+  gap:6px;
+  margin-top:6px;
+}
+
+.counter button{
+  width:28px;
+  height:28px;
+}
+
+.counter input{
+  width:42px;
+  text-align:center;
+}
+</style>
 </head>
+
 <body>
 
-<h1 class="title">LIOS Калькулятор</h1>
+<h1>LIOS Калькулятор</h1>
 
+<!-- ШАГ 1 -->
 <div class="step active" id="step1">
   <h2>Выберите тип взрывчатки</h2>
   <div class="grid" id="explosives"></div>
   <button class="nav" onclick="nextStep(1)">Далее</button>
 </div>
 
+<!-- ШАГ 2 -->
 <div class="step" id="step2">
   <h2>Выберите вид материала</h2>
   <div class="grid" id="materials"></div>
@@ -25,21 +97,106 @@
   </div>
 </div>
 
+<!-- ШАГ 3 -->
 <div class="step" id="step3">
   <h2>Укажите количество объектов</h2>
-  <div class="grid compact" id="objects"></div>
+  <div class="grid" id="objects"></div>
   <div class="navs">
     <button class="nav" onclick="prevStep(1)">Назад</button>
-    <button class="nav" onclick="calculate()">Рассчитать</button>
+    <button class="nav">Рассчитать</button>
   </div>
 </div>
 
-<div class="step" id="step4">
-  <h2>Результат</h2>
-  <pre id="result"></pre>
-  <button class="nav" onclick="prevStep(2)">Назад</button>
-</div>
+<script>
+const steps=document.querySelectorAll('.step');
 
-<script src="script.js"></script>
+let selectedExplosives=[];
+let selectedMaterials=[];
+let selectedObjects={};
+
+const explosives=['Бобовка','Динамит','C4','Гексоген','Ракета'];
+const materials=['Дерево','Камень','Железо','Сталь','Титан','Прочее'];
+
+const objectsByMaterial={
+  'Дерево':['Деревянная дверь','Деревянная стена','Деревянный фундамент'],
+  'Камень':['Каменная дверь','Каменная стена','Каменный фундамент'],
+  'Железо':['Железная дверь','Железная стена','Железный фундамент'],
+  'Сталь':['Стальная дверь','Стальная стена','Стальной фундамент'],
+  'Титан':['Титановая дверь','Титановая стена','Титановый фундамент'],
+  'Прочее':['Турель','Торговый бот']
+};
+
+// шаги
+function showStep(i){
+  steps.forEach(s=>s.classList.remove('active'));
+  steps[i].classList.add('active');
+}
+function nextStep(i){
+  if(i===1 && !selectedExplosives.length){alert('Выберите взрывчатку');return}
+  if(i===2 && !selectedMaterials.length){alert('Выберите материал');return}
+  if(i===2) loadObjects();
+  showStep(i);
+}
+function prevStep(i){showStep(i)}
+
+// шаг 1
+const expDiv=document.getElementById('explosives');
+explosives.forEach(e=>{
+  const d=document.createElement('div');
+  d.className='cell';
+  d.textContent=e;
+  d.onclick=()=>toggle(d,selectedExplosives,e);
+  expDiv.appendChild(d);
+});
+
+// шаг 2
+const matDiv=document.getElementById('materials');
+materials.forEach(m=>{
+  const d=document.createElement('div');
+  d.className='cell';
+  d.textContent=m;
+  d.onclick=()=>toggle(d,selectedMaterials,m);
+  matDiv.appendChild(d);
+});
+
+function toggle(el,arr,val){
+  if(arr.includes(val)){
+    arr.splice(arr.indexOf(val),1);
+    el.classList.remove('active');
+  }else{
+    arr.push(val);
+    el.classList.add('active');
+  }
+}
+
+// шаг 3
+function loadObjects(){
+  const o=document.getElementById('objects');
+  o.innerHTML='';
+  selectedObjects={};
+
+  selectedMaterials.forEach(m=>{
+    objectsByMaterial[m].forEach(obj=>{
+      selectedObjects[obj]=0;
+      const d=document.createElement('div');
+      d.className='cell';
+      d.innerHTML=`
+        <div>${obj}</div>
+        <div class="counter">
+          <button onclick="chg('${obj}',-1)">-</button>
+          <input id="i_${obj}" value="0">
+          <button onclick="chg('${obj}',1)">+</button>
+        </div>`;
+      o.appendChild(d);
+    });
+  });
+}
+
+function chg(obj,v){
+  selectedObjects[obj]=Math.max(0,selectedObjects[obj]+v);
+  document.getElementById('i_'+obj).value=selectedObjects[obj];
+}
+</script>
+
 </body>
 </html>
