@@ -1,102 +1,75 @@
-/* ================= ДАННЫЕ ================= */
-
-const EXPLOSIVES = [
-  { id: "bobovka", name: "Бобовка", img: "bobovka.png" },
-  { id: "dynamite", name: "Динамит", img: "dynamite.png" },
-  { id: "c4", name: "C4", img: "c4.png" },
-  { id: "rocket", name: "Ракета", img: "rocket.png" },
-  { id: "hexogen", name: "Гексоген", img: "hexogen.png" }
-];
-
-const MATERIALS = [
-  { id: "wood", name: "Дерево", img: "wood_wall.png" },
-  { id: "stone", name: "Камень", img: "stone_wall.png" },
-  { id: "metal", name: "Металл", img: "metal_wall.png" },
-  { id: "steel", name: "Сталь", img: "steel_wall.png" },
-  { id: "titan", name: "Титан", img: "titan_wall.png" },
-  { id: "objects", name: "Объекты", img: "objects.png" }
-];
-
-const OBJECTS = [
-  { id: "wall", name: "Стена", img: "stone_wall.png" },
-  { id: "door", name: "Дверь", img: "stone_door.png" },
-  { id: "foundation", name: "Фундамент", img: "stone_foundation.png" },
-  { id: "turret", name: "Турель", img: "object_shotgun_turret.png", mat: "objects" }
-];
-
-/* ================= ЦИФРЫ РЕЙДА ================= */
-
-const RAID = {
-  bobovka: { wood: { wall: 2, door: 3 }, stone: { wall: 5, door: 6 } },
-  dynamite: { metal: { wall: 4, door: 2 } },
-  c4: { steel: { wall: 2, door: 1 }, titan: { wall: 3 } },
-  rocket: { steel: { wall: 3 } },
-  hexogen: { titan: { wall: 2, door: 2 } }
-};
-
-const SULFUR = {
-  bobovka: 120,
-  dynamite: 570,
-  c4: 2200,
-  rocket: 1400,
-  hexogen: 3000
-};
-
-/* ================= СОСТОЯНИЕ ================= */
-
-let selectedExp = [];
-let selectedMat = null;
-let selectedObjects = {};
-
-/* ================= РЕНДЕР ================= */
-
-function renderCards(list, container, click) {
-  container.innerHTML = "";
-  list.forEach(item => {
-    const div = document.createElement("div");
-    div.className = "card";
-    div.innerHTML = `<img src="images/${item.img}"><div>${item.name}</div>`;
-    div.onclick = () => click(item, div);
-    container.appendChild(div);
-  });
+body {
+  background: url('images/my_background.jpg') no-repeat center center fixed;
+  background-size: cover;
+  font-family: Arial, sans-serif;
+  color: #fff;
+  margin: 0;
 }
 
-/* ================= ШАГИ ================= */
+.container {
+  max-width: 900px;
+  margin: 20px auto;
+  background: rgba(0,0,0,0.75);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px #000;
+}
 
-const steps = [...document.querySelectorAll(".step")];
-const showStep = i => {
-  steps.forEach(s => s.classList.remove("active"));
-  steps[i].classList.add("active");
-};
+h1,h2{text-align:center;}
 
-/* ================= ИНИЦИАЛИЗАЦИЯ ================= */
+.step { display:none; opacity:0; transition: opacity 0.4s ease; }
+.step.active { display:block; opacity:1; }
 
-const expBox = document.getElementById("explosives");
-renderCards(EXPLOSIVES, expBox, (item, el) => {
-  el.classList.toggle("selected");
-  selectedExp.includes(item.id)
-    ? selectedExp = selectedExp.filter(x => x !== item.id)
-    : selectedExp.push(item.id);
-  document.getElementById("to-step-2").disabled = !selectedExp.length;
-});
+.grid {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin:10px 0;
+  justify-items:center;
+}
 
-const matBox = document.getElementById("materials");
-renderCards(MATERIALS, matBox, (item, el) => {
-  [...matBox.children].forEach(c => c.classList.remove("selected"));
-  el.classList.add("selected");
-  selectedMat = item.id;
-  document.getElementById("to-step-3").disabled = false;
-});
+.explosive, .material, .card {
+  background: rgba(255,255,255,0.05);
+  border-radius: 10px;
+  padding:10px;
+  text-align:center;
+  cursor:pointer;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  transition:0.3s;
+  width:100%;
+}
 
-document.getElementById("to-step-2").onclick = () => showStep(1);
-document.getElementById("to-step-3").onclick = () => showStep(2);
-document.getElementById("back-1").onclick = () => showStep(0);
-document.getElementById("back-2").onclick = () => showStep(1);
+.explosive img, .material img, .card img { width:70px; height:70px; object-fit:contain; margin-bottom:5px; }
 
-/* ================= ОБЪЕКТЫ ================= */
+.explosive.active, .material.active, .card.active { border:2px solid #fff; }
 
-const objBox = document.getElementById("objects");
+.btn {
+  margin:10px auto;
+  padding:10px 20px;
+  background:#333;
+  border:2px solid #fff;
+  color:#fff;
+  border-radius:6px;
+  cursor:pointer;
+  display:block;
+  transition:0.3s;
+}
+.btn:hover { background:#444; }
+.btn:disabled { background:#555; cursor:not-allowed; }
 
+.counter { display:flex; align-items:center; gap:5px; margin-top:5px; }
+.counter input { width:40px; text-align:center; border-radius:4px; border:none; }
+
+pre { background: rgba(0,0,0,0.5); padding:10px; border-radius:5px; overflow:auto; }
+
+/* Мобильная адаптация */
+@media(max-width:600px){
+  .grid { grid-template-columns:repeat(2,1fr); }
+  .explosive img, .material img, .card img { width:60px; height:60px; }
+    }
 function renderObjects() {
   objBox.innerHTML = "";
   OBJECTS.forEach(obj => {
