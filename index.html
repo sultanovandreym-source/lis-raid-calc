@@ -2,225 +2,44 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
 <title>LIOS Калькулятор</title>
-
-<style>
-* {
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-    user-select: none;
-    font-family: Arial, sans-serif;
-}
-
-body {
-    margin: 0;
-    min-height: 100vh;
-    background: linear-gradient(rgba(0,0,0,.55), rgba(0,0,0,.55)),
-                url("background.jpg") center / cover no-repeat;
-    color: #fff;
-}
-
-h1 {
-    text-align: center;
-    margin: 16px 0 4px;
-    font-size: 22px;
-}
-
-h2 {
-    text-align: center;
-    margin: 8px 0 16px;
-    font-size: 16px;
-    font-weight: normal;
-    opacity: .9;
-}
-
-.screen {
-    display: none;
-    padding: 10px;
-}
-
-.screen.active {
-    display: block;
-}
-
-.grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-}
-
-.card {
-    border: 1px solid rgba(255,255,255,.4);
-    border-radius: 12px;
-    padding: 8px;
-    text-align: center;
-    transition: .2s;
-}
-
-.card img {
-    width: 100%;
-    max-height: 90px;
-    object-fit: contain;
-}
-
-.card span {
-    display: block;
-    margin-top: 6px;
-    font-size: 13px;
-}
-
-.card.selected {
-    border-color: #fff;
-    box-shadow: 0 0 8px rgba(255,255,255,.7);
-}
-
-.controls {
-    display: flex;
-    justify-content: center;
-    gap: 16px;
-    margin: 20px 0 10px;
-}
-
-button {
-    background: transparent;
-    color: #fff;
-    border: 1px solid #fff;
-    border-radius: 20px;
-    padding: 8px 24px;
-    font-size: 14px;
-}
-</style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<!-- 1 вкладка -->
-<div class="screen active" id="screen1">
-    <h1>LIOS Калькулятор</h1>
-    <h2>Выберите тип взрывчатки</h2>
+<h1 class="title">LIOS Калькулятор</h1>
 
-    <div class="grid">
-        <div class="card" onclick="toggle(this)">
-            <img src="bomb.png">
-            <span>Бабовка</span>
-        </div>
-        <div class="card" onclick="toggle(this)">
-            <img src="dynamite.png">
-            <span>Динамит</span>
-        </div>
-        <div class="card" onclick="toggle(this)">
-            <img src="c4.png">
-            <span>C4</span>
-        </div>
-        <div class="card" onclick="toggle(this)">
-            <img src="hexogen.png">
-            <span>Гексаген</span>
-        </div>
-        <div class="card" onclick="toggle(this)">
-            <img src="rocket.png">
-            <span>Ракета</span>
-        </div>
-    </div>
-
-    <div class="controls">
-        <button onclick="next(1)">Далее</button>
-    </div>
+<div class="step active" id="step1">
+  <h2>Выберите тип взрывчатки</h2>
+  <div class="grid" id="explosives"></div>
+  <button class="nav" onclick="nextStep(1)">Далее</button>
 </div>
 
-<!-- 2 вкладка -->
-<div class="screen" id="screen2">
-    <h1>LIOS Калькулятор</h1>
-    <h2>Выберите вид материала</h2>
-
-    <div class="grid">
-        <div class="card" onclick="toggle(this)">
-            <img src="wood.png">
-            <span>Дерево</span>
-        </div>
-        <div class="card" onclick="toggle(this)">
-            <img src="stone.png">
-            <span>Камень</span>
-        </div>
-        <div class="card" onclick="toggle(this)">
-            <img src="metal.png">
-            <span>Железо</span>
-        </div>
-        <div class="card" onclick="toggle(this)">
-            <img src="steel.png">
-            <span>Сталь</span>
-        </div>
-        <div class="card" onclick="toggle(this)">
-            <img src="titan.png">
-            <span>Титан</span>
-        </div>
-        <div class="card" onclick="toggle(this)">
-            <img src="other.png">
-            <span>Прочее</span>
-        </div>
-    </div>
-
-    <div class="controls">
-        <button onclick="back(2)">Назад</button>
-        <button onclick="next(2)">Далее</button>
-    </div>
+<div class="step" id="step2">
+  <h2>Выберите вид материала</h2>
+  <div class="grid" id="materials"></div>
+  <div class="navs">
+    <button class="nav" onclick="prevStep(0)">Назад</button>
+    <button class="nav" onclick="nextStep(2)">Далее</button>
+  </div>
 </div>
 
-<!-- 3 вкладка -->
-<div class="screen" id="screen3">
-    <h1>LIOS Калькулятор</h1>
-    <h2>Укажите количество объектов</h2>
-
-    <div class="grid">
-        <div class="card">
-            <img src="door.png">
-            <span>Дверь</span>
-            <div>
-                <button onclick="change(this,-1)">-</button>
-                <input value="0" style="width:40px;text-align:center;">
-                <button onclick="change(this,1)">+</button>
-            </div>
-        </div>
-        <div class="card">
-            <img src="wall.png">
-            <span>Стена</span>
-            <div>
-                <button onclick="change(this,-1)">-</button>
-                <input value="0" style="width:40px;text-align:center;">
-                <button onclick="change(this,1)">+</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="controls">
-        <button onclick="back(3)">Назад</button>
-        <button>Рассчитать</button>
-    </div>
+<div class="step" id="step3">
+  <h2>Укажите количество объектов</h2>
+  <div class="grid compact" id="objects"></div>
+  <div class="navs">
+    <button class="nav" onclick="prevStep(1)">Назад</button>
+    <button class="nav" onclick="calculate()">Рассчитать</button>
+  </div>
 </div>
 
-<script>
-function toggle(el) {
-    el.classList.toggle("selected");
-}
+<div class="step" id="step4">
+  <h2>Результат</h2>
+  <pre id="result"></pre>
+  <button class="nav" onclick="prevStep(2)">Назад</button>
+</div>
 
-function next(n) {
-    document.getElementById("screen"+n).classList.remove("active");
-    document.getElementById("screen"+(n+1)).classList.add("active");
-}
-
-function back(n) {
-    document.getElementById("screen"+n).classList.remove("active");
-    document.getElementById("screen"+(n-1)).classList.add("active");
-}
-
-function change(btn, val) {
-    let input = btn.parentElement.querySelector("input");
-    let num = parseInt(input.value) + val;
-    if (num < 0) num = 0;
-    input.value = num;
-}
-</script>
-
+<script src="script.js"></script>
 </body>
 </html>
