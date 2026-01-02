@@ -1,162 +1,162 @@
-/* ===== ДАННЫЕ ===== */
+/* ================= ДАННЫЕ ================= */
 
-const explosives = {
-  bobovka:{name:"Бобовка", img:"bobovka.png"},
-  dynamite:{name:"Динамит", img:"dynamite.png"},
-  c4:{name:"С4", img:"c4.png"},
-  hexogen:{name:"Гексоген", img:"hexogen.png"},
-  rocket:{name:"Ракета", img:"rocket.png"}
+const EXPLOSIVES = [
+  { id: "bobovka", name: "Бобовка", img: "bobovka.png" },
+  { id: "dynamite", name: "Динамит", img: "dynamite.png" },
+  { id: "c4", name: "C4", img: "c4.png" },
+  { id: "rocket", name: "Ракета", img: "rocket.png" },
+  { id: "hexogen", name: "Гексоген", img: "hexogen.png" }
+];
+
+const MATERIALS = [
+  { id: "wood", name: "Дерево", img: "wood_wall.png" },
+  { id: "stone", name: "Камень", img: "stone_wall.png" },
+  { id: "metal", name: "Металл", img: "metal_wall.png" },
+  { id: "steel", name: "Сталь", img: "steel_wall.png" },
+  { id: "titan", name: "Титан", img: "titan_wall.png" },
+  { id: "objects", name: "Объекты", img: "objects.png" }
+];
+
+const OBJECTS = [
+  { id: "wall", name: "Стена", img: "stone_wall.png" },
+  { id: "door", name: "Дверь", img: "stone_door.png" },
+  { id: "foundation", name: "Фундамент", img: "stone_foundation.png" },
+  { id: "turret", name: "Турель", img: "object_shotgun_turret.png", mat: "objects" }
+];
+
+/* ================= ЦИФРЫ РЕЙДА ================= */
+
+const RAID = {
+  bobovka: { wood: { wall: 2, door: 3 }, stone: { wall: 5, door: 6 } },
+  dynamite: { metal: { wall: 4, door: 2 } },
+  c4: { steel: { wall: 2, door: 1 }, titan: { wall: 3 } },
+  rocket: { steel: { wall: 3 } },
+  hexogen: { titan: { wall: 2, door: 2 } }
 };
 
-const materials = {
-  wood:{name:"Дерево", img:"wood.png"},
-  stone:{name:"Камень", img:"stone.png"},
-  metal:{name:"Металл", img:"metal.png"},
-  steel:{name:"Сталь", img:"steel.png"},
-  titan:{name:"Титан", img:"titan.png"},
-  objects:{name:"Объекты", img:"objects.png"}
+const SULFUR = {
+  bobovka: 120,
+  dynamite: 570,
+  c4: 2200,
+  rocket: 1400,
+  hexogen: 3000
 };
 
-const buildObjects = {
-  door:"Дверь",
-  wall:"Стена",
-  foundation:"Фундамент",
-  ladder:"Складная лестница",
-  grate:"Решётка"
-};
+/* ================= СОСТОЯНИЕ ================= */
 
-const specialObjects = {
-  tracker:"Устройство отслеживания стрельбы",
-  auto_shotgun:"Автоматическая установка для картечи",
-  em_turret:"Электромагнитная турель",
-  trader_bot:"Торговый бот",
-  rocket_launcher:"Ракетная пусковая установка"
-};
+let selectedExp = [];
+let selectedMat = null;
+let selectedObjects = {};
 
-/* ===== ЦИФРЫ ===== */
+/* ================= РЕНДЕР ================= */
 
-const raid = {
-  bobovka:{wood:{door:[2,240], wall:[4,480]}, stone:{door:[3,360], wall:[10,1200]}},
-  dynamite:{metal:{door:[4,480], wall:[10,1200]}},
-  c4:{steel:{door:[4,6000], wall:[13,19500]}},
-  hexogen:{titan:{door:[4,10000], wall:[10,25000]}}
-};
-
-const objectRaid = {
-  bobovka:{tracker:[50,6000], auto_shotgun:[50,6000], em_turret:[50,6000], trader_bot:[668,80160], rocket_launcher:[50,6000]},
-  dynamite:{tracker:[7,3500], auto_shotgun:[7,3500], em_turret:[7,3500], trader_bot:[68,34000], rocket_launcher:[7,3500]},
-  c4:{tracker:[3,4500], auto_shotgun:[3,4500], em_turret:[3,4500], trader_bot:[13,19500], rocket_launcher:[3,4500]},
-  hexogen:{tracker:[2,5000], auto_shotgun:[2,5000], em_turret:[2,5000], trader_bot:[6,15000], rocket_launcher:[2,5000]},
-  rocket:{tracker:[3,4500], auto_shotgun:[3,4500], em_turret:[3,4500], trader_bot:[13,19500], rocket_launcher:[3,4500]}
-};
-
-/* ===== СОСТОЯНИЕ ===== */
-
-let step = 1;
-let selExp = [];
-let selMat = [];
-let counts = {};
-
-/* ===== РЕНДЕР КАРТОЧЕК ===== */
-
-function render(id,data,type){
-  const el=document.getElementById(id);
-  el.innerHTML="";
-  Object.entries(data).forEach(([k,v])=>{
-    el.innerHTML+=`<div class="card" onclick="toggle('${type}','${k}',this)">
-      <img src="images/${v.img}">
-      <div class="title">${v.name}</div>
-    </div>`;
+function renderCards(list, container, click) {
+  container.innerHTML = "";
+  list.forEach(item => {
+    const div = document.createElement("div");
+    div.className = "card";
+    div.innerHTML = `<img src="images/${item.img}"><div>${item.name}</div>`;
+    div.onclick = () => click(item, div);
+    container.appendChild(div);
   });
 }
 
-render("explosives",explosives,"exp");
-render("materials",materials,"mat");
+/* ================= ШАГИ ================= */
 
-/* ===== ОБЪЕКТЫ ===== */
+const steps = [...document.querySelectorAll(".step")];
+const showStep = i => {
+  steps.forEach(s => s.classList.remove("active"));
+  steps[i].classList.add("active");
+};
 
-function renderObjects(){
-  const el=document.getElementById("objects");
-  el.innerHTML="";
-  selMat.forEach(mat=>{
-    if(mat==="objects"){
-      Object.entries(specialObjects).forEach(([o,n])=>{
-        drawObject(el,o,n,`object_${o}.png`);
-      });
-    } else {
-      Object.entries(buildObjects).forEach(([o,n])=>{
-        drawObject(el,`${mat}_${o}`,`${n}`,`${mat}_${o}.png`);
-      });
-    }
+/* ================= ИНИЦИАЛИЗАЦИЯ ================= */
+
+const expBox = document.getElementById("explosives");
+renderCards(EXPLOSIVES, expBox, (item, el) => {
+  el.classList.toggle("selected");
+  selectedExp.includes(item.id)
+    ? selectedExp = selectedExp.filter(x => x !== item.id)
+    : selectedExp.push(item.id);
+  document.getElementById("to-step-2").disabled = !selectedExp.length;
+});
+
+const matBox = document.getElementById("materials");
+renderCards(MATERIALS, matBox, (item, el) => {
+  [...matBox.children].forEach(c => c.classList.remove("selected"));
+  el.classList.add("selected");
+  selectedMat = item.id;
+  document.getElementById("to-step-3").disabled = false;
+});
+
+document.getElementById("to-step-2").onclick = () => showStep(1);
+document.getElementById("to-step-3").onclick = () => showStep(2);
+document.getElementById("back-1").onclick = () => showStep(0);
+document.getElementById("back-2").onclick = () => showStep(1);
+
+/* ================= ОБЪЕКТЫ ================= */
+
+const objBox = document.getElementById("objects");
+
+function renderObjects() {
+  objBox.innerHTML = "";
+  OBJECTS.forEach(obj => {
+    if (obj.mat && obj.mat !== selectedMat) return;
+
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+      <img src="images/${obj.img}">
+      <div>${obj.name}</div>
+      <div class="counter">
+        <button>-</button>
+        <input value="0">
+        <button>+</button>
+      </div>
+    `;
+
+    const input = card.querySelector("input");
+    card.querySelectorAll("button")[0].onclick = () => input.value = Math.max(0, +input.value - 1);
+    card.querySelectorAll("button")[1].onclick = () => input.value++;
+
+    input.oninput = () => {
+      selectedObjects[obj.id] = +input.value;
+      document.getElementById("calculate").disabled =
+        !Object.values(selectedObjects).some(v => v > 0);
+    };
+
+    objBox.appendChild(card);
   });
 }
 
-function drawObject(el,key,title,img){
-  const val=counts[key]||0;
-  el.innerHTML+=`<div class="card">
-    <img src="images/${img}">
-    <div class="title">${title}</div>
-    <div class="counter">
-      <button onclick="chg('${key}',-1)">−</button>
-      <input value="${val}" oninput="setv('${key}',this.value)">
-      <button onclick="chg('${key}',1)">+</button>
-    </div>
-  </div>`;
-}
+document.getElementById("to-step-3").onclick = () => {
+  renderObjects();
+  showStep(2);
+};
 
-/* ===== ВЫБОР ===== */
+/* ================= РАСЧЁТ ================= */
 
-function toggle(type,k,el){
-  const arr=type==="exp"?selExp:selMat;
-  if(arr.includes(k)){arr.splice(arr.indexOf(k),1);el.classList.remove("active");}
-  else {arr.push(k);el.classList.add("active");}
-  update();
-}
+document.getElementById("calculate").onclick = () => {
+  let html = "";
+  let totalSulfur = 0;
 
-function chg(k,d){ counts[k]=Math.max(0,(counts[k]||0)+d); renderObjects(); update(); }
-function setv(k,v){ counts[k]=Math.max(0,Number(v)||0); update(); }
+  for (const [obj, count] of Object.entries(selectedObjects)) {
+    if (!count) continue;
 
-function update(){
-  next1.disabled=!selExp.length;
-  next2.disabled=!selMat.length;
-  calc.disabled=!Object.values(counts).some(v=>v>0);
-}
+    selectedExp.forEach(exp => {
+      const cost = RAID[exp]?.[selectedMat]?.[obj];
+      if (!cost) return;
 
-/* ===== НАВИГАЦИЯ ===== */
+      const need = cost * count;
+      const sulfur = need * SULFUR[exp];
+      totalSulfur += sulfur;
 
-function go(n){
-  document.querySelector(".step.active").classList.remove("active");
-  step=n;
-  document.getElementById(`step-${step}`).classList.add("active");
-  if(step===3) renderObjects();
-}
-
-next1.onclick=()=>go(2);
-next2.onclick=()=>go(3);
-calc.onclick=calculate;
-
-/* ===== РАСЧЕТ ===== */
-
-function calculate(){
-  let out="", total=0;
-  selExp.forEach(exp=>{
-    Object.entries(counts).forEach(([k,c])=>{
-      if(!c) return;
-      const [m,o]=k.split("_");
-      let data=raid[exp]?.[m]?.[o] || objectRaid[exp]?.[o];
-      if(!data){
-        // логика выгодного рейда
-        if(m==="wood"||m==="stone") data=raid["bobovka"]?.[m]?.[o];
-        else if(m==="metal") data=raid["dynamite"]?.[m]?.[o];
-        else if(m==="steel") data=raid["c4"]?.[m]?.[o];
-        else if(m==="titan") data=raid["hexogen"]?.[m]?.[o];
-      }
-      if(!data) return;
-      out+=`${data[0]*c} ${explosives[exp].name} — ${data[1]*c} серы\n`;
-      total+=data[1]*c;
+      html += `<p>${obj}: ${need} ${exp}, сера ${sulfur}</p>`;
     });
-  });
-  out+=`\nОбщее количество серы: ${total}`;
-  document.getElementById("result").textContent=out;
-  go(4);
-}
+  }
+
+  html += `<hr><b>Всего серы: ${totalSulfur}</b>`;
+  document.getElementById("result-content").innerHTML = html;
+  showStep(3);
+};
+
+document.getElementById("restart").onclick = () => location.reload();
