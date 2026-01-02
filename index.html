@@ -2,11 +2,12 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Калькулятор LIOS</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
 <div class="container">
   <h1>Калькулятор LIOS</h1>
 
@@ -20,7 +21,7 @@
       <div class="exp" data-exp="hexogen"><img src="images/hexogen.png"><span>Гексоген</span></div>
       <div class="exp" data-exp="rocket"><img src="images/rocket.png"><span>Ракета</span></div>
     </div>
-    <button id="next1">Далее</button>
+    <button id="next1" class="btn" onclick="nextStep(1)">Далее</button>
   </div>
 
   <!-- 2 вкладка -->
@@ -34,23 +35,23 @@
       <div class="mat" data-mat="titan"><img src="images/titan.png"><span>Титан</span></div>
       <div class="mat" data-mat="objects"><img src="images/objects.png"><span>Объекты</span></div>
     </div>
-    <button id="prev2">Назад</button>
-    <button id="next2">Далее</button>
+    <button class="btn" onclick="prevStep(0)">Назад</button>
+    <button id="next2" class="btn" onclick="nextStep(2)">Далее</button>
   </div>
 
   <!-- 3 вкладка -->
   <div class="step">
-    <h2>Выберите объекты</h2>
+    <h2>Выберите объекты и количество</h2>
     <div id="objects" class="grid"></div>
-    <button id="prev3">Назад</button>
-    <button id="calculateBtn">Рассчитать</button>
+    <button class="btn" onclick="prevStep(1)">Назад</button>
+    <button id="calculateBtn" class="btn" onclick="calculate()">Рассчитать</button>
   </div>
 
   <!-- 4 вкладка -->
   <div class="step">
     <h2>Результат</h2>
     <pre id="result"></pre>
-    <button id="prev4">Назад</button>
+    <button class="btn" onclick="prevStep(2)">Назад</button>
   </div>
 </div>
 
