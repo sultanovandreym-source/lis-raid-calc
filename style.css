@@ -1,76 +1,84 @@
-* {
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
+body{
+  margin:0;
+  font-family:Arial;
+  color:#fff;
+  background:linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
+  url(images/my_background.jpg) center/cover fixed;
 }
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #0e0e0e;
-  color: #fff;
-  text-align: center;
+.title{text-align:center;margin:16px 0}
+
+.step{display:none;padding:0 12px}
+.step.active{display:block}
+
+h2{text-align:center;margin-bottom:12px;font-size:18px}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
 }
 
-.title {
-  margin: 15px 0;
+.card{
+  border:1.5px solid rgba(255,255,255,.4);
+  border-radius:10px;
+  padding:8px;
+  text-align:center;
+  cursor:pointer;
 }
 
-.step {
-  display: none;
-  padding: 10px;
+.card.active{border-color:#fff}
+
+.card img{
+  width:60px;
+  height:60px;
+  object-fit:contain;
 }
 
-.step.active {
-  display: block;
+.card span{font-size:13px;display:block;margin-top:4px}
+
+.compact .card img{width:48px;height:48px}
+
+.counter{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:6px;
+  margin-top:6px;
 }
 
-h2 {
-  margin-bottom: 10px;
-  font-size: 18px;
+.counter button{
+  background:transparent;
+  border:1px solid #fff;
+  color:#fff;
+  width:26px;
+  height:26px;
+  border-radius:6px;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-  margin-bottom: 15px;
+.counter input{
+  width:36px;
+  text-align:center;
 }
 
-.cell {
-  border: 1px solid rgba(255,255,255,0.3);
-  border-radius: 10px;
-  padding: 10px 5px;
-  cursor: pointer;
+.nav{
+  background:transparent;
+  border:1.5px solid #fff;
+  color:#fff;
+  padding:10px 18px;
+  border-radius:8px;
+  margin:12px auto;
+  display:block;
 }
 
-.cell.selected {
-  border: 2px solid #fff;
+.navs{
+  display:flex;
+  justify-content:space-between;
 }
 
-.cell img {
-  width: 60px;
-  height: 60px;
-  object-fit: contain;
-}
-
-.cell span {
-  display: block;
-  margin-top: 6px;
-  font-size: 14px;
-}
-
-.nav,
-.navs .nav {
-  background: transparent;
-  border: 1px solid #fff;
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 20px;
-  font-size: 16px;
-}
-
-.navs {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
+pre{
+  background:rgba(0,0,0,.45);
+  padding:10px;
+  border-radius:8px;
+  font-size:14px;
 }
