@@ -1,3 +1,4 @@
+
 let selectedExplosives = [];
 let selectedMaterials = [];
 let selectedObjects = {};
@@ -13,6 +14,7 @@ function showStep(n){
 function nextStep(n){
   if(n===1 && selectedExplosives.length===0){ alert("Выберите взрывчатку"); return; }
   if(n===2 && selectedMaterials.length===0){ alert("Выберите материалы"); return; }
+
   if(n===2) loadObjects();
   showStep(n);
 }
@@ -37,7 +39,7 @@ document.querySelectorAll('.mat').forEach(e=>{
   }
 });
 
-// Объекты
+// Названия объектов
 const objectNames = {
   door:'Дверь', wall:'Стена', foundation:'Фундамент',
   ladder:'Складная лестница', grate:'Решётка',
@@ -49,6 +51,7 @@ const objectNames = {
   rocket_launcher:'Ракетная установка'
 };
 
+// Объекты по материалам
 const objectsByMaterial = {
   wood:['door','wall','foundation'],
   stone:['door','wall','foundation'],
@@ -58,6 +61,7 @@ const objectsByMaterial = {
   objects:['tracker','auto_rifle','auto_shotgun','trader_bot','em_turret','rocket_launcher']
 };
 
+// Загружаем объекты в 3 вкладке
 function loadObjects(){
   objectsDiv.innerHTML='';
   selectedObjects={};
@@ -83,11 +87,13 @@ function loadObjects(){
   });
 }
 
+// Кнопки + и -
 function change(k,v){
   selectedObjects[k]=Math.max(0,(selectedObjects[k]||0)+v);
   document.getElementById('c_'+k).value = selectedObjects[k];
 }
 
+// Ввод вручную
 function manualChange(k,v){
   const val = Math.max(0, parseInt(v)||0);
   selectedObjects[k] = val;
@@ -100,6 +106,7 @@ const data = {
   dynamite:{ wood:{door:{count:1,sulfur:500}, wall:{count:2,sulfur:1000}}, metal:{door:{count:4,sulfur:2000}, wall:{count:13,sulfur:6500}, foundation:{count:50,sulfur:25000}, ladder:{count:7,sulfur:3500}, grate:{count:2,sulfur:1000} } }
 };
 
+// Расчёт
 function calculate(){
   let totalSulfur=0;
   let output='';
