@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>Калькулятор LIOS</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>Калькулятор LIOS</title>
+<link rel="stylesheet" href="style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 </head>
 <body>
+
 <div class="container">
   <h1>Калькулятор LIOS</h1>
 
@@ -19,7 +21,7 @@
       <div class="exp" data-exp="hexogen"><img src="images/hexogen.png"><span>Гексоген</span></div>
       <div class="exp" data-exp="rocket"><img src="images/rocket.png"><span>Ракета</span></div>
     </div>
-    <button onclick="nextStep(1)">Далее</button>
+    <button id="next1" onclick="nextStep(1)" disabled>Далее</button>
   </div>
 
   <!-- 2 вкладка -->
@@ -34,7 +36,7 @@
       <div class="mat" data-mat="objects"><img src="images/objects.png"><span>Объекты</span></div>
     </div>
     <button onclick="prevStep(0)">Назад</button>
-    <button onclick="nextStep(2)">Далее</button>
+    <button id="next2" onclick="nextStep(2)" disabled>Далее</button>
   </div>
 
   <!-- 3 вкладка -->
