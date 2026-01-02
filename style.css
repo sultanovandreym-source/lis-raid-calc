@@ -1,97 +1,80 @@
-body {
-  background: url("images/my_background.jpg") no-repeat center center fixed;
-  background-size: cover;
-  margin: 0;
-  font-family: Arial, sans-serif;
-  color: #fff;
+body{
+  background:url("images/my_background.jpg") center/cover fixed no-repeat;
+  margin:0;
+  font-family:Arial, sans-serif;
+  color:#fff;
 }
 
-.container {
-  max-width: 980px;
-  margin: 20px auto;
-  background: rgba(0,0,0,0.75);
-  padding: 20px;
-  border-radius: 12px;
+.container{
+  max-width:900px;
+  margin:20px auto;
+  padding:20px;
+  background:rgba(0,0,0,.75);
+  border-radius:12px;
 }
 
-h1, h2 {
-  text-align: center;
+h1,h2{text-align:center}
+
+.step{display:none}
+.step.active{display:block}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+  margin:15px 0;
 }
 
-.step {
-  display: none;
-}
-.step.active {
-  display: block;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
-  justify-items: center;
+.exp,.mat,.object-icon{
+  background:rgba(255,255,255,.05);
+  border-radius:12px;
+  padding:12px;
+  text-align:center;
+  cursor:pointer;
+  border:2px solid transparent;
 }
 
-.card {
-  width: 100%;
-  max-width: 180px;
-  background: rgba(255,255,255,0.06);
-  border-radius: 12px;
-  padding: 14px;
-  text-align: center;
-  cursor: pointer;
-  border: 2px solid transparent;
-  transition: 0.25s;
+.exp.active,.mat.active,.object-icon.active{
+  border-color:#fff;
 }
 
-.card img {
-  width: 80px;
-  height: 80px;
-  object-fit: contain;
-  margin-bottom: 6px;
+img{
+  width:72px;
+  height:72px;
+  object-fit:contain;
 }
 
-.card.active {
-  border-color: #fff;
+.buttons{text-align:center}
+
+.btn{
+  margin:10px;
+  padding:10px 22px;
+  background:#333;
+  border:2px solid #fff;
+  color:#fff;
+  border-radius:8px;
+  cursor:pointer;
 }
 
-.counter {
-  display: flex;
-  justify-content: center;
-  gap: 6px;
-  margin-top: 6px;
+.counter{
+  display:flex;
+  justify-content:center;
+  gap:6px;
+  margin-top:6px;
 }
 
-.counter input {
-  width: 45px;
-  text-align: center;
+.counter input{
+  width:50px;
+  text-align:center;
 }
 
-.buttons {
-  text-align: center;
-  margin-top: 15px;
+pre{
+  white-space:pre-wrap;
+  background:rgba(0,0,0,.5);
+  padding:12px;
+  border-radius:8px;
 }
 
-button {
-  background: #444;
-  border: 2px solid #fff;
-  color: #fff;
-  padding: 10px 22px;
-  border-radius: 8px;
-  cursor: pointer;
-  margin: 5px;
-}
-
-pre {
-  background: rgba(0,0,0,0.5);
-  padding: 12px;
-  border-radius: 8px;
-  white-space: pre-wrap;
-}
-
-/* 📱 Телефон */
-@media (max-width: 600px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+@media(max-width:600px){
+  .grid{grid-template-columns:repeat(2,1fr)}
 }
