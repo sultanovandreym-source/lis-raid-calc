@@ -146,22 +146,39 @@ RAID.rocket = JSON.parse(JSON.stringify(RAID.c4));
 
 /* ================== РАСЧЁТ ================== */
 function calculate(){
-  let out='';
-  let sulfur=0;
-  Object.entries(selectedObj).forEach(([k,c])=>{
-    if(!c) return;
-    const [mat,obj]=k.split('_');
-    out+=`${names[obj]} × ${c}\n`;
-    selectedExp.forEach(e=>{
-      const d = mat === 'objects'
-  ? RAID[e]?.objects?.[obj]
-  : RAID[e]?.[mat]?.[obj];
-      if(!d) return;
-      out+=`  ${e.toUpperCase()}: ${d[0]*c} шт (${d[1]*c} серы)\n`;
-      sulfur+=d[1]*c;
+  let out = '';
+  let sulfur = 0;
+
+  Object.entries(selectedObj).forEach(([key, count]) => {
+    if (!count) return;
+
+    const [mat, obj] = key.split('_');
+    out += `${names[obj]} × ${count}\n`;
+
+    selectedExp.forEach(exp => {
+      let d;
+
+      // 👇 КЛЮЧЕВОЕ ИСПРАВЛЕНИЕ
+      if (mat === 'objects') {
+        d = RAID[exp]?.objects?.[obj];
+      } else {
+        d = RAID[exp]?.[mat]?.[obj];
+      }
+
+      if (d === null) {
+        out += `  ${exp.toUpperCase()}: невозможно разрушить\n`;
+      } 
+      else if (d) {
+        out += `  ${exp.toUpperCase()}: ${d[0] * count} шт (${d[1] * count} серы)\n`;
+        sulfur += d[1] * count;
+      }
     });
-    out+='\n';
+
+    out += '\n';
   });
-  document.getElementById('result').innerText = out ? out + `ИТОГО серы: ${sulfur}` : 'Ничего не выбрано';
+
+  document.getElementById('result').innerText =
+    out ? out + `ИТОГО серы: ${sulfur}` : 'Ничего не выбрано';
+
   showStep(3);
 }
