@@ -1,96 +1,132 @@
-body {
-  background: url('images/my_background.jpg') no-repeat center center fixed;
-  background-size: cover;
-  font-family: Arial;
-  color: #fff;
-  margin: 0;
+let selectedExplosives = [];
+let selectedMaterials = [];
+let selectedObjects = {};
+
+const steps = document.querySelectorAll('.step');
+const objectsDiv = document.getElementById('objects');
+
+function showStep(n){
+  steps.forEach(s=>s.classList.remove('active'));
+  steps[n].classList.add('active');
 }
 
-.container {
-  max-width: 1000px;
-  margin: 20px auto;
-  background: rgba(0,0,0,0.75);
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 20px #000;
-  text-align: center;
+function nextStep(n){
+  if(n===1 && selectedExplosives.length===0){ alert("Выберите взрывчатку"); return; }
+  if(n===2 && selectedMaterials.length===0){ alert("Выберите материалы"); return; }
+
+  if(n===2) loadObjects();
+  showStep(n);
 }
 
-h1, h2 { text-align: center; }
+function prevStep(n){ showStep(n); }
 
-.step { display:none; opacity:0; transition: opacity 0.4s ease; }
-.step.active { display:block; opacity:1; }
+// Выбор взрывчатки
+document.querySelectorAll('.exp').forEach(e=>{
+  e.onclick=()=>{
+    e.classList.toggle('active');
+    const v=e.dataset.exp;
+    selectedExplosives.includes(v) ? selectedExplosives.splice(selectedExplosives.indexOf(v),1) : selectedExplosives.push(v);
+  }
+});
 
-.grid {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin: 15px 0;
+// Выбор материалов
+document.querySelectorAll('.mat').forEach(e=>{
+  e.onclick=()=>{
+    e.classList.toggle('active');
+    const v=e.dataset.mat;
+    selectedMaterials.includes(v) ? selectedMaterials.splice(selectedMaterials.indexOf(v),1) : selectedMaterials.push(v);
+  }
+});
+
+// Названия объектов
+const objectNames = {
+  door:'Дверь', wall:'Стена', foundation:'Фундамент',
+  ladder:'Складная лестница', grate:'Решётка',
+  tracker:'Устройство отслеживания стрельбы',
+  auto_rifle:'Автоматическая винтовка',
+  auto_shotgun:'Автоматическая картечь',
+  trader_bot:'Торговый бот',
+  em_turret:'Электромагнитная турель',
+  rocket_launcher:'Ракетная установка'
+};
+
+const objectsByMaterial = {
+  wood:['door','wall','foundation'],
+  stone:['door','wall','foundation'],
+  metal:['door','wall','foundation','ladder','grate'],
+  steel:['door','wall','foundation','ladder','grate'],
+  titan:['door','wall','foundation','ladder','grate'],
+  objects:['tracker','auto_rifle','auto_shotgun','trader_bot','em_turret','rocket_launcher']
+};
+
+function loadObjects(){
+  objectsDiv.innerHTML='';
+  selectedObjects={};
+
+  selectedMaterials.forEach(mat=>{
+    objectsByMaterial[mat].forEach(obj=>{
+      const key = `${mat}_${obj}`;
+      const img = mat==='objects' ? `images/${obj}.png` : `images/${mat}_${obj}.png`;
+
+      const d = document.createElement('div');
+      d.className='object-icon';
+      d.innerHTML=`
+        <img src="${img}" alt="${objectNames[obj]}">
+        <span>${objectNames[obj]}</span>
+        <div class="counter">
+          <button onclick="change('${key}',-1)">-</button>
+          <input type="number" id="c_${key}" value="0" min="0" onchange="manualChange('${key}',this.value)">
+          <button onclick="change('${key}',1)">+</button>
+        </div>`;
+      objectsDiv.appendChild(d);
+      selectedObjects[key]=0;
+    });
+  });
 }
 
-.column {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+function change(k,v){
+  selectedObjects[k]=Math.max(0,(selectedObjects[k]||0)+v);
+  document.getElementById('c_'+k).value = selectedObjects[k];
 }
 
-/* Карточки */
-.exp, .mat, .object-icon {
-  width: 180px;
-  height: 180px;
-  padding: 3mm;
-  box-sizing: border-box;
-  border-radius: 10px;
-  background: rgba(255,255,255,0.05);
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  border: 2px solid transparent;
-  transition: all 0.3s ease;
+function manualChange(k,v){
+  const val = Math.max(0, parseInt(v)||0);
+  selectedObjects[k] = val;
+  document.getElementById('c_'+k).value = val;
 }
 
-.exp img, .mat img, .object-icon img {
-  width: calc(100% - 6mm);
-  height: calc(100% - 30px);
-  object-fit: contain;
-  margin-bottom:5px;
-}
+// Пример данных взрывчатки
+const data = {
+  bobovka:{ wood:{door:{count:2,sulfur:240}, wall:{count:4,sulfur:480}, foundation:{count:15,sulfur:1800}}, metal:{door:{count:30,sulfur:3600}, wall:{count:100,sulfur:12000}, foundation:{count:400,sulfur:48000}, ladder:{count:46,sulfur:5520}, grate:{count:10,sulfur:1200} } },
+  dynamite:{ wood:{door:{count:1,sulfur:500}, wall:{count:2,sulfur:1000}}, metal:{door:{count:4,sulfur:2000}, wall:{count:13,sulfur:6500}, foundation:{count:50,sulfur:25000}, ladder:{count:7,sulfur:3500}, grate:{count:2,sulfur:1000} } }
+};
 
-/* Выделение */
-.exp.active, .mat.active, .object-icon.active {
-  border: 2px solid #fff;
-}
+function calculate(){
+  let totalSulfur=0;
+  let output='';
+  let hasObjects=false;
 
-/* Кнопки */
-.btn {
-  margin:10px;
-  padding:10px 20px;
-  background: #333;
-  border: 2px solid #fff;
-  color:#fff;
-  border-radius:6px;
-  cursor:pointer;
-  transition:0.3s;
-}
-.btn:hover { background:#444; }
+  Object.entries(selectedObjects).forEach(([key,val])=>{
+    if(val===0) return;
+    hasObjects=true;
+    const [mat,obj]=key.split('_');
+    output+=`${objectNames[obj]} (${mat}) x${val}\n`;
 
-.counter { display:flex; align-items:center; gap:5px; margin-top:5px; }
-.counter input { width:40px; text-align:center; border-radius:4px; border:none; }
+    selectedExplosives.forEach(exp=>{
+      const v = data[exp]?.[mat]?.[obj];
+      if(v){
+        output+=`• ${exp}: ${v.count*val} (Сера: ${v.sulfur*val})\n`;
+        totalSulfur+=v.sulfur*val;
+      } else {
+        output+=`• ${exp}: Невозможно\n`;
+      }
+    });
+    output+='\n';
+  });
 
-pre {
-  background: rgba(0,0,0,0.5);
-  padding: 10px;
-  border-radius: 5px;
-  overflow:auto;
-}
+  if(!hasObjects){ alert("Выберите хотя бы один объект"); return; }
 
-/* Мобильная адаптация */
-@media(max-width:600px){
-  .grid { flex-wrap: wrap; }
-  .column { flex: 0 0 50%; } /* 2 колонки */
-  .exp, .mat, .object-icon { width: 140px; height: 140px; padding: 2mm; }
-  .exp img, .mat img, .object-icon img { width: calc(100% - 4mm); height: calc(100% - 30px); }
-}
+  output += `Общее количество серы: ${totalSulfur}`;
+  document.getElementById('result').innerText = output;
+  showStep(3);
+  }
