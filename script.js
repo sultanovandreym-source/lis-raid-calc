@@ -1,125 +1,168 @@
 const steps = document.querySelectorAll('.step');
-let selectedExp = [];
-let selectedMat = [];
-let selectedObjects = {};
+
+const selectedExp = new Set();
+const selectedMat = new Set();
+const selectedObj = {};
 
 function showStep(n){
-  steps.forEach(s => s.classList.remove('active'));
+  steps.forEach(s=>s.classList.remove('active'));
   steps[n].classList.add('active');
 }
 
 function nextStep(n){
-  if(n === 1 && selectedExp.length === 0){
-    alert('Выберите взрывчатку');
-    return;
-  }
-  if(n === 2 && selectedMat.length === 0){
-    alert('Выберите материал');
-    return;
-  }
-  if(n === 2) loadObjects();
+  if(n===1 && !selectedExp.size) return alert('Выберите взрывчатку');
+  if(n===2 && !selectedMat.size) return alert('Выберите материал');
+  if(n===2) loadObjects();
   showStep(n);
 }
 
-function prevStep(n){
-  showStep(n);
-}
+function prevStep(n){ showStep(n); }
 
-/* ================== ВЗРЫВЧАТКА ================== */
-document.querySelectorAll('.exp').forEach(el=>{
-  el.onclick = ()=>{
-    const v = el.dataset.exp;
-    el.classList.toggle('active');
+/* ====== ДАННЫЕ ДЛЯ ИНТЕРФЕЙСА ====== */
 
-    if(selectedExp.includes(v)){
-      selectedExp = selectedExp.filter(x=>x!==v);
-    } else {
-      selectedExp.push(v);
-    }
-  };
-});
+const EXPLOSIVES = [
+  ['bobovka','Бабовка'],
+  ['dynamite','Динамит'],
+  ['c4','C4'],
+  ['hexogen','Гексоген'],
+  ['rocket','Ракета']
+];
 
-/* ================== МАТЕРИАЛЫ ================== */
-document.querySelectorAll('.mat').forEach(el=>{
-  el.onclick = ()=>{
-    const v = el.dataset.mat;
-    el.classList.toggle('active');
+const MATERIALS = [
+  ['wood','Дерево'],
+  ['stone','Камень'],
+  ['metal','Железо'],
+  ['steel','Сталь'],
+  ['titan','Титан'],
+  ['objects','Прочее']
+];
 
-    if(selectedMat.includes(v)){
-      selectedMat = selectedMat.filter(x=>x!==v);
-    } else {
-      selectedMat.push(v);
-    }
-  };
-});
-
-/* ================== ОБЪЕКТЫ ================== */
-const objectMap = {
-  wood: [
-    ['door','Деревяная дверь'],
-    ['wall','Деревяная стена'],
-    ['foundation','Деревяный фундамент']
+const OBJECTS = {
+  wood:[
+    ['door','Деревянная дверь'],
+    ['wall','Деревянная стена'],
+    ['foundation','Деревянный фундамент']
   ],
-  stone: [
-    ['door','Каменая дверь'],
-    ['wall','Каменая стена'],
-    ['foundation','Каменый фундамент']
+  stone:[
+    ['door','Каменная дверь'],
+    ['wall','Каменная стена'],
+    ['foundation','Каменный фундамент']
   ],
-  metal: [
+  metal:[
     ['door','Железная дверь'],
     ['wall','Железная стена'],
     ['foundation','Железный фундамент'],
-    ['ladder','Железная складная лестница'],
-    ['grate','Железная решетка']
+    ['ladder','Складная лестница'],
+    ['grate','Решётка']
   ],
-  steel: [
+  steel:[
     ['door','Стальная дверь'],
     ['wall','Стальная стена'],
     ['foundation','Стальной фундамент'],
-    ['ladder','Стальная складная лестница'],
-    ['grate','Стальная решетка']
+    ['ladder','Складная лестница'],
+    ['grate','Решётка']
   ],
-  titan: [
+  titan:[
     ['door','Титановая дверь'],
     ['wall','Титановая стена'],
     ['foundation','Титановый фундамент'],
-    ['ladder','Титановая складная лестница'],
-    ['grate','Титановая решетка']
+    ['ladder','Складная лестница'],
+    ['grate','Решётка']
   ],
-  objects: [
-    ['sensor','Устройство отслеживания стрельбы'],
-    ['rifle','Установка с автоматической винтовкой'],
-    ['shotgun','Автоматическая установка для картечи'],
-    ['bot','Торговый бот'],
-    ['turret','Электромагнитная турель'],
-    ['launcher','Ракетная пусковая установка']
+  objects:[
+    ['tracker','Устройство отслеживания'],
+    ['auto_rifle','Автоматическая винтовка'],
+    ['shotgun','Картечница'],
+    ['trader','Торговый бот'],
+    ['em_turret','ЭМ турель'],
+    ['rocket_launcher','Ракетная установка']
   ]
 };
 
+/* ====== СОЗДАНИЕ КАРТОЧЕК ====== */
+
+function createCard(name, key, set){
+  const div=document.createElement('div');
+  div.className='card';
+  div.innerHTML=`<img src="images/${key}.png"><span>${name}</span>`;
+  div.onclick=()=>{
+    div.classList.toggle('active');
+    div.classList.contains('active') ? set.add(key) : set.delete(key);
+  };
+  return div;
+}
+
+/* ====== ЗАГРУЗКА 1 И 2 ВКЛАДКИ ====== */
+
+EXPLOSIVES.forEach(e=>{
+  explosives.appendChild(createCard(e[1],e[0],selectedExp));
+});
+
+MATERIALS.forEach(m=>{
+  materials.appendChild(createCard(m[1],m[0],selectedMat));
+});
+
+/* ====== 3 ВКЛАДКА ====== */
+
 function loadObjects(){
-  const wrap = document.getElementById('objects');
-  wrap.innerHTML = '';
-  selectedObjects = {};
+  objects.innerHTML='';
+  Object.keys(selectedObj).forEach(k=>delete selectedObj[k]);
 
   selectedMat.forEach(mat=>{
-    objectMap[mat].forEach(o=>{
-      const key = mat+'_'+o[0];
-      selectedObjects[key] = 0;
+    OBJECTS[mat].forEach(o=>{
+      const key=mat+'_'+o[0];
+      selectedObj[key]=0;
 
-      wrap.innerHTML += `
-      <div class="object-icon">
+      const c=document.createElement('div');
+      c.className='card';
+      c.innerHTML=`
+        <img src="images/${o[0]}.png">
         <span>${o[1]}</span>
         <div class="counter">
-          <button onclick="chg('${key}',-1)">-</button>
-          <input id="c_${key}" value="0" readonly>
-          <button onclick="chg('${key}',1)">+</button>
+          <button>-</button>
+          <input value="0">
+          <button>+</button>
         </div>
-      </div>`;
+      `;
+
+      const inp=c.querySelector('input');
+      c.querySelectorAll('button')[0].onclick=()=>{
+        inp.value=Math.max(0,+inp.value-1);
+        selectedObj[key]=+inp.value;
+      };
+      c.querySelectorAll('button')[1].onclick=()=>{
+        inp.value=+inp.value+1;
+        selectedObj[key]=+inp.value;
+      };
+      inp.onchange=()=>selectedObj[key]=+inp.value||0;
+
+      objects.appendChild(c);
     });
   });
 }
 
-function chg(k,v){
-  selectedObjects[k] = Math.max(0, selectedObjects[k] + v);
-  document.getElementById('c_'+k).value = selectedObjects[k];
+/* ====== РАСЧЁТ (RAID_DATA У ТЕБЯ УЖЕ ЕСТЬ) ====== */
+
+function calculate(){
+  let out='';
+  let sulfur=0;
+
+  Object.entries(selectedObj).forEach(([k,c])=>{
+    if(!c) return;
+    const [mat,obj]=k.split('_');
+
+    selectedExp.forEach(exp=>{
+      const d=RAID_DATA[exp]?.[mat]?.[obj];
+      if(d===null){
+        out+=`${obj}: ${exp} — невозможно\n`;
+      }else if(d){
+        out+=`${obj}: ${exp} ${d[0]*c} шт (${d[1]*c} серы)\n`;
+        sulfur+=d[1]*c;
+      }
+    });
+    out+='\n';
+  });
+
+  result.textContent=out+`\nИТОГО СЕРЫ: ${sulfur}`;
+  showStep(3);
 }
