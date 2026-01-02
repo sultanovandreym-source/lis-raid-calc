@@ -1,21 +1,23 @@
-let selectedExplosives=[], selectedMaterials=[], selectedObjects={};
+let selectedExplosives=[];
+let selectedMaterials=[];
+let selectedObjects={};
+
 const steps=document.querySelectorAll('.step');
 const objectsDiv=document.getElementById('objects');
+const next1=document.getElementById('next1');
+const next2=document.getElementById('next2');
 
-function showStep(n){ 
+function showStep(n){
   steps.forEach(s=>s.classList.remove('active'));
   steps[n].classList.add('active');
 }
-
 function nextStep(n){
-  if(n===1 && selectedExplosives.length===0){ alert("Выберите хотя бы одну взрывчатку"); return; }
-  if(n===2 && selectedMaterials.length===0){ alert("Выберите хотя бы один материал"); return; }
   if(n===2) loadObjects();
   showStep(n);
 }
 function prevStep(n){ showStep(n); }
 
-// Выбор взрывчатки
+// выбор взрывчатки
 document.querySelectorAll('.exp').forEach(e=>{
   e.onclick=()=>{
     e.classList.toggle('active');
@@ -23,10 +25,11 @@ document.querySelectorAll('.exp').forEach(e=>{
     selectedExplosives.includes(v)
       ? selectedExplosives=selectedExplosives.filter(x=>x!==v)
       : selectedExplosives.push(v);
+    next1.disabled = selectedExplosives.length === 0;
   }
 });
 
-// Выбор материалов
+// выбор материалов
 document.querySelectorAll('.mat').forEach(e=>{
   e.onclick=()=>{
     e.classList.toggle('active');
@@ -34,20 +37,19 @@ document.querySelectorAll('.mat').forEach(e=>{
     selectedMaterials.includes(v)
       ? selectedMaterials=selectedMaterials.filter(x=>x!==v)
       : selectedMaterials.push(v);
+    next2.disabled = selectedMaterials.length === 0;
   }
 });
 
+// названия объектов
 const objectNames={
-  door:'Дверь', wall:'Стена', foundation:'Фундамент',
-  ladder:'Складная лестница', grate:'Решётка',
-  tracker:'Устройство отслеживания стрельбы',
-  auto_rifle:'Автоматическая винтовка',
-  auto_shotgun:'Автоматическая картечь',
-  trader_bot:'Торговый бот',
-  em_turret:'Электромагнитная турель',
-  rocket_launcher:'Ракетная установка'
+  door:'Дверь',wall:'Стена',foundation:'Фундамент',
+  ladder:'Лестница',grate:'Решётка',
+  tracker:'Турель',auto_rifle:'Автомат',auto_shotgun:'Картечница',
+  trader_bot:'Торговый бот',em_turret:'Электромагнитная турель',rocket_launcher:'Ракетная установка'
 };
 
+// объекты по материалу
 const objectsByMaterial={
   wood:['door','wall','foundation'],
   stone:['door','wall','foundation'],
@@ -63,7 +65,7 @@ function loadObjects(){
   selectedMaterials.forEach(mat=>{
     objectsByMaterial[mat].forEach(obj=>{
       const key=`${mat}_${obj}`;
-      const img = mat==='objects' ? `images/${obj}.png` : `images/${mat}_${obj}.png`;
+      const img = mat==='objects'?`images/${obj}.png`:`images/${mat}_${obj}.png`;
       const d=document.createElement('div');
       d.className='object-icon';
       d.innerHTML=`
@@ -85,26 +87,34 @@ function change(k,v){
   document.getElementById('c_'+k).innerText=selectedObjects[k];
 }
 
+// данные взрывчатки (пример)
 const data={
-  bobovka:{ wood:{door:{count:2,sulfur:240},wall:{count:4,sulfur:480},foundation:{count:15,sulfur:1800}}, metal:{door:{count:30,sulfur:3600},wall:{count:100,sulfur:12000},foundation:{count:400,sulfur:48000},ladder:{count:46,sulfur:5520},grate:{count:10,sulfur:1200}} },
-  dynamite:{ wood:{door:{count:1,sulfur:500},wall:{count:2,sulfur:1000}}, metal:{door:{count:4,sulfur:2000},wall:{count:13,sulfur:6500},foundation:{count:50,sulfur:25000},ladder:{count:7,sulfur:3500},grate:{count:5,sulfur:2500}} }
-  // Добавьте остальные взрывчатки
+  bobovka:{ wood:{door:{count:2,sulfur:240},wall:{count:4,sulfur:480},foundation:{count:15,sulfur:1800}}, metal:{door:{count:30,sulfur:3600},wall:{count:100,sulfur:12000}}},
+  dynamite:{ wood:{door:{count:1,sulfur:500},wall:{count:2,sulfur:1000}}, metal:{door:{count:4,sulfur:2000},wall:{count:13,sulfur:6500}}},
+  c4:{ wood:{door:{count:1,sulfur:1500}}, metal:{door:{count:2,sulfur:3000}}},
+  hexogen:{ wood:{door:{count:1,sulfur:2500}}, metal:{door:{count:1,sulfur:2500}}},
+  rocket:{ wood:{door:{count:1,sulfur:1500}}, metal:{door:{count:2,sulfur:3000}}}
 };
 
 function calculate(){
-  let res=''; let total=0;
+  let res='';
+  let totalSulfur=0;
   Object.entries(selectedObjects).forEach(([k,v])=>{
     if(!v) return;
     const [mat,obj]=k.split('_');
     res+=`${objectNames[obj]} (${mat}) x${v}\n`;
     selectedExplosives.forEach(exp=>{
       const val=data[exp]?.[mat]?.[obj];
-      if(val){ res+=`• ${exp}: ${val.count*v} (Сера: ${val.sulfur*v})\n`; total+=val.sulfur*v; }
-      else res+=`• ${exp}: Невозможно\n`;
+      if(val){
+        res+=`  ${exp}: ${val.count*v} (Сера: ${val.sulfur*v})\n`;
+        totalSulfur+=val.sulfur*v;
+      } else {
+        res+=`  ${exp}: Невозможно\n`;
+      }
     });
     res+='\n';
   });
-  res+=`Общее количество серы: ${total}`;
+  res+=`Общее количество серы: ${totalSulfur}`;
   document.getElementById('result').innerText=res||'Ничего не выбрано';
   showStep(3);
 }
