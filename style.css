@@ -2,34 +2,21 @@ body{
   margin:0;
   font-family:Arial;
   color:#fff;
-  background:
-    linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.6)),
-    url(images/my_background.jpg) center/cover fixed;
+  background: linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.6)), url(images/my_background.jpg) center/cover fixed;
 }
 
-.title{
-  text-align:center;
-  margin:14px 0;
-}
+.title{text-align:center;margin:14px 0}
 
-.step{
-  display:none;
-  padding:0 12px;
-}
+.step{display:none;padding:0 12px}
 .step.active{display:block}
 
-.panel{
-  background: rgba(0,0,0,0.55);
-  border-radius: 14px;
-  padding: 14px 12px 26px; /* ⬅️ больше снизу под кнопки */
-  margin: 10px auto 22px;
-  max-width: 520px;
-}
+h2{text-align:center;font-size:18px;margin-bottom:10px}
 
-h2{
-  text-align:center;
-  font-size:18px;
-  margin-bottom:10px;
+.dark-window{
+  background: rgba(0,0,0,0.45);
+  padding:10px;
+  border-radius:12px;
+  margin-bottom:12px;
 }
 
 .grid{
@@ -46,9 +33,7 @@ h2{
   cursor:pointer;
 }
 
-.card.active{
-  border-color:#fff;
-}
+.card.active{border-color:#fff}
 
 .card img{
   width:60px;
