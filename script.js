@@ -153,7 +153,9 @@ function calculate(){
     const [mat,obj]=k.split('_');
     out+=`${names[obj]} × ${c}\n`;
     selectedExp.forEach(e=>{
-      const d = RAID[e]?.[mat]?.[obj] || RAID[e]?.objects?.[obj];
+      const d = mat === 'objects'
+  ? RAID[e]?.objects?.[obj]
+  : RAID[e]?.[mat]?.[obj];
       if(!d) return;
       out+=`  ${e.toUpperCase()}: ${d[0]*c} шт (${d[1]*c} серы)\n`;
       sulfur+=d[1]*c;
