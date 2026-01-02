@@ -16,6 +16,7 @@ body {
   border-radius: 10px;
   margin: 20px;
   box-sizing: border-box;
+  text-align: center;
 }
 
 .step { display: none; }
@@ -25,7 +26,7 @@ body {
   display: grid;
   grid-template-columns: repeat(4,1fr);
   gap: 12px;
-  justify-items: center; /* по центру */
+  justify-items: center;
   transition: all 0.3s ease;
 }
 
@@ -41,14 +42,14 @@ body {
   align-items: center;
   border: 2px solid transparent;
   transition: all 0.3s ease;
-  width: 120px; /* фиксированный размер */
-  height: 150px;
+  width: 130px;
+  height: 160px;
   box-sizing: border-box;
 }
 
 .exp img, .mat img, .object-icon img {
-  width: 90px;
-  height: 90px;
+  width: 95px;
+  height: 95px;
   object-fit: contain;
   margin-bottom: 5px;
   transition: transform 0.3s ease;
@@ -58,9 +59,8 @@ body {
   transform: scale(1.05);
 }
 
-.exp.active, .mat.active, .object-icon.active {
+.active {
   border: 2px solid #fff;
-  transform: scale(1.03);
 }
 
 button {
@@ -100,5 +100,5 @@ input[type="number"]:focus {
 @media(max-width: 600px) {
   .grid { grid-template-columns: repeat(2,1fr); }
   .exp img, .mat img, .object-icon img { width: 70px; height: 70px; }
-  .exp, .mat, .object-icon { width: 100px; height: 130px; }
+  .exp, .mat, .object-icon { width: 110px; height: 140px; }
 }
