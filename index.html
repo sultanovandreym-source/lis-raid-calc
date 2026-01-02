@@ -10,7 +10,7 @@
 <div class="container">
   <h1>Калькулятор LIOS</h1>
 
-  <!-- 1 вкладка: Взрывчатка -->
+  <!-- 1 вкладка -->
   <div class="step active">
     <h2>Выберите взрывчатку</h2>
     <div class="grid">
@@ -20,10 +20,10 @@
       <div class="exp" data-exp="hexogen"><img src="images/hexogen.png"><span>Гексоген</span></div>
       <div class="exp" data-exp="rocket"><img src="images/rocket.png"><span>Ракета</span></div>
     </div>
-    <button id="next1">Далее</button>
+    <button onclick="nextStep(1)" id="next1">Далее</button>
   </div>
 
-  <!-- 2 вкладка: Материалы -->
+  <!-- 2 вкладка -->
   <div class="step">
     <h2>Выберите материалы</h2>
     <div class="grid">
@@ -34,23 +34,23 @@
       <div class="mat" data-mat="titan"><img src="images/titan.png"><span>Титан</span></div>
       <div class="mat" data-mat="objects"><img src="images/objects.png"><span>Объекты</span></div>
     </div>
-    <button id="prev2">Назад</button>
-    <button id="next2">Далее</button>
+    <button onclick="prevStep(0)">Назад</button>
+    <button onclick="nextStep(2)" id="next2">Далее</button>
   </div>
 
-  <!-- 3 вкладка: Объекты -->
+  <!-- 3 вкладка -->
   <div class="step">
     <h2>Выберите объекты</h2>
     <div id="objects" class="grid"></div>
-    <button id="prev3">Назад</button>
-    <button id="calculate">Рассчитать</button>
+    <button onclick="prevStep(1)">Назад</button>
+    <button onclick="calculate()" id="calcBtn">Рассчитать</button>
   </div>
 
-  <!-- 4 вкладка: Результат -->
+  <!-- 4 вкладка -->
   <div class="step">
     <h2>Результат</h2>
     <pre id="result"></pre>
-    <button id="prev4">Назад</button>
+    <button onclick="prevStep(2)">Назад</button>
   </div>
 </div>
 
