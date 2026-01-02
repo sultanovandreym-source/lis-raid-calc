@@ -1,27 +1,26 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>Lios Calculator</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <link rel="stylesheet" href="css/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lios Calculator</title>
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
 <div class="container">
 
-  <!-- ШАГ 1 -->
+  <!-- ШАГ 1: Выбор взрывчатки -->
   <section class="step active" id="step-1">
-    <h2>Взрывчатка</h2>
+    <h2>Выберите взрывчатку</h2>
     <div class="grid" id="explosives"></div>
     <div class="buttons">
       <button id="next1" disabled>Далее</button>
     </div>
   </section>
 
-  <!-- ШАГ 2 -->
+  <!-- ШАГ 2: Выбор материала -->
   <section class="step" id="step-2">
-    <h2>Материал</h2>
+    <h2>Выберите материал</h2>
     <div class="grid" id="materials"></div>
     <div class="buttons">
       <button onclick="go(1)">Назад</button>
@@ -29,9 +28,9 @@
     </div>
   </section>
 
-  <!-- ШАГ 3 -->
+  <!-- ШАГ 3: Выбор объектов -->
   <section class="step" id="step-3">
-    <h2>Объекты</h2>
+    <h2>Выберите объекты</h2>
     <div class="grid" id="objects"></div>
     <div class="buttons">
       <button onclick="go(2)">Назад</button>
@@ -39,7 +38,7 @@
     </div>
   </section>
 
-  <!-- РЕЗУЛЬТАТ -->
+  <!-- ШАГ 4: Результат -->
   <section class="step" id="step-4">
     <h2>Результат</h2>
     <pre id="result"></pre>
@@ -49,7 +48,6 @@
   </section>
 
 </div>
-
 <script src="js/app.js"></script>
 </body>
 </html>
