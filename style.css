@@ -1,132 +1,79 @@
-* {
-  box-sizing: border-box;
-}
-
 body {
-  background: #1e1e1e;
-  font-family: Arial, sans-serif;
-  color: #fff;
-  margin: 0;
+  background:#1e1e1e;
+  font-family:Arial;
+  color:#fff;
+  margin:0;
 }
 
 .container {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 16px;
-  background: #2a2a2a;
-  border-radius: 10px;
+  max-width:900px;
+  margin:20px auto;
+  background:#2a2a2a;
+  padding:20px;
+  border-radius:10px;
 }
 
-h1, h2 {
-  text-align: center;
-  margin: 10px 0;
-}
+.step { display:none; opacity:0; transition:opacity 0.3s; }
+.step.active { display:block; opacity:1; }
 
-.step {
-  display: none;
-}
-
-.step.active {
-  display: block;
-}
-
-/* ===== Сетка ===== */
 .grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr); /* ПК */
-  gap: 12px;
-  margin-top: 12px;
+  display:grid;
+  gap:12px;
+  grid-template-columns:repeat(auto-fit, minmax(120px,1fr));
 }
 
-/* ===== Карточки ===== */
-.exp,
-.mat,
-.object-icon {
-  background: #3a3a3a;
-  border-radius: 10px;
-  padding: 10px;
-  text-align: center;
-  cursor: pointer;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-
-  aspect-ratio: 1 / 1; /* квадрат */
+.exp,.mat,.object-icon {
+  background:#3a3a3a;
+  border-radius:10px;
+  padding:10px;
+  text-align:center;
+  cursor:pointer;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  transition: transform 0.2s, background 0.2s;
 }
 
-.exp img,
-.mat img,
-.object-icon img {
-  width: 64px;
-  height: 64px;
-  object-fit: contain;
+.exp:hover,.mat:hover,.object-icon:hover { transform:scale(1.05); }
+
+.exp img,.mat img,.object-icon img {
+  width:64px;
+  height:64px;
+  object-fit:contain;
 }
 
-.exp span,
-.mat span,
-.object-icon span {
-  font-size: 13px;
-  margin-top: 6px;
-  text-align: center;
-}
+.active { background:#4f6cff; }
 
-/* ===== Активное ===== */
-.active {
-  background: #4f6cff;
-}
-
-/* ===== Счётчик ===== */
-.counter {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: 6px;
-}
-
-.counter button {
-  padding: 4px 10px;
-  background: #4f6cff;
-  border: none;
-  border-radius: 4px;
-  color: #fff;
-  cursor: pointer;
-}
-
-/* ===== Кнопки ===== */
 button {
-  margin: 12px 6px 0;
-  padding: 10px 20px;
-  background: #4f6cff;
-  border: none;
-  color: #fff;
-  border-radius: 6px;
-  cursor: pointer;
+  margin:10px;
+  padding:10px 20px;
+  background:#4f6cff;
+  border:none;
+  color:#fff;
+  border-radius:6px;
+  cursor:pointer;
+  transition: background 0.2s;
+}
+button:hover { background:#5577ff; }
+button.disabled { background:#555; cursor:not-allowed; }
+
+.counter {
+  display:flex;
+  align-items:center;
+  gap:5px;
 }
 
-/* ===== Результат ===== */
-pre {
-  background: #1e1e1e;
-  padding: 12px;
-  border-radius: 8px;
-  white-space: pre-wrap;
+#result {
+  background:#333;
+  padding:15px;
+  border-radius:8px;
+  white-space:pre-wrap;
+  font-family:monospace;
+  line-height:1.4;
 }
 
-/* ===== 📱 МОБИЛЬНАЯ АДАПТАЦИЯ ===== */
-@media (max-width: 768px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr); /* телефон */
-  }
-
-  .exp img,
-  .mat img,
-  .object-icon img {
-    width: 56px;
-    height: 56px;
-  }
-
-  button {
-    width: 100%;
-  }
+@media (max-width:600px){
+  .grid { grid-template-columns:repeat(2,1fr); }
+  .exp img,.mat img,.object-icon img { width:50px; height:50px; }
 }
