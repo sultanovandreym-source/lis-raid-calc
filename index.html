@@ -1,59 +1,67 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Lios Calculator</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Lios Calculator</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="container">
   <h1>Lios Calculator</h1>
 
-  <!-- Вкладка 1: Взрывчатка -->
+  <!-- Step 1: Взрывчатка -->
   <div class="step active">
     <h2>Выберите взрывчатку</h2>
     <div class="grid">
-      <div class="explosive" data-exp="бобовка"><img src="images/bobovka.png"><span>Бобовка</span></div>
-      <div class="explosive" data-exp="динамит"><img src="images/dynamite.png"><span>Динамит</span></div>
-      <div class="explosive" data-exp="С4"><img src="images/c4.png"><span>С4</span></div>
-      <div class="explosive" data-exp="гексоген"><img src="images/hexogen.png"><span>Гексоген</span></div>
-      <div class="explosive" data-exp="ракета"><img src="images/rocket.png"><span>Ракета</span></div>
+      <div class="card explosive" data-exp="bobovka"><img src="images/bobovka.png"><span>Бобовка</span></div>
+      <div class="card explosive" data-exp="dynamite"><img src="images/dynamite.png"><span>Динамит</span></div>
+      <div class="card explosive" data-exp="C4"><img src="images/c4.png"><span>С4</span></div>
+      <div class="card explosive" data-exp="hexogen"><img src="images/hexogen.png"><span>Гексоген</span></div>
+      <div class="card explosive" data-exp="rocket"><img src="images/rocket.png"><span>Ракета</span></div>
     </div>
-    <button id="next1" class="btn">Далее</button>
+    <div class="nav-buttons">
+      <button id="next1">Далее</button>
+    </div>
   </div>
 
-  <!-- Вкладка 2: Материалы -->
+  <!-- Step 2: Материалы -->
   <div class="step">
     <h2>Выберите материалы</h2>
     <div class="grid">
-      <div class="material" data-mat="wood"><img src="images/wood.png"><span>Дерево</span></div>
-      <div class="material" data-mat="stone"><img src="images/stone.png"><span>Камень</span></div>
-      <div class="material" data-mat="metal"><img src="images/metal.png"><span>Металл</span></div>
-      <div class="material" data-mat="steel"><img src="images/steel.png"><span>Сталь</span></div>
-      <div class="material" data-mat="titan"><img src="images/titan.png"><span>Титан</span></div>
-      <div class="material" data-mat="objects"><img src="images/objects.png"><span>Объекты</span></div>
+      <div class="card material" data-mat="wood"><img src="images/wood.png"><span>Дерево</span></div>
+      <div class="card material" data-mat="stone"><img src="images/stone.png"><span>Камень</span></div>
+      <div class="card material" data-mat="metal"><img src="images/metal.png"><span>Металл</span></div>
+      <div class="card material" data-mat="steel"><img src="images/steel.png"><span>Сталь</span></div>
+      <div class="card material" data-mat="titan"><img src="images/titan.png"><span>Титан</span></div>
+      <div class="card material" data-mat="objects"><img src="images/objects.png"><span>Объекты</span></div>
     </div>
-    <button id="prev2" class="btn">Назад</button>
-    <button id="next2" class="btn">Далее</button>
+    <div class="nav-buttons">
+      <button id="prev2">Назад</button>
+      <button id="next2">Далее</button>
+    </div>
   </div>
 
-  <!-- Вкладка 3: Объекты -->
+  <!-- Step 3: Объекты -->
   <div class="step">
     <h2>Выберите объекты и количество</h2>
     <div id="objects" class="grid"></div>
-    <button id="prev3" class="btn">Назад</button>
-    <button id="calculate" class="btn" disabled>Рассчитать</button>
+    <div class="nav-buttons">
+      <button id="prev3">Назад</button>
+      <button id="calculate" disabled>Рассчитать</button>
+    </div>
   </div>
 
-  <!-- Вкладка 4: Результат -->
+  <!-- Step 4: Результат -->
   <div class="step">
     <h2>Результат</h2>
     <pre id="result"></pre>
-    <button id="prev4" class="btn">Назад</button>
+    <div class="nav-buttons">
+      <button id="prev4">Назад</button>
+    </div>
   </div>
-</div>
 
+</div>
 <script src="script.js"></script>
 </body>
 </html>
