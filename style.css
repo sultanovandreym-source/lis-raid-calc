@@ -1,7 +1,7 @@
 body {
   background:#1e1e1e;
-  font-family:Arial, sans-serif;
   color:#fff;
+  font-family:Arial;
   margin:0;
 }
 
@@ -16,13 +16,15 @@ body {
 .step { display:none; }
 .step.active { display:block; }
 
+/* Сетка 2 колонки */
 .grid {
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 колонки */
   gap:12px;
 }
 
-.exp,.mat,.object-icon {
+/* Карточки взрывчатки, материалов и объектов */
+.card, .exp, .mat, .object-icon {
   background:#3a3a3a;
   border-radius:10px;
   padding:10px;
@@ -32,21 +34,24 @@ body {
   flex-direction:column;
   justify-content:center;
   align-items:center;
-  transition: transform 0.2s, background 0.2s;
 }
 
-.exp img,.mat img,.object-icon img {
+.card img, .exp img, .mat img, .object-icon img {
   width:64px;
   height:64px;
   object-fit:contain;
 }
 
-.exp span,.mat span,.object-icon span {
-  margin-top:6px;
+.active {
+  background:#4f6cff;
 }
 
-.exp:hover,.mat:hover,.object-icon:hover { transform:scale(1.1); }
-.active { background:#4f6cff; }
+.counter {
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  margin-top:6px;
+}
 
 button {
   margin:10px;
@@ -58,19 +63,9 @@ button {
   cursor:pointer;
 }
 
-.counter { display:flex; align-items:center; gap:6px; margin-top:5px; }
-
-/* Адаптация */
-@media (max-width:900px) {
-  .grid { grid-template-columns:repeat(3,1fr); }
-  .exp img,.mat img,.object-icon img { width:72px; height:72px; }
-}
-
-@media (max-width:600px) {
-  .grid { display:flex; overflow-x:auto; gap:10px; padding-bottom:10px; }
-  .grid::-webkit-scrollbar { height:6px; }
-  .grid::-webkit-scrollbar-thumb { background:#4f6cff; border-radius:3px; }
-  .exp,.mat,.object-icon { min-width:120px; flex:0 0 auto; }
-  .exp img,.mat img,.object-icon img { width:80px; height:80px; }
-  button { width:100%; }
+/* Мобильная адаптация */
+@media screen and (max-width:600px){
+  .grid {
+    grid-template-columns: 1fr; /* на телефоне 1 колонка */
+  }
 }
