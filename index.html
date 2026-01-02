@@ -1,64 +1,64 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Калькулятор LIOS</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Lios Calculator</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="container">
-  <h1>Калькулятор LIOS</h1>
+  <h1>Lios Calculator</h1>
 
-  <!-- Шаг 1 -->
+  <!-- STEP 1 -->
   <div class="step active">
     <h2>Выберите взрывчатку</h2>
     <div class="grid">
-      <div class="card exp" data-exp="bobovka"><img src="images/bobovka.png"><span>Бобовка</span></div>
-      <div class="card exp" data-exp="dynamite"><img src="images/dynamite.png"><span>Динамит</span></div>
-      <div class="card exp" data-exp="c4"><img src="images/c4.png"><span>C4</span></div>
-      <div class="card exp" data-exp="hexogen"><img src="images/hexogen.png"><span>Гексоген</span></div>
-      <div class="card exp" data-exp="rocket"><img src="images/rocket.png"><span>Ракета</span></div>
+      <div class="exp" data-exp="bobovka"><img src="images/bobovka.png"><span>Бобовка</span></div>
+      <div class="exp" data-exp="dynamite"><img src="images/dynamite.png"><span>Динамит</span></div>
+      <div class="exp" data-exp="c4"><img src="images/c4.png"><span>C4</span></div>
+      <div class="exp" data-exp="hexogen"><img src="images/hexogen.png"><span>Гексоген</span></div>
+      <div class="exp" data-exp="rocket"><img src="images/rocket.png"><span>Ракеты</span></div>
     </div>
     <div class="buttons">
-      <button onclick="nextStep(1)">Далее</button>
+      <button class="btn" onclick="nextStep(1)">Далее</button>
     </div>
   </div>
 
-  <!-- Шаг 2 -->
+  <!-- STEP 2 -->
   <div class="step">
     <h2>Выберите материалы</h2>
     <div class="grid">
-      <div class="card mat" data-mat="wood"><img src="images/wood.png"><span>Дерево</span></div>
-      <div class="card mat" data-mat="stone"><img src="images/stone.png"><span>Камень</span></div>
-      <div class="card mat" data-mat="metal"><img src="images/metal.png"><span>Железо</span></div>
-      <div class="card mat" data-mat="steel"><img src="images/steel.png"><span>Сталь</span></div>
-      <div class="card mat" data-mat="titan"><img src="images/titan.png"><span>Титан</span></div>
-      <div class="card mat" data-mat="objects"><img src="images/objects.png"><span>Объекты</span></div>
+      <div class="mat" data-mat="wood"><img src="images/wood.png"><span>Дерево</span></div>
+      <div class="mat" data-mat="stone"><img src="images/stone.png"><span>Камень</span></div>
+      <div class="mat" data-mat="metal"><img src="images/metal.png"><span>Железо</span></div>
+      <div class="mat" data-mat="steel"><img src="images/steel.png"><span>МВК</span></div>
+      <div class="mat" data-mat="titan"><img src="images/titan.png"><span>Титан</span></div>
+      <div class="mat" data-mat="objects"><img src="images/objects.png"><span>Объекты</span></div>
     </div>
     <div class="buttons">
-      <button onclick="prevStep(0)">Назад</button>
-      <button onclick="nextStep(2)">Далее</button>
+      <button class="btn" onclick="prevStep(0)">Назад</button>
+      <button class="btn" onclick="nextStep(2)">Далее</button>
     </div>
   </div>
 
-  <!-- Шаг 3 -->
+  <!-- STEP 3 -->
   <div class="step">
-    <h2>Объекты</h2>
+    <h2>Объекты и количество</h2>
     <div id="objects" class="grid"></div>
     <div class="buttons">
-      <button onclick="prevStep(1)">Назад</button>
-      <button onclick="calculate()">Рассчитать</button>
+      <button class="btn" onclick="prevStep(1)">Назад</button>
+      <button class="btn" onclick="calculate()">Рассчитать</button>
     </div>
   </div>
 
-  <!-- Шаг 4 -->
+  <!-- STEP 4 -->
   <div class="step">
     <h2>Результат</h2>
     <pre id="result"></pre>
     <div class="buttons">
-      <button onclick="prevStep(2)">Назад</button>
+      <button class="btn" onclick="prevStep(2)">Назад</button>
     </div>
   </div>
 </div>
