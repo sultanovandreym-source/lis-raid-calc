@@ -12,34 +12,33 @@
 
 <div class="step active" id="step1">
   <h2>Выберите тип взрывчатки</h2>
-  <div class="grid" id="explosives"></div>
-  <button class="nav" onclick="nextStep(1)">Далее</button>
-</div>
+  <<div style="
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:12px;
+  padding:12px;
+  margin-top:10px;
+">
 
-<div class="step" id="step2">
-  <h2>Выберите вид материала</h2>
-  <div class="grid" id="materials"></div>
-  <div class="navs">
-    <button class="nav" onclick="prevStep(0)">Назад</button>
-    <button class="nav" onclick="nextStep(2)">Далее</button>
+  <div style="border:2px solid white; height:100px; display:flex; align-items:center; justify-content:center">
+    Бобовка
   </div>
-</div>
 
-<div class="step" id="step3">
-  <h2>Укажите количество объектов</h2>
-  <div class="grid compact" id="objects"></div>
-  <div class="navs">
-    <button class="nav" onclick="prevStep(1)">Назад</button>
-    <button class="nav" onclick="calculate()">Рассчитать</button>
+  <div style="border:2px solid white; height:100px; display:flex; align-items:center; justify-content:center">
+    Динамит
   </div>
-</div>
 
-<div class="step" id="step4">
-  <h2>Результат</h2>
-  <pre id="result"></pre>
-  <button class="nav" onclick="prevStep(2)">Назад</button>
-</div>
+  <div style="border:2px solid white; height:100px; display:flex; align-items:center; justify-content:center">
+    C4
+  </div>
 
-<script src="script.js"></script>
-</body>
+  <div style="border:2px solid white; height:100px; display:flex; align-items:center; justify-content:center">
+    Гексоген
+  </div>
+
+  <div style="border:2px solid white; height:100px; display:flex; align-items:center; justify-content:center">
+    Ракета
+  </div>
+
+  </div>
 </html>
