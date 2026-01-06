@@ -3,12 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <title>LIOS Калькулятор</title>
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <link rel="stylesheet" href="style.css">
-
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
 
@@ -42,7 +38,7 @@
     <div class="grid compact" id="objects"></div>
     <div class="navs">
       <button class="nav" onclick="prevStep(1)">Назад</button>
-      <button class="nav" id="tgCalculateBtn" onclick="calculate()">Рассчитать</button>
+      <button class="nav" onclick="calculate()">Рассчитать</button>
     </div>
   </div>
 </div>
@@ -53,32 +49,35 @@
     <h2>Результат</h2>
     <pre id="result"></pre>
     <button class="nav" onclick="prevStep(2)">Назад</button>
-    <button class="nav" id="sendToTelegram">Отправить в Telegram</button>
+    <button class="nav" onclick="sendToTelegram()">Отправить в Telegram</button>
   </div>
 </div>
 
 <script src="script.js"></script>
 <script>
-  // Инициализация Telegram WebApp API
-  const tg = window.Telegram?.WebApp;
-  if (tg) {
-    tg.ready();
-    tg.expand();
+  // Telegram WebApp
+  const tg = window.Telegram.WebApp;
 
-    // Кнопка MainButton Telegram
-    const mainBtn = tg.MainButton;
-    mainBtn.text = "Рассчитать";
-    mainBtn.show();
+  // Расширяем WebApp на весь экран
+  tg.expand();
 
-    mainBtn.onClick(() => calculate());
+  // Скрываем встроенные кнопки Telegram
+  tg.MainButton.hide();
+  tg.BackButton.hide();
 
-    // Кнопка "Отправить в Telegram"
-    document.getElementById("sendToTelegram").onclick = () => {
-      const result = document.getElementById("result").innerText;
-      tg.sendData(JSON.stringify({result: result}));
-      alert("Результат отправлен в Telegram!");
-    };
+  // Проверка запуска в Telegram
+  if(!tg.initData) {
+    alert("Этот калькулятор доступен только внутри Telegram WebApp!");
+    window.location.href = "https://t.me/your_bot"; // перенаправление на бота
+  }
+
+  // Функция отправки результата в Telegram
+  function sendToTelegram() {
+    const text = document.getElementById('result').innerText;
+    tg.sendData(text); // отправка данных в бота
+    tg.close(); // закрываем WebApp
   }
 </script>
+
 </body>
 </html>
